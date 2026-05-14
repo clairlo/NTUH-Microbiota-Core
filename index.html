@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>微菌體核心技術服務平台 | 台大醫院醫學研究部</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Microsoft JhengHei','Noto Sans TC',Arial,sans-serif;background:#f0ede8;color:#1a1a1a}
+
+/* Nav */
+.nav{background:#1a4a6b;padding:13px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-logo{color:#fff;font-size:13px;font-weight:700;letter-spacing:1px;line-height:1.4}
+.nav-logo span{font-size:9px;color:rgba(255,255,255,.6);display:block;margin-top:1px;letter-spacing:.5px}
+.nav-btn{background:rgba(255,255,255,.15);color:#fff;font-size:12px;font-weight:700;padding:7px 18px;border-radius:6px;text-decoration:none;letter-spacing:.5px;transition:background .15s;white-space:nowrap}
+.nav-btn:hover{background:rgba(255,255,255,.25)}
+
+/* Hero */
+.hero{background:#1a4a6b;padding:52px 24px 60px;text-align:center}
+.hero-badge{background:rgba(255,255,255,.12);display:inline-block;font-size:11px;color:rgba(255,255,255,.8);padding:5px 16px;border-radius:20px;margin-bottom:16px;letter-spacing:1px}
+.hero h1{font-size:26px;font-weight:700;color:#fff;letter-spacing:2px;margin-bottom:8px;line-height:1.4}
+.hero p{font-size:13px;color:rgba(255,255,255,.65);margin-bottom:28px;line-height:1.7}
+.hero-btn{display:inline-flex;align-items:center;gap:8px;background:#fff;color:#1a4a6b;font-size:14px;font-weight:700;padding:12px 28px;border-radius:8px;text-decoration:none;letter-spacing:.5px;transition:opacity .15s}
+.hero-btn:hover{opacity:.9}
+.hero-btn svg{width:16px;height:16px;stroke:#1a4a6b;fill:none;stroke-width:2;flex-shrink:0}
+
+/* Body */
+.body{max-width:720px;margin:0 auto;padding:32px 20px 40px}
+.sec-title{font-size:11px;font-weight:700;color:#1a4a6b;letter-spacing:2px;margin-bottom:14px;padding-bottom:6px;border-bottom:1.5px solid #d0dbe3}
+
+/* Service cards */
+.svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:32px}
+@media(max-width:480px){.svc-grid{grid-template-columns:1fr}}
+.svc-card{background:#fff;border-radius:10px;padding:18px;border:1px solid #d8e8f3}
+.svc-icon{width:36px;height:36px;background:#e3f0fb;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.svc-icon svg{width:20px;height:20px;stroke:#1a4a6b;fill:none;stroke-width:1.8}
+.svc-name{font-size:13px;font-weight:700;color:#1a4a6b;margin-bottom:6px;line-height:1.4}
+.svc-desc{font-size:12px;color:#7a8a94;line-height:1.6}
+
+/* Flow */
+.flow-card{background:#fff;border-radius:10px;padding:18px;border:1px solid #d8e8f3;margin-bottom:32px}
+.flow-steps{display:flex;align-items:center;gap:6px;margin-top:12px;flex-wrap:wrap}
+.flow-step{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;min-width:70px}
+.step-num{width:30px;height:30px;background:#1a4a6b;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.step-txt{font-size:11px;color:#546e7a;text-align:center;line-height:1.5}
+.step-arrow{color:#b0bec5;font-size:18px;flex-shrink:0;margin-bottom:16px}
+
+/* Contact */
+.contact-card{background:#fff;border-radius:10px;padding:18px;border:1px solid #d8e8f3;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:32px}
+.contact-info{font-size:12px;color:#546e7a;line-height:1.8}
+.contact-info strong{color:#1a4a6b;font-size:14px;display:block;margin-bottom:3px}
+.contact-btn{background:#1a4a6b;color:#fff;font-size:13px;font-weight:700;padding:10px 20px;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:background .15s;white-space:nowrap}
+.contact-btn:hover{background:#163d5a}
+.contact-btn svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2;flex-shrink:0}
+
+/* Footer */
+.footer{text-align:center;padding:18px;font-size:10px;color:#aaa;background:#fff;border-top:1px solid #e8eef3}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">微菌體核心技術服務平台
+    <span>NTUH Microbiome Core Technology</span>
+  </div>
+  <a class="nav-btn" href="/apply/">委託申請</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">國立臺灣大學醫學院附設醫院　醫學研究部</div>
+  <h1>微菌體核心技術<br>服務平台</h1>
+  <p>提供專業微菌體相關研究技術服務<br>歡迎各研究團隊提出委託申請</p>
+  <a class="hero-btn" href="/apply/">
+    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+    填寫委託申請表
+  </a>
+</div>
+
+<div class="body">
+
+  <div class="sec-title">服務項目</div>
+  <div class="svc-grid">
+    <div class="svc-card">
+      <div class="svc-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 3v11m0 0a3 3 0 1 0 6 0V3"/><path d="M6 21h12"/></svg>
+      </div>
+      <div class="svc-name">微菌批次樣品製備平台</div>
+      <div class="svc-desc">純菌製備（單菌株 / 多菌株）及糞便樣品前處理（動物 FMT 實驗用）</div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+      </div>
+      <div class="svc-name">腸道厭氧菌分離純化培養平台</div>
+      <div class="svc-desc">目標菌種分離純化，支援人類及動物糞便樣品，提供專業培養技術服務</div>
+    </div>
+  </div>
+
+  <div class="sec-title">申請流程</div>
+  <div class="flow-card">
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-txt">填寫線上<br>申請表</div>
+      </div>
+      <div class="step-arrow">›</div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-txt">核心人員<br>2 日內聯繫</div>
+      </div>
+      <div class="step-arrow">›</div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-txt">雙方討論<br>確認需求</div>
+      </div>
+      <div class="step-arrow">›</div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-txt">正式立案<br>執行服務</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-title">聯絡資訊</div>
+  <div class="contact-card">
+    <div class="contact-info">
+      <strong>微菌體核心技術服務窗口</strong>
+      國立臺灣大學醫學院附設醫院　醫學研究部<br>
+      核心人員將於 2 個工作日內回覆
+    </div>
+    <a class="contact-btn" href="/apply/">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      填寫申請表
+    </a>
+  </div>
+
+</div>
+
+<div class="footer">© 2026 NTUH Microbiome Core Technology　｜　ntuh-microbiome-core.org</div>
+
+</body>
+</html>
