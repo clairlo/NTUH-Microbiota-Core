@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>微菌體核心技術服務委託申請表</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Microsoft JhengHei','Noto Sans TC',Arial,sans-serif;background:#f0ede8;min-height:100vh;padding:32px 16px;color:#1a1a1a}
+h1{font-size:0;height:0;overflow:hidden}
+.card{max-width:740px;margin:0 auto;background:#fff;border-radius:12px;box-shadow:0 2px 24px rgba(0,0,0,.10);overflow:hidden}
+
+/* Header */
+.form-header{background:#1a4a6b;padding:22px 28px 18px;display:flex;align-items:center;gap:16px}
+.form-header-badge{background:rgba(255,255,255,.15);border-radius:6px;padding:6px 12px;font-size:11px;font-weight:700;color:#fff;letter-spacing:2px;white-space:nowrap;line-height:1.4;text-align:center}
+.form-header-title{font-size:20px;font-weight:700;color:#fff;letter-spacing:2px}
+.form-header-en{font-size:10px;color:rgba(255,255,255,.6);margin-top:2px;letter-spacing:.5px}
+
+/* Body */
+.form-body{padding:28px 28px 0}
+.section{margin-bottom:24px}
+.section-label{font-size:11px;font-weight:700;color:#1a4a6b;letter-spacing:2px;margin-bottom:12px;padding-bottom:6px;border-bottom:1.5px solid #e3edf5;display:flex;align-items:center;gap:6px}
+.section-label svg{width:14px;height:14px;stroke:#1a4a6b;fill:none;stroke-width:2;flex-shrink:0}
+
+.row{display:grid;gap:12px;margin-bottom:12px}
+.row.c2{grid-template-columns:1fr 1fr}
+.row.c3{grid-template-columns:1fr 1fr 1fr}
+.row.c14{grid-template-columns:1.2fr 2.8fr}
+@media(max-width:560px){.row.c2,.row.c3,.row.c14{grid-template-columns:1fr}}
+
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:11px;color:#546e7a;font-weight:500}
+.field .hint{font-size:10px;color:#90a4ae;margin-top:1px;font-style:italic;line-height:1.4}
+.field input,.field select,.field textarea{
+  width:100%;padding:8px 11px;
+  border:1px solid #d0dbe3;border-radius:7px;
+  font-size:13px;font-family:inherit;
+  background:#fff;color:#1a1a1a;
+  transition:border .15s,box-shadow .15s;outline:none
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#1a4a6b;box-shadow:0 0 0 3px rgba(26,74,107,.10)}
+.field textarea{resize:vertical;min-height:56px;line-height:1.5}
+
+/* Radio / Checkbox option groups */
+.opt-group{display:flex;flex-wrap:wrap;gap:7px 10px;margin-top:4px}
+.opt-group label{display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;padding:6px 11px;border:1px solid #d0dbe3;border-radius:7px;transition:all .15s;user-select:none}
+.opt-group label:hover{background:#f0f7ff;border-color:#a8c8e8}
+.opt-group input[type=radio],.opt-group input[type=checkbox]{width:14px;height:14px;accent-color:#1a4a6b;cursor:pointer;flex-shrink:0}
+.opt-group label:has(input:checked){background:#e8f2fb;border-color:#1a4a6b}
+
+/* Platform cards */
+.platform{border:1.5px solid #d0dbe3;border-radius:10px;margin-bottom:14px;overflow:hidden}
+.platform-head{background:#f5f8fb;padding:13px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.platform-head input[type=checkbox]{width:16px;height:16px;accent-color:#1a4a6b;flex-shrink:0;cursor:pointer}
+.plt-title{font-size:13px;font-weight:700;color:#1a4a6b}
+.plt-en{font-size:10px;color:#90a4ae;margin-top:1px}
+.platform-body{padding:16px 18px;display:none;border-top:1px solid #e3edf5}
+.platform-body.open{display:block}
+
+/* Depth levels */
+.d1-label{font-size:12px;font-weight:700;color:#2e6a96;margin-bottom:10px;padding-left:4px;border-left:3px solid #2e6a96}
+
+.depth2{background:#f7fafd;border:1px solid #ddeaf4;border-radius:8px;padding:12px 14px;margin-bottom:10px}
+.depth2-toggle{display:flex;align-items:center;gap:7px;cursor:pointer;font-size:12px;font-weight:700;color:#3a7baa;user-select:none}
+.depth2-toggle input[type=checkbox]{width:14px;height:14px;accent-color:#1a4a6b;flex-shrink:0}
+.depth2-body{display:none;margin-top:12px}
+.depth2-body.open{display:block}
+
+.depth3{background:#eef5fb;border:1px solid #cce0ef;border-radius:7px;padding:10px 12px;margin-bottom:10px}
+.depth3-label{font-size:11px;font-weight:700;color:#546e7a;margin-bottom:8px}
+
+/* Notice */
+.notice{border:1px solid #f0b429;background:#fffdf0;border-radius:8px;padding:10px 14px;font-size:12px;color:#7a5c00;line-height:1.6;margin-bottom:20px}
+.notice strong{color:#b7791f}
+
+/* Actions */
+.form-actions{padding:16px 28px 24px;display:flex;gap:10px;justify-content:flex-end;border-top:1px solid #eef2f6;margin-top:8px}
+.btn{padding:9px 22px;border-radius:8px;font-size:13px;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all .15s;font-weight:500}
+.btn-ghost{background:#fff;border:1px solid #c8d6e0;color:#1a4a6b}
+.btn-ghost:hover{background:#f0f7ff;border-color:#1a4a6b}
+.btn-primary{background:#1a4a6b;border:none;color:#fff}
+.btn-primary:hover{background:#163d5a}
+.btn-primary:active{transform:scale(.98)}
+
+/* Modal */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;align-items:center;justify-content:center;padding:16px}
+.modal-bg.open{display:flex}
+.modal{background:#fff;border-radius:12px;width:min(700px,100%);max-height:90vh;overflow-y:auto;padding:24px;box-shadow:0 8px 40px rgba(0,0,0,.18)}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.modal-head span{font-size:15px;font-weight:700;color:#1a4a6b}
+.modal-close{background:none;border:none;cursor:pointer;font-size:22px;color:#90a4ae;line-height:1;padding:2px}
+.modal-close:hover{color:#1a4a6b}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid #eef2f6}
+
+/* Preview / print shared styles */
+.pv{font-size:8.5pt;line-height:1.45;color:#1a1a1a}
+.pv-hdr{display:flex;align-items:center;border-bottom:3px solid #1a4a6b;padding-bottom:7px;margin-bottom:10px;gap:10px}
+.pv-badge{background:#1a4a6b;color:#fff;font-size:8.5pt;font-weight:700;padding:5px 10px;letter-spacing:1px;border-radius:3px;white-space:nowrap;line-height:1.4;text-align:center}
+.pv-title{font-size:13pt;font-weight:700;color:#1a4a6b;letter-spacing:2px}
+.pv-en{font-size:6pt;color:#888;margin-top:1px}
+.pv-meta{margin-left:auto;text-align:right;font-size:6pt;color:#888}
+.pv-sec{background:#1a4a6b;color:#fff;font-size:7pt;font-weight:700;padding:2.5px 8px;margin:7px 0 4px;letter-spacing:1.5px}
+.pv-tbl{width:100%;border-collapse:collapse;font-size:7.5pt;margin-bottom:3px}
+.pv-tbl td,.pv-tbl th{border:1px solid #b0bec5;padding:2.5px 5px;vertical-align:top}
+.pv-tbl th{background:#e8eef3;color:#1a4a6b;font-weight:700;font-size:6.5pt;text-align:center}
+.pv-tbl .lbl{font-size:5.5pt;color:#546e7a}
+.pv-tbl .val{font-size:8pt}
+.pv-tbl .hl{background:#f0f7ff}
+.pv-tbl .grp{background:#e8eef3;font-weight:700;font-size:7.5pt;color:#1a4a6b}
+.pv-tbl .sub{background:#f5f8fb;font-weight:700;font-size:7pt;color:#2e6a96;padding-left:10px}
+.pv-tbl .sub2{font-size:7pt;color:#333;padding-left:20px}
+.pv-sig td{border:1px solid #b0bec5;padding:5px 8px;width:33%;text-align:center;font-size:6.5pt;color:#546e7a}
+.pv-notice{border:1px solid #f0b429;background:#fffdf0;padding:4px 7px;font-size:6pt;color:#7a5c00;margin:5px 0;border-radius:3px}
+.pv-footer{text-align:center;font-size:5.5pt;color:#aaa;border-top:1px solid #e0e0e0;padding-top:3px;margin-top:8px}
+</style>
+</head>
+<body>
+<h1>微菌體核心技術服務委託申請表</h1>
+
+<div class="card">
+  <div class="form-header">
+    <div class="form-header-badge">微菌體<br>核心技術</div>
+    <div>
+      <div class="form-header-title">服務委託申請表</div>
+      <div class="form-header-en">Microbiome Core Technology Service Application Form</div>
+    </div>
+  </div>
+
+  <div class="form-body">
+
+    <!-- 壹 -->
+    <div class="section">
+      <div class="section-label">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        壹、申請人基本資料
+      </div>
+      <div class="row c14">
+        <div class="field"><label>計畫主持人（PI）</label><input id="pi" placeholder="姓名"></div>
+        <div class="field"><label>委託單位 / 機構名稱</label><input id="org" placeholder="例：國立臺灣大學醫學院附設醫院"></div>
+      </div>
+      <div class="row c3">
+        <div class="field"><label>聯絡人姓名</label><input id="contact" placeholder="姓名"></div>
+        <div class="field"><label>聯絡電話</label><input id="tel" placeholder="02-xxxx-xxxx 或 09xx-xxx-xxx"></div>
+        <div class="field"><label>電子郵件</label><input id="email" type="email" placeholder="example@hospital.gov.tw"></div>
+      </div>
+    </div>
+
+    <!-- 貳 -->
+    <div class="section">
+      <div class="section-label">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12l2 2 4-4"/></svg>
+        貳、委託性質
+      </div>
+      <div class="opt-group" id="nature">
+        <label><input type="checkbox" value="學術研究"><span>學術研究</span></label>
+        <label><input type="checkbox" value="臨床試驗"><span>臨床試驗</span></label>
+        <label><input type="checkbox" value="產學合作"><span>產學合作</span></label>
+        <label><input type="checkbox" value="其他"><span>其他</span></label>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <div class="field"><label>補充說明（選填）</label><input id="nature_note" placeholder="如有其他說明請填寫"></div>
+      </div>
+    </div>
+
+    <!-- 參 -->
+    <div class="section">
+      <div class="section-label">
+        <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+        參、委託服務項目
+      </div>
+      <p style="font-size:12px;color:#90a4ae;margin-bottom:14px">請勾選欲委託之服務平台，勾選後展開填寫詳細資訊。</p>
+
+      <!-- ══ 平台一：微菌批次樣品製備平台 ══ -->
+      <div class="platform">
+        <div class="platform-head" onclick="togglePlt('batch')">
+          <input type="checkbox" id="chk_batch" onclick="event.stopPropagation();togglePlt('batch',this.checked)">
+          <div>
+            <div class="plt-title">微菌批次樣品製備平台</div>
+            <div class="plt-en">Microbiome Batch Sample Preparation Platform</div>
+          </div>
+        </div>
+        <div class="platform-body" id="body_batch">
+          <div class="d1-label" style="margin-bottom:12px">欲委託製備之樣品類型</div>
+
+          <!-- 子項：純菌製備 -->
+          <div class="depth2">
+            <div class="depth2-toggle">
+              <input type="checkbox" id="chk_pure" onchange="toggleD2('pure',this.checked)">
+              <span>純菌製備</span>
+            </div>
+            <div class="depth2-body" id="d2_pure">
+              <div class="field" style="margin-bottom:10px">
+                <label>製備類型</label>
+                <div class="opt-group">
+                  <label><input type="radio" name="pure_type" value="單菌株"><span>單菌株</span></label>
+                  <label><input type="radio" name="pure_type" value="多菌株"><span>多菌株</span></label>
+                </div>
+              </div>
+              <div class="row c2" style="margin-bottom:10px">
+                <div class="field"><label>欲委託製備總菌株數量</label><input id="pure_count" placeholder="例：10 株"></div>
+                <div class="field"><label>菌種名稱及菌株編號</label><input id="pure_strain" placeholder="例：Lactobacillus reuteri ATCC 23272"></div>
+              </div>
+              <div class="depth3">
+                <div class="depth3-label">預計提供之樣品類型</div>
+                <div class="opt-group">
+                  <label><input type="radio" name="pure_provide" value="冷凍保存管"><span>冷凍保存管</span></label>
+                  <label><input type="radio" name="pure_provide" value="其他"><span>其他</span></label>
+                </div>
+                <div class="field" style="margin-top:8px">
+                  <label>其他說明（選填）</label>
+                  <input id="pure_provide_other" placeholder="請描述">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 子項：糞便樣品前處理 -->
+          <div class="depth2">
+            <div class="depth2-toggle">
+              <input type="checkbox" id="chk_fmt" onchange="toggleD2('fmt',this.checked)">
+              <span>糞便樣品前處理（動物 FMT 實驗用）</span>
+            </div>
+            <div class="depth2-body" id="d2_fmt">
+              <div class="field" style="margin-bottom:10px">
+                <label>欲委託製備 FMT 樣品組別數</label>
+                <input id="fmt_groups" placeholder="例：3 組">
+              </div>
+              <div class="depth3" style="margin-bottom:10px">
+                <div class="depth3-label">預計提供之樣品類型</div>
+                <div class="opt-group">
+                  <label><input type="radio" name="fmt_sample" value="人類糞便"><span>人類糞便</span></label>
+                  <label><input type="radio" name="fmt_sample" value="動物糞便"><span>動物糞便</span></label>
+                </div>
+              </div>
+              <div class="depth3" style="margin-bottom:10px">
+                <div class="depth3-label">預計提供樣品之保存條件</div>
+                <div class="opt-group">
+                  <label><input type="radio" name="fmt_storage" value="-80°C"><span>-80°C</span></label>
+                  <label><input type="radio" name="fmt_storage" value="-20°C"><span>-20°C</span></label>
+                  <label><input type="radio" name="fmt_storage" value="4°C"><span>4°C</span></label>
+                  <label><input type="radio" name="fmt_storage" value="新鮮（採集後 2 小時內）"><span>新鮮（採集後 2 小時內）</span></label>
+                </div>
+              </div>
+              <div class="field">
+                <label>樣品保存液（請自填，若未使用請填無）</label>
+                <input id="fmt_preserv" placeholder="請自填，若未使用請填無">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ══ 平台二：腸道厭氧菌分離純化培養平台 ══ -->
+      <div class="platform">
+        <div class="platform-head" onclick="togglePlt('anaerobic')">
+          <input type="checkbox" id="chk_anaerobic" onclick="event.stopPropagation();togglePlt('anaerobic',this.checked)">
+          <div>
+            <div class="plt-title">腸道厭氧菌分離純化培養平台</div>
+            <div class="plt-en">Intestinal Anaerobic Bacteria Isolation &amp; Culture Platform</div>
+          </div>
+        </div>
+        <div class="platform-body" id="body_anaerobic">
+
+          <div class="field" style="margin-bottom:12px">
+            <label>目標菌種</label>
+            <div class="hint">若為 uncultured bacteria，請註明比對的資料庫名稱並提供序列。</div>
+            <textarea id="an_target" placeholder="菌種名稱或描述（可填寫多種菌，例如：Akkermansia muciniphila / Faecalibacterium prausnitzii）" style="min-height:72px"></textarea>
+          </div>
+
+          <div class="row c2" style="margin-bottom:12px">
+            <div class="field">
+              <label>目標菌種在檢體中的含量（相對豐度）%</label>
+              <input id="an_abund" placeholder="例：0.01">
+            </div>
+            <div class="field">
+              <label>特殊生理活性</label>
+              <input id="an_activity" placeholder="如有請填寫，否則填無">
+            </div>
+          </div>
+
+          <div class="depth3" style="margin-bottom:10px">
+            <div class="depth3-label">預計提供樣品類型</div>
+            <div class="opt-group">
+              <label><input type="radio" name="an_sample" value="人類糞便"><span>人類糞便</span></label>
+              <label><input type="radio" name="an_sample" value="動物糞便"><span>動物糞便</span></label>
+            </div>
+          </div>
+
+          <div class="depth3" style="margin-bottom:10px">
+            <div class="depth3-label">預計提供樣品之保存條件</div>
+            <div class="opt-group">
+              <label><input type="radio" name="an_storage" value="-80°C"><span>-80°C</span></label>
+              <label><input type="radio" name="an_storage" value="-20°C"><span>-20°C</span></label>
+              <label><input type="radio" name="an_storage" value="4°C"><span>4°C</span></label>
+              <label><input type="radio" name="an_storage" value="新鮮（採集後 2 小時內）"><span>新鮮（採集後 2 小時內）</span></label>
+            </div>
+          </div>
+
+          <div class="row c2">
+            <div class="field">
+              <label>樣品保存液（請自填，若未使用請填無）</label>
+              <input id="an_preserv" placeholder="請自填，若未使用請填無">
+            </div>
+            <div class="field">
+              <label>樣品採集年份</label>
+              <input id="an_year" placeholder="例：2026">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- /section 參 -->
+
+    <div class="notice">
+      <strong>注意事項：</strong>申請人應確認所提供之樣品符合相關法規及倫理審查規範。本申請表送出後，服務窗口將於 2 個工作日內與您確認服務細節及收費標準，實際執行時程依核心實驗室排程為準。
+    </div>
+
+  </div><!-- /form-body -->
+
+  <div class="form-actions">
+    <button class="btn btn-ghost" onclick="openPreview()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/></svg>
+      預覽申請單
+    </button>
+    <button class="btn btn-primary" onclick="doPrint()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      列印 / 存成 PDF
+    </button>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <div class="modal-head">
+      <span>申請單預覽</span>
+      <button class="modal-close" onclick="closePreview()">×</button>
+    </div>
+    <div id="previewContent"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closePreview()">關閉</button>
+      <button class="btn btn-primary" onclick="doPrint()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        列印
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+function v(id){var e=document.getElementById(id);return e?e.value.trim():''}
+function radio(n){var e=document.querySelector('input[name="'+n+'"]:checked');return e?e.value:'（未選擇）'}
+function cbs(gid){return[...document.querySelectorAll('#'+gid+' input:checked')].map(e=>e.value).join('、')||'（未勾選）'}
+function isOn(id){return document.getElementById(id).checked}
+
+function togglePlt(name,force){
+  var chk=document.getElementById('chk_'+name)
+  var body=document.getElementById('body_'+name)
+  if(force===undefined)force=!chk.checked
+  chk.checked=force
+  body.className='platform-body'+(force?' open':'')
+}
+function toggleD2(name,show){
+  document.getElementById('d2_'+name).className='depth2-body'+(show?' open':'')
+}
+
+function today(){
+  var d=new Date()
+  return d.getFullYear()+'/'+(d.getMonth()+1).toString().padStart(2,'0')+'/'+d.getDate().toString().padStart(2,'0')
+}
+
+function buildHTML(){
+  var batchOn=isOn('chk_batch'), anaOn=isOn('chk_anaerobic')
+  var pureOn=isOn('chk_pure'), fmtOn=isOn('chk_fmt')
+  var rows=''
+
+  if(batchOn){
+    rows+=`<tr class="grp"><td colspan="2">微菌批次樣品製備平台</td></tr>`
+    if(pureOn){
+      rows+=`<tr><td class="sub" colspan="2">▸ 純菌製備</td></tr>`
+      rows+=`<tr><td class="sub2">製備類型</td><td class="sub2">${radio('pure_type')}</td></tr>`
+      rows+=`<tr><td class="sub2">欲委託製備總菌株數量</td><td class="sub2">${v('pure_count')||'—'}</td></tr>`
+      rows+=`<tr><td class="sub2">菌種名稱及菌株編號</td><td class="sub2">${v('pure_strain')||'—'}</td></tr>`
+      var pp=radio('pure_provide');var ppo=v('pure_provide_other')
+      rows+=`<tr><td class="sub2">預計提供之樣品類型</td><td class="sub2">${pp}${ppo&&pp==='其他'?' （'+ppo+'）':''}</td></tr>`
+    }
+    if(fmtOn){
+      rows+=`<tr><td class="sub" colspan="2">▸ 糞便樣品前處理（動物 FMT 實驗用）</td></tr>`
+      rows+=`<tr><td class="sub2">欲委託製備 FMT 樣品組別數</td><td class="sub2">${v('fmt_groups')||'—'}</td></tr>`
+      rows+=`<tr><td class="sub2">預計提供之樣品類型</td><td class="sub2">${radio('fmt_sample')}</td></tr>`
+      rows+=`<tr><td class="sub2">預計提供樣品之保存條件</td><td class="sub2">${radio('fmt_storage')}</td></tr>`
+      rows+=`<tr><td class="sub2">樣品保存液</td><td class="sub2">${v('fmt_preserv')||'—'}</td></tr>`
+    }
+    if(!pureOn&&!fmtOn) rows+=`<tr><td class="sub2" colspan="2">（未選擇子項目）</td></tr>`
+  }
+
+  if(anaOn){
+    rows+=`<tr class="grp"><td colspan="2">腸道厭氧菌分離純化培養平台</td></tr>`
+    rows+=`<tr><td class="sub2">目標菌種</td><td class="sub2">${v('an_target')||'—'}</td></tr>`
+    rows+=`<tr><td class="sub2">特殊生理活性</td><td class="sub2">${v('an_activity')||'—'}</td></tr>`
+    rows+=`<tr><td class="sub2">目標菌種相對豐度（%）</td><td class="sub2">${v('an_abund')||'—'}</td></tr>`
+    rows+=`<tr><td class="sub2">預計提供樣品類型</td><td class="sub2">${radio('an_sample')}</td></tr>`
+    rows+=`<tr><td class="sub2">預計提供樣品之保存條件</td><td class="sub2">${radio('an_storage')}</td></tr>`
+    rows+=`<tr><td class="sub2">樣品保存液</td><td class="sub2">${v('an_preserv')||'—'}</td></tr>`
+    rows+=`<tr><td class="sub2">樣品採集年份</td><td class="sub2">${v('an_year')||'—'}</td></tr>`
+  }
+
+  if(!batchOn&&!anaOn) rows=`<tr><td colspan="2" style="text-align:center;color:#aaa;font-size:7pt">（未選擇服務項目）</td></tr>`
+
+  return `<div class="pv">
+<div class="pv-hdr">
+  <div class="pv-badge">微菌體<br>核心技術</div>
+  <div><div class="pv-title">服務委託申請表</div><div class="pv-en">Microbiome Core Technology Service Application Form</div></div>
+  <div class="pv-meta">提交日期：${today()}</div>
+</div>
+
+<div class="pv-sec">壹、申請人基本資料</div>
+<table class="pv-tbl">
+<tr><td class="lbl" style="width:45%">委託單位 / 機構名稱</td><td class="lbl">計畫主持人（PI）</td></tr>
+<tr class="hl"><td class="val">${v('org')||'（未填寫）'}</td><td class="val">${v('pi')||'（未填寫）'}</td></tr>
+<tr><td class="lbl">聯絡人姓名</td><td class="lbl">聯絡電話</td></tr>
+<tr><td class="val">${v('contact')||'（未填寫）'}</td><td class="val">${v('tel')||'（未填寫）'}</td></tr>
+<tr><td class="lbl" colspan="2">電子郵件</td></tr>
+<tr><td class="val" colspan="2">${v('email')||'（未填寫）'}</td></tr>
+</table>
+
+<div class="pv-sec">貳、委託性質</div>
+<table class="pv-tbl">
+<tr><td class="lbl" style="width:35%">委託性質</td><td class="lbl">補充說明</td></tr>
+<tr class="hl"><td class="val"><b>${cbs('nature')}</b></td><td class="val">${v('nature_note')||'—'}</td></tr>
+</table>
+
+<div class="pv-sec">參、委託服務項目</div>
+<table class="pv-tbl">
+<tr><th style="width:45%">項目</th><th>填報內容</th></tr>
+${rows}
+</table>
+
+<div class="pv-notice"><b>注意事項：</b>申請人應確認所提供之樣品符合相關法規及倫理審查規範。本申請表送出後，服務窗口將於 2 個工作日內與您確認服務細節及收費標準。</div>
+
+<div class="pv-sec">肆、聲明與簽名</div>
+<p style="font-size:6.5pt;color:#555;margin-bottom:5px">本人確認上述填報資訊正確無誤，並同意遵守微菌體核心技術服務相關規範。</p>
+<table class="pv-tbl pv-sig">
+<tr>
+  <td>申請人簽名<br><br><br>日期：＿＿年＿＿月＿＿日</td>
+  <td>計畫主持人簽名<br><br><br>日期：＿＿年＿＿月＿＿日</td>
+  <td>核心服務窗口（收件）<br><br><br>日期：＿＿年＿＿月＿＿日</td>
+</tr>
+</table>
+<div class="pv-footer">微菌體核心技術服務委託申請表　｜　版本 1.1　｜　${today()}</div>
+</div>`
+}
+
+function openPreview(){
+  document.getElementById('previewContent').innerHTML=buildHTML()
+  document.getElementById('modal').className='modal-bg open'
+}
+function closePreview(){document.getElementById('modal').className='modal-bg'}
+
+var printCSS=`*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Microsoft JhengHei','Noto Sans TC',Arial,sans-serif;font-size:9pt;color:#000}
+.pv{width:210mm;min-height:297mm;padding:14mm 16mm;margin:0 auto}
+.pv-hdr{display:flex;align-items:center;border-bottom:3px solid #1a4a6b;padding-bottom:7px;margin-bottom:10px;gap:10px}
+.pv-badge{background:#1a4a6b;color:#fff;font-size:8.5pt;font-weight:700;padding:5px 10px;letter-spacing:1px;border-radius:3px;white-space:nowrap;line-height:1.4;text-align:center}
+.pv-title{font-size:13pt;font-weight:700;color:#1a4a6b;letter-spacing:2px}
+.pv-en{font-size:6pt;color:#888;margin-top:1px}
+.pv-meta{margin-left:auto;text-align:right;font-size:6pt;color:#888}
+.pv-sec{background:#1a4a6b;color:#fff;font-size:7pt;font-weight:700;padding:2.5px 8px;margin:7px 0 4px;letter-spacing:1.5px}
+.pv-tbl{width:100%;border-collapse:collapse;font-size:7.5pt;margin-bottom:3px}
+.pv-tbl td,.pv-tbl th{border:1px solid #b0bec5;padding:2.5px 5px;vertical-align:top}
+.pv-tbl th{background:#e8eef3;color:#1a4a6b;font-weight:700;font-size:6.5pt;text-align:center}
+.pv-tbl .lbl{font-size:5.5pt;color:#546e7a}
+.pv-tbl .val{font-size:8pt}
+.pv-tbl .hl{background:#f0f7ff}
+.pv-tbl .grp{background:#e8eef3;font-weight:700;font-size:7.5pt;color:#1a4a6b}
+.pv-tbl .sub{background:#f5f8fb;font-weight:700;font-size:7pt;color:#2e6a96;padding-left:10px}
+.pv-tbl .sub2{font-size:7pt;color:#333;padding-left:20px}
+.pv-sig td{border:1px solid #b0bec5;padding:5px 8px;width:33%;text-align:center;font-size:6.5pt;color:#546e7a}
+.pv-notice{border:1px solid #f0b429;background:#fffdf0;padding:4px 7px;font-size:6pt;color:#7a5c00;margin:5px 0;border-radius:3px}
+.pv-footer{text-align:center;font-size:5.5pt;color:#aaa;border-top:1px solid #e0e0e0;padding-top:3px;margin-top:8px}
+@page{size:A4;margin:0}`
+
+function doPrint(){
+  var win=window.open('','_blank','width=920,height=760')
+  win.document.write('<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>微菌體核心技術服務委託申請表</title><style>'+printCSS+'</style></head><body>'+buildHTML()+'</body></html>')
+  win.document.close()
+  win.focus()
+  setTimeout(function(){win.print()},400)
+}
+
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closePreview()})
+</script>
+</body>
+</html>
