@@ -121,6 +121,21 @@ h1{font-size:0;height:0;overflow:hidden}
 .pv-sig td{border:1px solid #b0bec5;padding:5px 8px;width:33%;text-align:center;font-size:6.5pt;color:#546e7a}
 .pv-notice{border:1px solid #f0b429;background:#fffdf0;padding:4px 7px;font-size:6pt;color:#7a5c00;margin:5px 0;border-radius:3px}
 .pv-footer{text-align:center;font-size:5.5pt;color:#aaa;border-top:1px solid #e0e0e0;padding-top:3px;margin-top:8px}
+
+/* ── Print styles ── */
+@media print{
+  body{background:#fff;padding:0}
+  .card{box-shadow:none;border-radius:0;max-width:none}
+  .form-actions,.modal-bg,#successMsg,.section-err,.err-msg{display:none!important}
+  .form-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .platform-head{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .section-label{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .platform-body{display:block!important}
+  .depth2-body{display:block!important}
+  .print-date{display:block!important}
+  @page{size:A4;margin:12mm 14mm}
+}
+.print-date{display:none;font-size:10px;color:rgba(255,255,255,.6);text-align:right;margin-left:auto}
 </style>
 </head>
 <body>
@@ -136,6 +151,7 @@ h1{font-size:0;height:0;overflow:hidden}
     <div style="margin-left:auto;text-align:right">
       <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:1px">台大醫院</div>
       <div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:2px;letter-spacing:.5px">醫學研究部</div>
+      <div class="print-date" id="printDate"></div>
     </div>
   </div>
 
@@ -504,11 +520,10 @@ body{font-family:'Microsoft JhengHei','Noto Sans TC',Arial,sans-serif;font-size:
 @page{size:A4;margin:0}`
 
 function doPrint(){
-  var win=window.open('','_blank','width=920,height=760')
-  win.document.write('<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>微菌體核心技術服務委託申請表</title><style>'+printCSS+'</style></head><body>'+buildHTML()+'</body></html>')
-  win.document.close()
-  win.focus()
-  setTimeout(function(){win.print()},400)
+  var d=new Date()
+  var ds=d.getFullYear()+'/'+(d.getMonth()+1).toString().padStart(2,'0')+'/'+d.getDate().toString().padStart(2,'0')
+  document.getElementById('printDate').textContent='提交日期：'+ds
+  window.print()
 }
 
 document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closePreview()})
