@@ -121,7 +121,7 @@ h1{font-size:0;height:0;overflow:hidden}
     <div class="form-header-badge">微菌體<br>核心</div>
     <div>
       <div class="form-header-title">服務委託申請表</div>
-      <div class="form-header-en">Core Technology Service Application Form</div>
+      <div class="form-header-en">Microbiome Core Technology Service Application Form</div>
     </div>
     <div style="margin-left:auto;text-align:right">
       <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:1px">台大醫院</div>
@@ -420,7 +420,7 @@ function buildHTML(){
   return `<div class="pv">
 <div class="pv-hdr">
   <div class="pv-badge">微菌體<br>核心技術</div>
-  <div><div class="pv-title">服務委託申請表</div><div class="pv-en">Microbiome Core Technology Service Application Form</div></div>
+  <div><div class="pv-title">服務委託申請表</div><div class="pv-en">Microbiome Microbiome Core Technology Service Application Form</div></div>
   <div class="pv-meta">提交日期：${today()}</div>
 </div>
 
@@ -523,19 +523,12 @@ function doSubmit(){
     an_sample:radio('an_sample'),an_storage:radio('an_storage'),
     an_preserv:v('an_preserv'),an_year:v('an_year')
   }
-  fetch(GAS_URL,{method:'POST',body:JSON.stringify(payload)})
-  .then(function(r){return r.json()})
-  .then(function(res){
-    if(res.status==='success'){
-      var msg=document.getElementById('successMsg')
-      msg.style.display='flex'
-      btn.style.display='none'
-      msg.scrollIntoView({behavior:'smooth',block:'center'})
-    } else {
-      alert('送出失敗，請稍後再試。')
-      btn.disabled=false
-      btn.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> 送出申請'
-    }
+  fetch(GAS_URL,{method:'POST',mode:'no-cors',body:JSON.stringify(payload)})
+  .then(function(){
+    var msg=document.getElementById('successMsg')
+    msg.style.display='flex'
+    btn.style.display='none'
+    msg.scrollIntoView({behavior:'smooth',block:'center'})
   })
   .catch(function(){
     alert('網路錯誤，請檢查網路連線後再試。')
