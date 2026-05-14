@@ -128,18 +128,47 @@ h1{font-size:0;height:0;overflow:hidden}
 /* ── Print styles ── */
 @media print{
   #sigBlock{display:block!important}
-  body{background:#fff;padding:0}
+  body{background:#fff;padding:0;font-size:11px}
   .card{box-shadow:none;border-radius:0;max-width:none}
   .form-actions,.modal-bg,#successMsg,.section-err,.err-msg{display:none!important}
   .form-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .form-header-strip{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .platform-head{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .section-label{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .platform-body{display:block!important}
-  .depth2-body{display:block!important}
-  .print-date{display:block!important}
-  @page{size:A4;margin:12mm 14mm}
+  .section-label{-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:9px;padding-bottom:3px;margin-bottom:6px}
+  .depth3{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .print-date{display:inline!important}
+  /* hide unchecked platforms */
+  .platform-hide{display:none!important}
+  /* hide unchecked sub-items */
+  .depth2-hide{display:none!important}
+  /* compact layout */
+  .form-body{padding:10px 14px 0}
+  .section{margin-bottom:10px}
+  .row{margin-bottom:6px;gap:8px}
+  .field input,.field select,.field textarea{padding:4px 8px;font-size:11px}
+  .field label{font-size:9px}
+  .field .hint{font-size:8px}
+  .platform{margin-bottom:8px}
+  .platform-head{padding:7px 12px}
+  .plt-title{font-size:11px}
+  .plt-en{font-size:8px}
+  .platform-body{padding:8px 12px}
+  .depth2{padding:7px 10px;margin-bottom:6px}
+  .depth2-toggle{font-size:10px}
+  .depth3{padding:6px 8px;margin-bottom:6px}
+  .depth3-label{font-size:9px;margin-bottom:4px}
+  .opt-group{gap:4px 6px}
+  .opt-group label{padding:3px 7px;font-size:11px}
+  .d1-label{font-size:10px;margin-bottom:6px}
+  .notice{padding:5px 10px;font-size:10px;margin-bottom:8px}
+  .form-header-top{padding:10px 14px 8px}
+  .form-header-title{font-size:15px}
+  .form-header-en{font-size:8px}
+  .form-header-badge{font-size:9px;padding:4px 8px}
+  .form-header-strip{padding:3px 14px;font-size:8px}
+  @page{size:A4;margin:10mm 12mm}
 }
-.print-date{display:none;font-size:10px;color:rgba(255,255,255,.6);text-align:right;margin-left:auto}
+.print-date{display:none;font-size:10px;color:rgba(255,255,255,.7)}
 </style>
 </head>
 <body>
@@ -554,20 +583,126 @@ body{font-family:'Microsoft JhengHei','Noto Sans TC',Arial,sans-serif;font-size:
 .pv-footer{text-align:center;font-size:5.5pt;color:#aaa;border-top:1px solid #e0e0e0;padding-top:3px;margin-top:8px}
 @page{size:A4;margin:0}`
 
-function doPrint(){
+function buildPrintDoc(){
   var d=new Date()
   var ds=d.getFullYear()+'/'+(d.getMonth()+1).toString().padStart(2,'0')+'/'+d.getDate().toString().padStart(2,'0')
-  document.getElementById('printDate').textContent='提交日期：'+ds
-  // Expand all platform bodies for print
-  document.querySelectorAll('.platform-body,.depth2-body').forEach(function(el){el.setAttribute('data-was',el.style.display);el.style.display='block'})
-  window.print()
-  // Restore after print
-  setTimeout(function(){
-    document.querySelectorAll('.platform-body,.depth2-body').forEach(function(el){
-      var was=el.getAttribute('data-was')
-      el.style.display=(was===null||was==='')?'':was
-    })
-  },1000)
+  var batchOn=isOn('chk_batch'), anaOn=isOn('chk_anaerobic')
+  var pureOn=isOn('chk_pure'), fmtOn=isOn('chk_fmt')
+
+  function row2(l1,v1,l2,v2){
+    return '<tr><td class="lbl">'+l1+'</td><td class="val">'+v1+'</td><td class="lbl">'+l2+'</td><td class="val">'+v2+'</td></tr>'
+  }
+  function row1(l,v){
+    return '<tr><td class="lbl">'+l+'</td><td class="val" colspan="3">'+v+'</td></tr>'
+  }
+  function secBar(t){return '<div class="sec-bar">'+t+'</div>'}
+  function na(v){return v||'—'}
+  function chk(on){return on?'<b style="color:#1a4a6b">✔ 申請</b>':'□ 未申請'}
+
+  // 參、批次平台
+  var batchRows=''
+  if(pureOn){
+    batchRows+='<tr><td class="sub" colspan="4">▸ 純菌製備</td></tr>'
+    batchRows+=row2('製備類型',na(radio('pure_type')),'欲委託製備總菌株數量',na(v('pure_count')))
+    batchRows+=row1('菌種名稱及菌株編號',na(v('pure_strain')))
+    batchRows+=row1('預計提供之樣品類型',na(radio('pure_provide'))+(v('pure_provide_other')?' （'+v('pure_provide_other')+'）':''))
+  }
+  if(fmtOn){
+    batchRows+='<tr><td class="sub" colspan="4">▸ 糞便樣品前處理（動物 FMT 實驗用）</td></tr>'
+    batchRows+=row2('欲委託製備 FMT 樣品組別數',na(v('fmt_groups')),'預計提供之樣品類型',na(radio('fmt_sample')))
+    batchRows+=row2('預計提供樣品之保存條件',na(radio('fmt_storage')),'樣品保存液',na(v('fmt_preserv')))
+  }
+  if(!pureOn&&!fmtOn&&batchOn) batchRows='<tr><td colspan="4" class="val" style="color:#aaa">（未選擇子項目）</td></tr>'
+
+  return `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8">
+<title>微菌體核心技術服務委託申請表</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Microsoft JhengHei',Arial,sans-serif;font-size:9pt;color:#000;background:#fff}
+.page{width:210mm;min-height:297mm;padding:12mm 14mm;margin:0 auto}
+.hdr{background:#1a4a6b;border-radius:4px;overflow:hidden;margin-bottom:10px}
+.hdr-top{padding:10px 14px;display:flex;align-items:center;gap:12px}
+.hdr-badge{background:rgba(255,255,255,.15);border-radius:4px;padding:4px 8px;font-size:8.5pt;font-weight:700;color:#fff;letter-spacing:1.5px;line-height:1.4;text-align:center;white-space:nowrap}
+.hdr-title{font-size:14pt;font-weight:700;color:#fff;letter-spacing:2px}
+.hdr-en{font-size:7pt;color:rgba(255,255,255,.6);margin-top:1px}
+.hdr-strip{background:rgba(0,0,0,.2);padding:3px 14px;display:flex;justify-content:space-between}
+.hdr-strip span{font-size:7.5pt;color:rgba(255,255,255,.75)}
+.sec-bar{background:#1a4a6b;color:#fff;font-size:8pt;font-weight:700;padding:3px 8px;margin:8px 0 4px;letter-spacing:1px}
+.tbl{width:100%;border-collapse:collapse;font-size:8.5pt;margin-bottom:2px}
+.tbl td{border:1px solid #b0bec5;padding:4px 7px;vertical-align:middle}
+.tbl .lbl{background:#f0f4f8;color:#546e7a;font-size:7.5pt;width:22%;white-space:nowrap}
+.tbl .val{color:#1a1a1a;width:28%}
+.tbl .grp{background:#e3edf5;font-weight:700;font-size:8pt;color:#1a4a6b}
+.tbl .sub{background:#f5f8fb;font-weight:700;font-size:7.5pt;color:#2e6a96;padding-left:12px}
+.tbl .na{color:#aaa;font-style:italic}
+.notice{border:1px solid #f0b429;background:#fffdf0;padding:5px 8px;font-size:7.5pt;color:#7a5c00;margin:6px 0;border-radius:3px}
+.sig-tbl{width:100%;border-collapse:collapse;margin-top:6px}
+.sig-tbl td{border:1px solid #b0bec5;padding:6px 10px;width:33%;text-align:center;font-size:7.5pt;color:#546e7a}
+.footer{text-align:center;font-size:6.5pt;color:#aaa;border-top:1px solid #e0e0e0;padding-top:3px;margin-top:8px}
+@page{size:A4;margin:0}
+</style></head><body>
+<div class="page">
+<div class="hdr">
+  <div class="hdr-top">
+    <div class="hdr-badge">微菌體<br>核心</div>
+    <div>
+      <div class="hdr-title">服務委託申請表</div>
+      <div class="hdr-en">Microbiome Core Technology Service Application Form</div>
+    </div>
+  </div>
+  <div class="hdr-strip">
+    <span>國立臺灣大學醫學院附設醫院　醫學研究部</span>
+    <span>提交日期：${ds}</span>
+  </div>
+</div>
+
+${secBar('壹、申請人基本資料')}
+<table class="tbl">
+${row2('計畫主持人（PI）',na(v('pi')),'委託單位 / 機構名稱',na(v('org')))}
+${row2('聯絡人姓名',na(v('contact')),'聯絡電話',na(v('tel')))}
+${row1('電子郵件',na(v('email')))}
+</table>
+
+${secBar('貳、委託性質')}
+<table class="tbl">
+${row2('委託性質',na(cbs('nature')),'補充說明',na(v('nature_note')))}
+</table>
+
+${secBar('參、委託服務項目')}
+<table class="tbl">
+<tr><td class="grp" colspan="4">${chk(batchOn)}&nbsp;&nbsp;微菌批次樣品製備平台</td></tr>
+${batchOn ? batchRows : '<tr><td colspan="4" class="na" style="padding-left:12px">未申請</td></tr>'}
+<tr><td class="grp" colspan="4">${chk(anaOn)}&nbsp;&nbsp;腸道厭氧菌分離純化培養平台</td></tr>
+${anaOn ? `
+<tr><td class="lbl">目標菌種</td><td class="val" colspan="3">${na(v('an_target'))}</td></tr>
+${row2('目標菌種相對豐度（%）',na(v('an_abund')),'特殊生理活性',na(v('an_activity')))}
+${row2('預計提供樣品類型',na(radio('an_sample')),'預計提供樣品之保存條件',na(radio('an_storage')))}
+${row2('樣品保存液',na(v('an_preserv')),'樣品採集年份',na(v('an_year')))}
+` : '<tr><td colspan="4" class="na" style="padding-left:12px">未申請</td></tr>'}
+</table>
+
+<div class="notice"><b>注意事項：</b>本申請表送出後不代表正式立案，核心人員將於 2 個工作日內與您聯繫，確認需求細節，經雙方討論確認後才會正式立案。</div>
+
+<div class="sec-bar">肆、聲明與簽名</div>
+<p style="font-size:7.5pt;color:#555;margin:4px 0 6px">本人確認上述填報資訊正確無誤，並同意遵守微菌體核心技術服務相關規範。</p>
+<table class="sig-tbl">
+<tr>
+  <td>申請人簽名<br><br><br>日期：＿＿年＿＿月＿＿日</td>
+  <td>計畫主持人簽名<br><br><br>日期：＿＿年＿＿月＿＿日</td>
+  <td>核心服務窗口（收件）<br><br><br>日期：＿＿年＿＿月＿＿日</td>
+</tr>
+</table>
+<div class="footer">微菌體核心技術服務委託申請表　｜　版本 1.2　｜　${ds}</div>
+</div>
+</body></html>`
+}
+
+function doPrint(){
+  var win=window.open('','_blank','width=900,height=750')
+  win.document.write(buildPrintDoc())
+  win.document.close()
+  win.focus()
+  setTimeout(function(){win.print()},400)
 }
 
 document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closePreview()})
