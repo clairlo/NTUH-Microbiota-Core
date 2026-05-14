@@ -513,6 +513,40 @@ function doPrint(){
 
 document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closePreview()})
 
+// 即時清除錯誤狀態
+document.querySelectorAll('input,select,textarea').forEach(function(el){
+  el.addEventListener('input',function(){
+    var field=this.closest('.field')
+    if(field) field.classList.remove('error')
+  })
+  el.addEventListener('change',function(){
+    // 清除自身 field 錯誤
+    var field=this.closest('.field')
+    if(field) field.classList.remove('error')
+    // 清除 opt-group 錯誤（radio/checkbox）
+    var grp=this.closest('.opt-group')
+    if(grp) grp.classList.remove('error')
+    // 清除 nature section 錯誤
+    if(this.closest('#nature')){
+      document.getElementById('nature').classList.remove('error')
+      var ne=document.getElementById('nature_err')
+      if(ne) ne.classList.remove('show')
+    }
+    // 清除 platform 錯誤
+    if(this.id==='chk_batch'||this.id==='chk_anaerobic'){
+      document.getElementById('plt_batch_wrap').classList.remove('error')
+      document.getElementById('plt_anaerobic_wrap').classList.remove('error')
+      var se=document.getElementById('service_err')
+      if(se) se.classList.remove('show')
+    }
+    // 清除 batch sub 錯誤
+    if(this.id==='chk_pure'||this.id==='chk_fmt'){
+      var be=document.getElementById('batch_sub_err')
+      if(be) be.classList.remove('show')
+    }
+  })
+})
+
 var GAS_URL='https://script.google.com/macros/s/AKfycbzKGrTAUnFtQ93dKd_ReoS9JqXb7PdmpPtrZN2icmKUjjjelbQv7E7Sd9pUmXWzzDi2OQ/exec'
 
 function clearErrors(){
