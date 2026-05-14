@@ -124,6 +124,7 @@ h1{font-size:0;height:0;overflow:hidden}
 
 /* ── Print styles ── */
 @media print{
+  #sigBlock{display:block!important}
   body{background:#fff;padding:0}
   .card{box-shadow:none;border-radius:0;max-width:none}
   .form-actions,.modal-bg,#successMsg,.section-err,.err-msg{display:none!important}
@@ -346,6 +347,18 @@ h1{font-size:0;height:0;overflow:hidden}
       <strong>注意事項：</strong>申請人應確認所提供之樣品符合相關法規及倫理審查規範。本申請表送出後，服務窗口將於 2 個工作日內與您確認服務細節及收費標準，實際執行時程依核心實驗室排程為準。
     </div>
 
+  <!-- 簽名欄（列印時顯示） -->
+  <div id="sigBlock" style="display:none;padding:0 28px 20px">
+    <div style="font-size:11px;font-weight:700;color:#1a4a6b;letter-spacing:2px;margin-bottom:10px;padding-bottom:6px;border-bottom:1.5px solid #e3edf5">肆、聲明與簽名</div>
+    <p style="font-size:12px;color:#555;margin-bottom:12px">本人確認上述填報資訊正確無誤，並同意遵守微菌體核心技術服務相關規範。</p>
+    <table style="width:100%;border-collapse:collapse">
+      <tr>
+        <td style="border:1px solid #b0bec5;padding:8px 12px;width:33%;text-align:center;font-size:12px;color:#546e7a">申請人簽名<br><br><br>日期：＿＿年＿＿月＿＿日</td>
+        <td style="border:1px solid #b0bec5;padding:8px 12px;width:33%;text-align:center;font-size:12px;color:#546e7a">計畫主持人簽名<br><br><br>日期：＿＿年＿＿月＿＿日</td>
+        <td style="border:1px solid #b0bec5;padding:8px 12px;width:33%;text-align:center;font-size:12px;color:#546e7a">核心服務窗口（收件）<br><br><br>日期：＿＿年＿＿月＿＿日</td>
+      </tr>
+    </table>
+  </div>
   </div><!-- /form-body -->
 
   <div class="form-actions">
@@ -491,7 +504,21 @@ ${rows}
 }
 
 function openPreview(){
-  document.getElementById('previewContent').innerHTML=buildHTML()
+  // Clone current form card content into modal
+  var card = document.querySelector('.card')
+  var clone = card.cloneNode(true)
+  // Remove actions, success msg, modal inside clone
+  var toRemove = clone.querySelectorAll('.form-actions, #successMsg, .modal-bg, .section-err, .err-msg')
+  toRemove.forEach(function(el){el.remove()})
+  // Show sig block in preview
+  var sig = clone.querySelector('#sigBlock')
+  if(sig) sig.style.display='block'
+  // Show all platform bodies
+  clone.querySelectorAll('.platform-body,.depth2-body').forEach(function(el){el.style.display='block'})
+  // Disable all inputs in clone
+  clone.querySelectorAll('input,select,textarea,button').forEach(function(el){el.disabled=true})
+  document.getElementById('previewContent').innerHTML=''
+  document.getElementById('previewContent').appendChild(clone)
   document.getElementById('modal').className='modal-bg open'
 }
 function closePreview(){document.getElementById('modal').className='modal-bg'}
@@ -523,7 +550,16 @@ function doPrint(){
   var d=new Date()
   var ds=d.getFullYear()+'/'+(d.getMonth()+1).toString().padStart(2,'0')+'/'+d.getDate().toString().padStart(2,'0')
   document.getElementById('printDate').textContent='提交日期：'+ds
+  // Expand all platform bodies for print
+  document.querySelectorAll('.platform-body,.depth2-body').forEach(function(el){el.setAttribute('data-was',el.style.display);el.style.display='block'})
   window.print()
+  // Restore after print
+  setTimeout(function(){
+    document.querySelectorAll('.platform-body,.depth2-body').forEach(function(el){
+      var was=el.getAttribute('data-was')
+      el.style.display=(was===null||was==='')?'':was
+    })
+  },1000)
 }
 
 document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closePreview()})
