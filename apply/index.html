@@ -537,25 +537,7 @@ ${rows}
 }
 
 function openPreview(){
-  // Set date in strip
-  var d=new Date()
-  var ds=d.getFullYear()+'/'+(d.getMonth()+1).toString().padStart(2,'0')+'/'+d.getDate().toString().padStart(2,'0')
-  document.getElementById('printDate').textContent='提交日期：'+ds
-  // Clone current form card content into modal
-  var card = document.querySelector('.card')
-  var clone = card.cloneNode(true)
-  // Remove actions, success msg, modal inside clone
-  var toRemove = clone.querySelectorAll('.form-actions, #successMsg, .modal-bg, .section-err, .err-msg')
-  toRemove.forEach(function(el){el.remove()})
-  // Show sig block in preview
-  var sig = clone.querySelector('#sigBlock')
-  if(sig) sig.style.display='block'
-  // Show all platform bodies
-  clone.querySelectorAll('.platform-body,.depth2-body').forEach(function(el){el.style.display='block'})
-  // Disable all inputs in clone
-  clone.querySelectorAll('input,select,textarea,button').forEach(function(el){el.disabled=true})
-  document.getElementById('previewContent').innerHTML=''
-  document.getElementById('previewContent').appendChild(clone)
+  document.getElementById('previewContent').innerHTML=buildPrintDoc()
   document.getElementById('modal').className='modal-bg open'
 }
 function closePreview(){document.getElementById('modal').className='modal-bg'}
