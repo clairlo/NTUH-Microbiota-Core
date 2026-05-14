@@ -68,6 +68,16 @@ h1{font-size:0;height:0;overflow:hidden}
 .depth3{background:#eef5fb;border:1px solid #cce0ef;border-radius:7px;padding:10px 12px;margin-bottom:10px}
 .depth3-label{font-size:11px;font-weight:700;color:#546e7a;margin-bottom:8px}
 
+/* Required field error */
+.field.error input,.field.error select,.field.error textarea{border-color:#e24b4a;box-shadow:0 0 0 3px rgba(226,75,74,.10)}
+.field.error .opt-group{outline:2px solid #e24b4a;border-radius:8px;padding:4px}
+.opt-group.error{outline:2px solid #e24b4a;border-radius:8px;padding:4px}
+.err-msg{font-size:11px;color:#a32d2d;margin-top:3px;display:none}
+.field.error .err-msg{display:block}
+.platform.error{border-color:#e24b4a}
+.platform.error .platform-head{background:#fff5f5}
+.section-err{font-size:12px;color:#a32d2d;margin-top:6px;display:none}
+.section-err.show{display:block}
 /* Notice */
 .notice{border:1px solid #f0b429;background:#fffdf0;border-radius:8px;padding:10px 14px;font-size:12px;color:#7a5c00;line-height:1.6;margin-bottom:20px}
 .notice strong{color:#b7791f}
@@ -137,13 +147,13 @@ h1{font-size:0;height:0;overflow:hidden}
         壹、申請人基本資料
       </div>
       <div class="row c14">
-        <div class="field"><label>計畫主持人（PI）</label><input id="pi" placeholder="姓名"></div>
-        <div class="field"><label>委託單位 / 機構名稱</label><input id="org" placeholder="例：國立臺灣大學醫學院附設醫院"></div>
+        <div class="field"><label>計畫主持人（PI） <span style="color:#e24b4a">*</span></label><input id="pi" placeholder="姓名"></div>
+        <div class="field"><label>委託單位 / 機構名稱 <span style="color:#e24b4a">*</span></label><input id="org" placeholder="例：國立臺灣大學醫學院附設醫院"></div>
       </div>
       <div class="row c3">
-        <div class="field"><label>聯絡人姓名</label><input id="contact" placeholder="姓名"></div>
-        <div class="field"><label>聯絡電話</label><input id="tel" placeholder="02-xxxx-xxxx 或 09xx-xxx-xxx"></div>
-        <div class="field"><label>電子郵件</label><input id="email" type="email" placeholder="example@hospital.gov.tw"></div>
+        <div class="field"><label>聯絡人姓名 <span style="color:#e24b4a">*</span></label><input id="contact" placeholder="姓名"></div>
+        <div class="field"><label>聯絡電話 <span style="color:#e24b4a">*</span></label><input id="tel" placeholder="02-xxxx-xxxx 或 09xx-xxx-xxx"></div>
+        <div class="field"><label>電子郵件 <span style="color:#e24b4a">*</span></label><input id="email" type="email" placeholder="example@hospital.gov.tw"></div>
       </div>
     </div>
 
@@ -158,6 +168,7 @@ h1{font-size:0;height:0;overflow:hidden}
         <label><input type="checkbox" value="產學合作"><span>產學合作</span></label>
         <label><input type="checkbox" value="其他"><span>其他</span></label>
       </div>
+      <div id="nature_err" class="section-err">請至少勾選一項委託性質</div>
       <div class="row" style="margin-top:10px">
         <div class="field"><label>補充說明（選填）</label><input id="nature_note" placeholder="如有其他說明請填寫"></div>
       </div>
@@ -171,7 +182,8 @@ h1{font-size:0;height:0;overflow:hidden}
       <p style="font-size:12px;color:#90a4ae;margin-bottom:14px">請勾選欲委託之服務平台，勾選後展開填寫詳細資訊。</p>
 
       <!-- ══ 平台一：微菌批次樣品製備平台 ══ -->
-      <div class="platform">
+      <div id="service_err" class="section-err">請至少勾選一個服務平台</div>
+      <div class="platform" id="plt_batch_wrap">
         <div class="platform-head" onclick="togglePlt('batch')">
           <input type="checkbox" id="chk_batch" onclick="event.stopPropagation();togglePlt('batch',this.checked)">
           <div>
@@ -181,6 +193,7 @@ h1{font-size:0;height:0;overflow:hidden}
         </div>
         <div class="platform-body" id="body_batch">
           <div class="d1-label" style="margin-bottom:12px">欲委託製備之樣品類型</div>
+          <div id="batch_sub_err" class="section-err">請至少勾選一個子項目（純菌製備 或 糞便樣品前處理）</div>
 
           <!-- 子項：純菌製備 -->
           <div class="depth2">
@@ -197,8 +210,8 @@ h1{font-size:0;height:0;overflow:hidden}
                 </div>
               </div>
               <div class="row c2" style="margin-bottom:10px">
-                <div class="field"><label>欲委託製備總菌株數量</label><input id="pure_count" placeholder="例：10 株"></div>
-                <div class="field"><label>菌種名稱及菌株編號</label><input id="pure_strain" placeholder="例：Lactobacillus reuteri ATCC 23272"></div>
+                <div class="field"><label>欲委託製備總菌株數量 <span style="color:#e24b4a">*</span></label><input id="pure_count" placeholder="例：10 株"></div>
+                <div class="field"><label>菌種名稱及菌株編號 <span style="color:#e24b4a">*</span></label><input id="pure_strain" placeholder="例：Lactobacillus reuteri ATCC 23272"></div>
               </div>
               <div class="depth3">
                 <div class="depth3-label">預計提供之樣品類型</div>
@@ -222,19 +235,19 @@ h1{font-size:0;height:0;overflow:hidden}
             </div>
             <div class="depth2-body" id="d2_fmt">
               <div class="field" style="margin-bottom:10px">
-                <label>欲委託製備 FMT 樣品組別數</label>
+                <label>欲委託製備 FMT 樣品組別數 <span style="color:#e24b4a">*</span></label>
                 <input id="fmt_groups" placeholder="例：3 組">
               </div>
               <div class="depth3" style="margin-bottom:10px">
-                <div class="depth3-label">預計提供之樣品類型</div>
-                <div class="opt-group">
+                <div class="depth3-label">預計提供之樣品類型 <span style="color:#e24b4a">*</span></div>
+                <div class="opt-group" id="fmt_sample_grp">
                   <label><input type="radio" name="fmt_sample" value="人類糞便"><span>人類糞便</span></label>
                   <label><input type="radio" name="fmt_sample" value="動物糞便"><span>動物糞便</span></label>
                 </div>
               </div>
               <div class="depth3" style="margin-bottom:10px">
-                <div class="depth3-label">預計提供樣品之保存條件</div>
-                <div class="opt-group">
+                <div class="depth3-label">預計提供樣品之保存條件 <span style="color:#e24b4a">*</span></div>
+                <div class="opt-group" id="fmt_storage_grp">
                   <label><input type="radio" name="fmt_storage" value="-80°C"><span>-80°C</span></label>
                   <label><input type="radio" name="fmt_storage" value="-20°C"><span>-20°C</span></label>
                   <label><input type="radio" name="fmt_storage" value="4°C"><span>4°C</span></label>
@@ -242,7 +255,7 @@ h1{font-size:0;height:0;overflow:hidden}
                 </div>
               </div>
               <div class="field">
-                <label>樣品保存液（請自填，若未使用請填無）</label>
+                <label>樣品保存液（請自填，若未使用請填無） <span style="color:#e24b4a">*</span></label>
                 <input id="fmt_preserv" placeholder="請自填，若未使用請填無">
               </div>
             </div>
@@ -252,7 +265,7 @@ h1{font-size:0;height:0;overflow:hidden}
       </div>
 
       <!-- ══ 平台二：腸道厭氧菌分離純化培養平台 ══ -->
-      <div class="platform">
+      <div class="platform" id="plt_anaerobic_wrap">
         <div class="platform-head" onclick="togglePlt('anaerobic')">
           <input type="checkbox" id="chk_anaerobic" onclick="event.stopPropagation();togglePlt('anaerobic',this.checked)">
           <div>
@@ -263,18 +276,18 @@ h1{font-size:0;height:0;overflow:hidden}
         <div class="platform-body" id="body_anaerobic">
 
           <div class="field" style="margin-bottom:12px">
-            <label>目標菌種</label>
+            <label>目標菌種 <span style="color:#e24b4a">*</span></label>
             <div class="hint">若為 uncultured bacteria，請註明比對的資料庫名稱並提供序列。</div>
             <textarea id="an_target" placeholder="菌種名稱或描述（可填寫多種菌，例如：Akkermansia muciniphila / Faecalibacterium prausnitzii）" style="min-height:72px"></textarea>
           </div>
 
           <div class="row c2" style="margin-bottom:12px">
             <div class="field">
-              <label>目標菌種在檢體中的含量（相對豐度）%</label>
+              <label>目標菌種在檢體中的含量（相對豐度）% <span style="color:#e24b4a">*</span></label>
               <input id="an_abund" placeholder="例：0.01">
             </div>
             <div class="field">
-              <label>特殊生理活性</label>
+              <label>特殊生理活性 <span style="color:#e24b4a">*</span></label>
               <input id="an_activity" placeholder="如有請填寫，否則填無">
             </div>
           </div>
@@ -299,11 +312,11 @@ h1{font-size:0;height:0;overflow:hidden}
 
           <div class="row c2">
             <div class="field">
-              <label>樣品保存液（請自填，若未使用請填無）</label>
+              <label>樣品保存液（請自填，若未使用請填無） <span style="color:#e24b4a">*</span></label>
               <input id="an_preserv" placeholder="請自填，若未使用請填無">
             </div>
             <div class="field">
-              <label>樣品採集年份</label>
+              <label>樣品採集年份 <span style="color:#e24b4a">*</span></label>
               <input id="an_year" placeholder="例：2026">
             </div>
           </div>
@@ -502,11 +515,94 @@ document.getElementById('modal').addEventListener('click',function(e){if(e.targe
 
 var GAS_URL='https://script.google.com/macros/s/AKfycbzKGrTAUnFtQ93dKd_ReoS9JqXb7PdmpPtrZN2icmKUjjjelbQv7E7Sd9pUmXWzzDi2OQ/exec'
 
-function doSubmit(){
-  if(!v('pi')&&!v('org')&&!v('contact')){
-    alert('請至少填寫計畫主持人、委託單位及聯絡人姓名後再送出。')
-    return
+function clearErrors(){
+  document.querySelectorAll('.field.error').forEach(function(el){el.classList.remove('error')})
+  document.querySelectorAll('.platform.error').forEach(function(el){el.classList.remove('error')})
+  document.querySelectorAll('.section-err').forEach(function(el){el.classList.remove('show')})
+}
+
+function setErr(id){
+  var el=document.getElementById(id)
+  if(el) el.closest('.field')&&el.closest('.field').classList.add('error')
+}
+
+function setOptErr(groupId){
+  var el=document.getElementById(groupId)
+  if(el) el.classList.add('error')
+}
+
+function validate(){
+  clearErrors()
+  var ok=true
+
+  // 壹、基本資料 — 全部必填
+  var basic=[['pi','計畫主持人'],['org','委託單位'],['contact','聯絡人姓名'],['tel','聯絡電話'],['email','電子郵件']]
+  basic.forEach(function(pair){
+    if(!v(pair[0])){setErr(pair[0]);ok=false}
+  })
+
+  // 貳、委託性質 — 至少一項
+  if(!document.querySelector('#nature input:checked')){
+    document.getElementById('nature').classList.add('error')
+    var ne=document.getElementById('nature_err')
+    if(ne) ne.classList.add('show')
+    ok=false
   }
+
+  // 參、服務項目 — 至少勾一個平台
+  var batchOn=isOn('chk_batch'), anaOn=isOn('chk_anaerobic')
+  if(!batchOn&&!anaOn){
+    document.getElementById('plt_batch_wrap').classList.add('error')
+    document.getElementById('plt_anaerobic_wrap').classList.add('error')
+    var se=document.getElementById('service_err')
+    if(se) se.classList.add('show')
+    ok=false
+  }
+
+  // 微菌批次：至少勾一個子項
+  if(batchOn){
+    var pureOn=isOn('chk_pure'), fmtOn=isOn('chk_fmt')
+    if(!pureOn&&!fmtOn){
+      var be=document.getElementById('batch_sub_err')
+      if(be) be.classList.add('show')
+      ok=false
+    }
+    // 純菌製備子欄位
+    if(pureOn){
+      if(!document.querySelector('input[name="pure_type"]:checked')){document.getElementById('pure_type_grp').classList.add('error');ok=false}
+      if(!v('pure_count')){setErr('pure_count');ok=false}
+      if(!v('pure_strain')){setErr('pure_strain');ok=false}
+      if(!document.querySelector('input[name="pure_provide"]:checked')){document.getElementById('pure_provide_grp').classList.add('error');ok=false}
+    }
+    // 糞便前處理子欄位
+    if(fmtOn){
+      if(!v('fmt_groups')){setErr('fmt_groups');ok=false}
+      if(!document.querySelector('input[name="fmt_sample"]:checked')){document.getElementById('fmt_sample_grp').classList.add('error');ok=false}
+      if(!document.querySelector('input[name="fmt_storage"]:checked')){document.getElementById('fmt_storage_grp').classList.add('error');ok=false}
+      if(!v('fmt_preserv')){setErr('fmt_preserv');ok=false}
+    }
+  }
+
+  // 腸道厭氧菌子欄位
+  if(anaOn){
+    if(!v('an_target')){setErr('an_target');ok=false}
+    if(!v('an_abund')){setErr('an_abund');ok=false}
+    if(!v('an_activity')){setErr('an_activity');ok=false}
+    if(!document.querySelector('input[name="an_sample"]:checked')){document.getElementById('an_sample_grp').classList.add('error');ok=false}
+    if(!document.querySelector('input[name="an_storage"]:checked')){document.getElementById('an_storage_grp').classList.add('error');ok=false}
+    if(!v('an_preserv')){setErr('an_preserv');ok=false}
+    if(!v('an_year')){setErr('an_year');ok=false}
+  }
+
+  if(!ok){
+    var first=document.querySelector('.field.error,.platform.error')
+    if(first) first.scrollIntoView({behavior:'smooth',block:'center'})
+  }
+  return ok
+}
+
+function doSubmit(){
+  if(!validate()) return
   var btn=document.getElementById('submitBtn')
   btn.disabled=true
   btn.textContent='送出中...'
