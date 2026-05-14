@@ -11,10 +11,13 @@ h1{font-size:0;height:0;overflow:hidden}
 .card{max-width:740px;margin:0 auto;background:#fff;border-radius:12px;box-shadow:0 2px 24px rgba(0,0,0,.10);overflow:hidden}
 
 /* Header */
-.form-header{background:#1a4a6b;padding:22px 28px 18px;display:flex;align-items:center;gap:16px}
+.form-header{background:#1a4a6b;overflow:hidden}
+.form-header-top{padding:20px 28px 16px;display:flex;align-items:center;gap:16px}
 .form-header-badge{background:rgba(255,255,255,.15);border-radius:6px;padding:6px 12px;font-size:11px;font-weight:700;color:#fff;letter-spacing:2px;white-space:nowrap;line-height:1.4;text-align:center}
 .form-header-title{font-size:20px;font-weight:700;color:#fff;letter-spacing:2px}
 .form-header-en{font-size:10px;color:rgba(255,255,255,.6);margin-top:2px;letter-spacing:.5px}
+.form-header-strip{background:rgba(0,0,0,.2);padding:5px 28px;display:flex;justify-content:space-between;align-items:center}
+.form-header-strip span{font-size:10px;color:rgba(255,255,255,.7);letter-spacing:.5px}
 
 /* Body */
 .form-body{padding:28px 28px 0}
@@ -144,15 +147,16 @@ h1{font-size:0;height:0;overflow:hidden}
 
 <div class="card">
   <div class="form-header">
-    <div class="form-header-badge">微菌體<br>核心</div>
-    <div>
-      <div class="form-header-title">服務委託申請表</div>
-      <div class="form-header-en">Microbiome Core Technology Service Application Form</div>
+    <div class="form-header-top">
+      <div class="form-header-badge">微菌體<br>核心</div>
+      <div>
+        <div class="form-header-title">服務委託申請表</div>
+        <div class="form-header-en">Microbiome Core Technology Service Application Form</div>
+      </div>
     </div>
-    <div style="margin-left:auto;text-align:right">
-      <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:1px">台大醫院</div>
-      <div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:2px;letter-spacing:.5px">醫學研究部</div>
-      <div class="print-date" id="printDate"></div>
+    <div class="form-header-strip">
+      <span>國立臺灣大學醫學院附設醫院　醫學研究部</span>
+      <span class="print-date" id="printDate"></span>
     </div>
   </div>
 
@@ -344,7 +348,7 @@ h1{font-size:0;height:0;overflow:hidden}
     </div><!-- /section 參 -->
 
     <div class="notice">
-      <strong>注意事項：</strong>申請人應確認所提供之樣品符合相關法規及倫理審查規範。本申請表送出後，服務窗口將於 2 個工作日內與您確認服務細節及收費標準，實際執行時程依核心實驗室排程為準。
+      <strong>注意事項：</strong>本申請表送出後不代表正式立案，核心人員將於 2 個工作日內與您聯繫，確認需求細節，經雙方討論確認後才會正式立案。
     </div>
 
   <!-- 簽名欄（列印時顯示） -->
@@ -504,6 +508,10 @@ ${rows}
 }
 
 function openPreview(){
+  // Set date in strip
+  var d=new Date()
+  var ds=d.getFullYear()+'/'+(d.getMonth()+1).toString().padStart(2,'0')+'/'+d.getDate().toString().padStart(2,'0')
+  document.getElementById('printDate').textContent='提交日期：'+ds
   // Clone current form card content into modal
   var card = document.querySelector('.card')
   var clone = card.cloneNode(true)
