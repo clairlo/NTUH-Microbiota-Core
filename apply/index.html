@@ -195,10 +195,14 @@ h1{font-size:0;height:0;overflow:hidden}
 <div class="card">
   <div class="form-header">
     <div class="form-header-top">
-      <div class="form-header-badge">微菌體<br>核心</div>
       <div>
-        <div class="form-header-title">服務委託申請表</div>
-        <div class="form-header-en">Microbiome Core Technology Service Application Form</div>
+        <div style="display:inline-flex;flex-direction:column">
+          <div style="color:rgba(255,255,255,.5);font-size:13px;font-weight:400;display:flex;justify-content:space-between;margin-bottom:4px;letter-spacing:1px">
+            <span>微</span><span>菌</span><span>體</span><span>核</span><span>心</span><span>技</span><span>術</span><span>服</span><span>務</span><span>平</span><span>台</span>
+          </div>
+          <div class="form-header-title" style="letter-spacing:3px">服務委託申請表</div>
+        </div>
+        <div class="form-header-en">NTUH Microbiome Core Facility Service Application Form</div>
       </div>
     </div>
     <div class="form-header-strip">
@@ -206,7 +210,7 @@ h1{font-size:0;height:0;overflow:hidden}
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
         首頁
       </a>
-      <span>台大醫院　醫學研究部</span>
+      <span style="font-size:10px;color:#f5c842;font-weight:500">台大醫院　醫學研究部</span>
       <span class="print-date" id="printDate"></span>
     </div>
   </div>
@@ -608,7 +612,7 @@ function buildHTML(){
   return `<div class="pv">
 <div class="pv-hdr">
   <div class="pv-badge">微菌體<br>核心技術</div>
-  <div><div class="pv-title">服務委託申請表</div><div class="pv-en">Microbiome Microbiome Core Technology Service Application Form</div></div>
+  <div><div class="pv-title">服務委託申請表</div><div class="pv-en">NTUH Microbiome Core Facility Service Application Form</div></div>
   <div class="pv-meta">提交日期：${today()}</div>
 </div>
 
@@ -754,14 +758,14 @@ body{font-family:'Microsoft JhengHei',Arial,sans-serif;font-size:9pt;color:#000;
 <div class="page">
 <div class="hdr">
   <div class="hdr-top">
-    <div class="hdr-badge">微菌體<br>核心</div>
     <div>
+      <div style="font-size:7pt;color:rgba(255,255,255,.55);letter-spacing:1px;margin-bottom:3pt">微菌體核心技術服務平台</div>
       <div class="hdr-title">服務委託申請表</div>
-      <div class="hdr-en">Microbiome Core Technology Service Application Form</div>
+      <div class="hdr-en">NTUH Microbiome Core Facility Service Application Form</div>
     </div>
   </div>
   <div class="hdr-strip">
-    <span>台大醫院　醫學研究部</span>
+    <span style="color:#f5c842;font-weight:500">台大醫院　醫學研究部</span>
     <span>提交日期：${ds}</span>
   </div>
 </div>
