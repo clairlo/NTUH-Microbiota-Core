@@ -50,6 +50,24 @@ h1{font-size:0;height:0;overflow:hidden}
 .opt-group input[type=radio],.opt-group input[type=checkbox]{width:14px;height:14px;accent-color:#1a4a6b;cursor:pointer;flex-shrink:0}
 .opt-group label:has(input:checked){background:#e8f2fb;border-color:#1a4a6b}
 
+/* Platform color themes */
+/* Batch = blue */
+#plt_batch_wrap .platform-head{background:#e8f2fb;border-bottom:1.5px solid #90c4e8}
+#plt_batch_wrap .plt-title{color:#1a4a6b}
+#plt_batch_wrap .platform-body{background:#f7fafd}
+#plt_batch_wrap .depth2{background:#f0f7ff;border-color:#b8d8f0}
+#plt_batch_wrap .depth2-toggle{color:#1a4a6b}
+#plt_batch_wrap .depth3{background:#e3f0fb;border-color:#90c4e8}
+#plt_batch_wrap .depth3-label{color:#1a4a6b}
+#plt_batch_wrap .d1-label{color:#1a4a6b;border-color:#1a4a6b}
+/* Anaerobic = teal */
+#plt_anaerobic_wrap .platform-head{background:#e6f6f4;border-bottom:1.5px solid #80c9c0}
+#plt_anaerobic_wrap .plt-title{color:#1a6b5a}
+#plt_anaerobic_wrap .platform-body{background:#f4faf8}
+#plt_anaerobic_wrap .depth3{background:#e0f5f2;border-color:#80c9c0}
+#plt_anaerobic_wrap .depth3-label{color:#1a6b5a}
+#plt_anaerobic_wrap .section-label{color:#1a6b5a;border-color:#80c9c0}
+
 /* Platform cards */
 .platform{border:1.5px solid #d0dbe3;border-radius:10px;margin-bottom:14px;overflow:hidden}
 .platform-head{background:#f5f8fb;padding:13px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
@@ -184,7 +202,7 @@ h1{font-size:0;height:0;overflow:hidden}
       </div>
     </div>
     <div class="form-header-strip">
-      <span>國立臺灣大學醫學院附設醫院　醫學研究部</span>
+      <span>台大醫院　醫學研究部</span>
       <span class="print-date" id="printDate"></span>
     </div>
   </div>
@@ -253,8 +271,8 @@ h1{font-size:0;height:0;overflow:hidden}
             </div>
             <div class="depth2-body" id="d2_pure">
               <div class="field" style="margin-bottom:10px">
-                <label>製備類型</label>
-                <div class="opt-group">
+                <label>製備類型 <span style="color:#e24b4a">*</span></label>
+                <div class="opt-group" id="pure_type_grp">
                   <label><input type="radio" name="pure_type" value="單菌株"><span>單菌株</span></label>
                   <label><input type="radio" name="pure_type" value="多菌株"><span>多菌株</span></label>
                 </div>
@@ -263,9 +281,10 @@ h1{font-size:0;height:0;overflow:hidden}
                 <div class="field"><label>欲委託製備總菌株數量 <span style="color:#e24b4a">*</span></label><input id="pure_count" placeholder="例：10 株"></div>
                 <div class="field"><label>菌種名稱及菌株編號 <span style="color:#e24b4a">*</span></label><input id="pure_strain" placeholder="例：Lactobacillus reuteri ATCC 23272"></div>
               </div>
-              <div class="depth3">
-                <div class="depth3-label">預計提供之樣品類型</div>
-                <div class="opt-group">
+
+              <div class="depth3" style="margin-bottom:10px">
+                <div class="depth3-label">預計提供之樣品類型 <span style="color:#e24b4a">*</span></div>
+                <div class="opt-group" id="pure_provide_grp">
                   <label><input type="radio" name="pure_provide" value="冷凍保存管"><span>冷凍保存管</span></label>
                   <label><input type="radio" name="pure_provide" value="其他"><span>其他</span></label>
                 </div>
@@ -274,6 +293,57 @@ h1{font-size:0;height:0;overflow:hidden}
                   <input id="pure_provide_other" placeholder="請描述">
                 </div>
               </div>
+
+              <!-- 微菌需求形式 -->
+              <div class="depth3" style="margin-bottom:10px">
+                <div class="depth3-label">微菌需求形式 <span style="color:#e24b4a">*</span></div>
+                <div class="opt-group" id="pure_form_grp">
+                  <label><input type="radio" name="pure_form" value="活菌(live)" onchange="togglePureForm('live',true);togglePureForm('dead',false)"><span>活菌（live）</span></label>
+                  <label><input type="radio" name="pure_form" value="死菌(pasteurized)" onchange="togglePureForm('dead',true);togglePureForm('live',false)"><span>死菌（pasteurized）</span></label>
+                </div>
+                <div id="pure_form_live" style="display:none;margin-top:8px">
+                  <div class="field">
+                    <label>單位體積菌量需求</label>
+                    <input id="pure_live_dose" placeholder="例：2x10⁸ CFU/200 μl">
+                  </div>
+                </div>
+                <div id="pure_form_dead" style="display:none;margin-top:8px">
+                  <div class="row c2">
+                    <div class="field"><label>滅活條件</label><input id="pure_dead_cond" placeholder="例：80°C，20 分鐘"></div>
+                    <div class="field"><label>單位體積菌量需求</label><input id="pure_dead_dose" placeholder="例：2x10⁸ CFU/200 μl"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 實驗需求 -->
+              <div class="depth3">
+                <div class="depth3-label">實驗需求 <span style="color:#e24b4a">*</span></div>
+                <div class="opt-group" id="pure_exp_grp">
+                  <label><input type="radio" name="pure_exp" value="動物實驗(in vivo)" onchange="togglePureExp('vivo',true);togglePureExp('vitro',false)"><span>動物實驗（in vivo）</span></label>
+                  <label><input type="radio" name="pure_exp" value="體外實驗(in vitro)" onchange="togglePureExp('vitro',true);togglePureExp('vivo',false)"><span>體外實驗（in vitro）</span></label>
+                </div>
+                <div id="pure_exp_vivo" style="display:none;margin-top:8px">
+                  <div class="row c2" style="margin-bottom:8px">
+                    <div class="field"><label>動物隻數/組（n=?/group）</label><input id="pure_vivo_n" placeholder="例：8"></div>
+                    <div class="field"><label>組別數（需介入微菌的組數）</label><input id="pure_vivo_groups" placeholder="例：3 組"></div>
+                  </div>
+                  <div class="row c2" style="margin-bottom:8px">
+                    <div class="field"><label>實驗時程</label><input id="pure_vivo_duration" placeholder="例：12 週"></div>
+                    <div class="field"><label>介入頻率</label><input id="pure_vivo_freq" placeholder="例：4 次/週"></div>
+                  </div>
+                  <div class="field">
+                    <label>其他補充說明（選填）</label>
+                    <textarea id="pure_vivo_note" placeholder="請描述其他需求" style="min-height:48px"></textarea>
+                  </div>
+                </div>
+                <div id="pure_exp_vitro" style="display:none;margin-top:8px">
+                  <div class="field">
+                    <label>簡述實驗需求</label>
+                    <textarea id="pure_vitro_desc" placeholder="請簡述體外實驗需求" style="min-height:56px"></textarea>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
@@ -308,6 +378,36 @@ h1{font-size:0;height:0;overflow:hidden}
                 <label>樣品保存液（請自填，若未使用請填無） <span style="color:#e24b4a">*</span></label>
                 <input id="fmt_preserv" placeholder="請自填，若未使用請填無">
               </div>
+
+              <!-- 實驗需求 -->
+              <div class="depth3" style="margin-top:10px">
+                <div class="depth3-label">實驗需求 <span style="color:#e24b4a">*</span></div>
+                <div class="opt-group" id="fmt_exp_grp">
+                  <label><input type="radio" name="fmt_exp" value="動物實驗(in vivo)" onchange="toggleFmtExp('vivo',true);toggleFmtExp('vitro',false)"><span>動物實驗（in vivo）</span></label>
+                  <label><input type="radio" name="fmt_exp" value="體外實驗(in vitro)" onchange="toggleFmtExp('vitro',true);toggleFmtExp('vivo',false)"><span>體外實驗（in vitro）</span></label>
+                </div>
+                <div id="fmt_exp_vivo" style="display:none;margin-top:8px">
+                  <div class="row c2" style="margin-bottom:8px">
+                    <div class="field"><label>動物隻數/組（n=?/group）</label><input id="fmt_vivo_n" placeholder="例：8"></div>
+                    <div class="field"><label>組別數（需介入微菌的組數）</label><input id="fmt_vivo_groups" placeholder="例：3 組"></div>
+                  </div>
+                  <div class="row c2" style="margin-bottom:8px">
+                    <div class="field"><label>實驗時程</label><input id="fmt_vivo_duration" placeholder="例：12 週"></div>
+                    <div class="field"><label>介入頻率</label><input id="fmt_vivo_freq" placeholder="例：4 次/週"></div>
+                  </div>
+                  <div class="field">
+                    <label>其他補充說明（選填）</label>
+                    <textarea id="fmt_vivo_note" placeholder="請描述其他需求" style="min-height:48px"></textarea>
+                  </div>
+                </div>
+                <div id="fmt_exp_vitro" style="display:none;margin-top:8px">
+                  <div class="field">
+                    <label>簡述實驗需求</label>
+                    <textarea id="fmt_vitro_desc" placeholder="請簡述體外實驗需求" style="min-height:56px"></textarea>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
@@ -328,7 +428,7 @@ h1{font-size:0;height:0;overflow:hidden}
           <div class="field" style="margin-bottom:12px">
             <label>目標菌種 <span style="color:#e24b4a">*</span></label>
             <div class="hint">若為 uncultured bacteria，請註明比對的資料庫名稱並提供序列。</div>
-            <textarea id="an_target" placeholder="菌種名稱或描述（可填寫多種菌，例如：Akkermansia muciniphila / Faecalibacterium prausnitzii）" style="min-height:72px"></textarea>
+            <textarea id="an_target" placeholder="菌種名稱或描述（可填寫多種菌，例如：Faecalibacterium prausnitzii / Bacteroides thetaiotaomicron）" style="min-height:72px"></textarea>
           </div>
 
           <div class="row c2" style="margin-bottom:12px">
@@ -447,6 +547,15 @@ function togglePlt(name,force){
 }
 function toggleD2(name,show){
   document.getElementById('d2_'+name).className='depth2-body'+(show?' open':'')
+}
+function togglePureForm(type,show){
+  document.getElementById('pure_form_'+type).style.display=show?'block':'none'
+}
+function togglePureExp(type,show){
+  document.getElementById('pure_exp_'+type).style.display=show?'block':'none'
+}
+function toggleFmtExp(type,show){
+  document.getElementById('fmt_exp_'+type).style.display=show?'block':'none'
 }
 
 function today(){
@@ -588,6 +697,21 @@ function buildPrintDoc(){
     batchRows+=row2('製備類型',na(radio('pure_type')),'欲委託製備總菌株數量',na(v('pure_count')))
     batchRows+=row1('菌種名稱及菌株編號',na(v('pure_strain')))
     batchRows+=row1('預計提供之樣品類型',na(radio('pure_provide'))+(v('pure_provide_other')?' （'+v('pure_provide_other')+'）':''))
+    var pf=radio('pure_form')
+    if(pf==='活菌(live)'){
+      batchRows+=row2('微菌需求形式','活菌（live）','單位體積菌量需求',na(v('pure_live_dose')))
+    } else if(pf==='死菌(pasteurized)'){
+      batchRows+=row2('微菌需求形式','死菌（pasteurized）','滅活條件',na(v('pure_dead_cond')))
+      batchRows+=row1('單位體積菌量需求',na(v('pure_dead_dose')))
+    }
+    var pe=radio('pure_exp')
+    if(pe==='動物實驗(in vivo)'){
+      batchRows+=row2('實驗需求','動物實驗（in vivo）','動物隻數/組',na(v('pure_vivo_n')))
+      batchRows+=row2('組別數',na(v('pure_vivo_groups')),'實驗時程',na(v('pure_vivo_duration')))
+      batchRows+=row2('介入頻率',na(v('pure_vivo_freq')),'其他補充說明',na(v('pure_vivo_note')))
+    } else if(pe==='體外實驗(in vitro)'){
+      batchRows+=row2('實驗需求','體外實驗（in vitro）','實驗需求描述',na(v('pure_vitro_desc')))
+    }
   }
   if(fmtOn){
     batchRows+='<tr><td class="sub" colspan="4">▸ 糞便樣品前處理（動物 FMT 實驗用）</td></tr>'
@@ -633,7 +757,7 @@ body{font-family:'Microsoft JhengHei',Arial,sans-serif;font-size:9pt;color:#000;
     </div>
   </div>
   <div class="hdr-strip">
-    <span>國立臺灣大學醫學院附設醫院　醫學研究部</span>
+    <span>台大醫院　醫學研究部</span>
     <span>提交日期：${ds}</span>
   </div>
 </div>
@@ -824,6 +948,14 @@ function doSubmit(){
     chk_pure:isOn('chk_pure')?'是':'否',
     pure_type:radio('pure_type'),pure_count:v('pure_count'),pure_strain:v('pure_strain'),
     pure_provide:radio('pure_provide'),pure_provide_other:v('pure_provide_other'),
+    pure_form:radio('pure_form'),pure_live_dose:v('pure_live_dose'),
+    pure_dead_cond:v('pure_dead_cond'),pure_dead_dose:v('pure_dead_dose'),
+    pure_exp:radio('pure_exp'),pure_vivo_n:v('pure_vivo_n'),pure_vivo_groups:v('pure_vivo_groups'),
+    pure_vivo_duration:v('pure_vivo_duration'),pure_vivo_freq:v('pure_vivo_freq'),pure_vivo_note:v('pure_vivo_note'),
+    pure_vitro_desc:v('pure_vitro_desc'),
+    fmt_exp:radio('fmt_exp'),fmt_vivo_n:v('fmt_vivo_n'),fmt_vivo_groups:v('fmt_vivo_groups'),
+    fmt_vivo_duration:v('fmt_vivo_duration'),fmt_vivo_freq:v('fmt_vivo_freq'),fmt_vivo_note:v('fmt_vivo_note'),
+    fmt_vitro_desc:v('fmt_vitro_desc'),
     chk_fmt:isOn('chk_fmt')?'是':'否',fmt_groups:v('fmt_groups'),
     fmt_sample:radio('fmt_sample'),fmt_storage:radio('fmt_storage'),fmt_preserv:v('fmt_preserv'),
     chk_anaerobic:isOn('chk_anaerobic')?'是':'否',
