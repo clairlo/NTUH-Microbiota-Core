@@ -68,7 +68,7 @@ h1{font-size:0;height:0;overflow:hidden}
 /* Notice */
 .notice{border:1px solid #f0b429;background:#fffdf0;border-radius:8px;padding:10px 14px;font-size:12px;color:#7a5c00;line-height:1.6;margin-bottom:16px}
 .notice strong{color:#b7791f}
-.notice-blue{border:1px solid #90c4e8;background:#f0f7ff;border-radius:8px;padding:10px 14px;font-size:12px;color:#1a4a6b;line-height:1.6;margin-bottom:16px}
+.notice-blue{border:1px solid #f4a0b0;background:#fff0f3;border-radius:8px;padding:10px 14px;font-size:12px;color:#8b2a3a;line-height:1.6;margin-bottom:16px}
 
 /* Service table */
 .svc-table{width:100%;border-collapse:collapse;margin-bottom:8px;font-size:13px}
@@ -179,7 +179,7 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
   .form-header-top{padding:8px 16px!important}
   .form-header-title{font-size:15px!important}
   .form-header-en{font-size:10.5px!important}
-  .form-header-strip{padding:3px 16px!important}
+  .form-header-strip{display:none!important}
   .strip-gold{display:block!important}
   .case-val{font-size:13px!important}
 
@@ -348,6 +348,31 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
   .opt-group label:has(input:checked){font-size:14px!important}
   .form-header-title{font-size:18px!important}
   .case-val{font-size:16px!important}
+
+  /* 列印日期移到底部 */
+  #printDate{display:none!important}
+  .print-footer{display:block!important;text-align:right!important;padding:4px 14px!important;font-size:11px!important;color:#888!important;margin-top:4px!important}
+
+  /* section 間距加大 */
+  .section{margin-bottom:14px!important;margin-top:4px!important}
+  .section-label{
+    font-size:13px!important;font-weight:700!important;
+    color:#1a4a6b!important;margin-bottom:8px!important;
+    padding-bottom:0!important;border-bottom:none!important;
+    margin-top:14px!important
+  }
+
+  /* 服務申請日期置右 */
+  .print-apptype-info{display:inline-block!important;width:auto!important}
+  #printApptypeInfo{float:none!important}
+
+  .section-label{display:flex!important;justify-content:space-between!important;align-items:baseline!important}
+  .section-label .readonly-badge,.section-label .user-badge{display:none!important}
+  .print-apptype-info{display:flex!important;gap:24px!important;font-size:12px!important;color:#444!important;font-weight:400!important}
+
+  /* banner 底線和表格切齊 */
+  .form-header{padding-left:0!important;padding-right:0!important}
+  .form-header-top{padding-left:14px!important;padding-right:14px!important}
 }
 </style>
 </head>
@@ -359,8 +384,8 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
   <div class="form-header">
     <div class="form-header-top">
       <div class="form-header-left">
-        <div class="small">微菌體核心技術服務平台</div>
-        <div class="form-header-title">服務委託確認單</div>
+        <div class="small">台大醫院 醫學研究部 微菌體核心</div>
+        <div class="form-header-title">服務委託申請確認單</div>
         <div class="form-header-en">NTUH Microbiome Core Facility Service Confirmation Form</div>
       </div>
       <div class="form-header-right">
@@ -383,7 +408,7 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
 
     <!-- 壹、申請人基本資料 -->
     <div class="section">
-      <div class="section-label">壹、申請人基本資料 <span class="readonly-badge">核心填寫</span><span class="print-apptype-info" id="printApptypeInfo" style="display:none"></span></div>
+      <div class="section-label">申請人基本資料 <span class="readonly-badge">核心填寫</span><span class="print-apptype-info" id="printApptypeInfo" style="display:none"></span></div>
       <div class="row c2 apptype-row" style="margin-bottom:12px">
         <div class="field">
           <label>適用對象</label>
@@ -432,7 +457,7 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
 
     <!-- 貳、服務項目及費用明細 -->
     <div class="section">
-      <div class="section-label">貳、服務項目及費用明細 <span class="readonly-badge">核心填寫</span></div>
+      <div class="section-label">服務項目及費用明細 <span class="readonly-badge">核心填寫</span></div>
       <div class="field no-print" style="margin-bottom:12px">
         <label>委託服務平台</label>
         <input id="service_type" readonly>
@@ -460,15 +485,9 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
 
     <!-- 參、繳費資訊 -->
     <div class="section">
-      <div class="section-label">參、繳費資訊 <span class="user-badge">請填寫</span></div>
+      <div class="section-label">繳費資訊 <span class="user-badge">請填寫</span></div>
 
       <div class="field" style="margin-bottom:14px">
-        <label>發票抬頭 <span style="color:#e24b4a">*</span></label>
-        <input id="invoice_title" placeholder="請填寫正確發票抬頭">
-        <span class="err-msg">請填寫發票抬頭</span>
-      </div>
-
-      <div class="field">
         <label>付款方式 <span style="color:#e24b4a">*</span></label>
         <div class="opt-group" id="pay_method_grp">
           <label><input type="radio" name="pay_method" value="現金" onchange="showPaySub('cash')"><span>💵 現金繳費</span></label>
@@ -476,6 +495,12 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
           <label><input type="radio" name="pay_method" value="開立預字收據（院外匯款）" onchange="showPaySub('external')"><span>🏦 開立預字收據（院外匯款）</span></label>
         </div>
         <span class="err-msg" id="pay_err" style="display:none;font-size:11px;color:#a32d2d;margin-top:3px">請選擇付款方式</span>
+      </div>
+
+      <div class="field" id="invoiceField" style="margin-bottom:14px;display:none">
+        <label>發票抬頭 <span style="color:#e24b4a">*</span></label>
+        <input id="invoice_title" placeholder="請填寫正確發票抬頭">
+        <span class="err-msg">請填寫發票抬頭</span>
       </div>
 
       <!-- 現金 -->
@@ -490,7 +515,7 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
       <div class="pay-sub" id="sub_internal">
         <div class="pay-sub-title">院內計畫扣款資訊</div>
         <div class="notice" style="margin-bottom:12px;font-size:12px">
-          ⚠️ 請確認計畫中<strong>需預留款項</strong>，以免主計無法扣款。清冊每月最後一週提交。
+          ⚠️ 請確認計畫有<strong>預留足夠款項</strong>，以免主計室無法進行扣款。
         </div>
         <div class="row c2">
           <div class="field">
@@ -529,7 +554,7 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
 
     <!-- 肆、備註 -->
     <div class="section">
-      <div class="section-label">肆、備註 <span class="user-badge">請填寫</span></div>
+      <div class="section-label">備註 <span class="user-badge">請填寫</span></div>
       <div class="field">
         <textarea id="notes" placeholder="如有其他說明事項請填寫"></textarea>
       </div>
@@ -537,7 +562,7 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
 
     <!-- 伍、簽章 -->
     <div class="section">
-      <div class="section-label">伍、簽章</div>
+      <div class="section-label">簽章</div>
       <div class="notice" style="margin-bottom:12px;font-size:12px">
         請列印本確認單，由<strong>計畫主持人簽名或蓋章</strong>後，正本送交核心人員，影本由申請人自存。
       </div>
@@ -569,11 +594,7 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
 
   <!-- Actions -->
   <div class="form-actions">
-    <button class="btn btn-ghost" onclick="printPreview()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-      預覽列印
-    </button>
-    <button class="btn btn-ghost" onclick="window.print()">
+<button class="btn btn-ghost" onclick="window.print()">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
       列印 / 存成PDF
     </button>
@@ -583,6 +604,7 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
     </button>
   </div>
   <div id="successMsg">✅ 確認單已送出！核心人員將盡快確認並與您聯繫。</div>
+  <div class="print-footer" id="printFooter" style="display:none;text-align:right;padding:6px 14px;font-size:11px;color:#888"></div>
 </div>
 
 <!-- 核心人員連結產生器 -->
@@ -721,14 +743,14 @@ async function queryCase() {
   const applyDate = params.get('date') || '';
   const span = document.getElementById('printApptypeInfo');
   if (span) {
-    let parts = [];
     const appLabels = ['台大醫院及台大醫學校區同仁','台灣大學非醫學校區同仁','其他單位'];
+    let html = '';
     if (appType) {
       const idx = parseInt(appType) - 1;
-      if (appLabels[idx]) parts.push('適用對象：' + appLabels[idx]);
+      if (appLabels[idx]) html += '<span>適用對象：' + appLabels[idx] + '</span>';
     }
-    if (applyDate) parts.push('服務申請日期：' + applyDate);
-    if (parts.length) span.textContent = '　　' + parts.join('　　　　');
+    if (applyDate) html += '<span style="margin-left:auto">服務申請日期：' + applyDate + '</span>';
+    if (html) { span.innerHTML = html; }
   }
 })();
 
@@ -753,7 +775,10 @@ window.addEventListener('afterprint', function() {
 });
 
 // Print date
-document.getElementById('printDate').textContent = '列印日期：' + new Date().toLocaleDateString('zh-TW');
+const printDateStr = '列印日期：' + new Date().toLocaleDateString('zh-TW');
+document.getElementById('printDate').textContent = printDateStr;
+const footer = document.getElementById('printFooter');
+if (footer) footer.textContent = printDateStr;
 
 // Read URL params and fill form
 const params = new URLSearchParams(location.search);
@@ -805,6 +830,10 @@ function showPaySub(type) {
     document.getElementById('sub_'+t).classList.toggle('open', t===type);
   });
   document.getElementById('pay_err').style.display = 'none';
+  const invoiceField = document.getElementById('invoiceField');
+  if (invoiceField) {
+    invoiceField.style.display = (type === 'internal') ? 'none' : 'block';
+  }
 }
 
 // Number to Chinese
@@ -832,8 +861,11 @@ function submitForm() {
     if (empty && msg) { const e=f?.querySelector('.err-msg'); if(e) e.textContent=msg; }
     return !empty;
   }
-  ok = chk('invoice_title','請填寫發票抬頭') && ok;
-  const payMethod = document.querySelector('input[name=pay_method]:checked')?.value;
+  const payMethodVal = document.querySelector('input[name=pay_method]:checked')?.value;
+  if (payMethodVal !== '院內計畫扣款') {
+    ok = chk('invoice_title','請填寫發票抬頭') && ok;
+  }
+  const payMethod = payMethodVal;
   if (!payMethod) { document.getElementById('pay_method_grp').classList.add('error'); document.getElementById('pay_err').style.display='block'; ok=false; }
   else { document.getElementById('pay_method_grp').classList.remove('error'); }
 
