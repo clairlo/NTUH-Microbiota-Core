@@ -433,9 +433,17 @@ h1{font-size:0;height:0;overflow:hidden}
 
   <div style="font-size:11px;color:#546e7a;margin-bottom:6px;font-weight:500">產生的連結</div>
   <div class="gen-url" id="genUrl">請填寫上方資料後自動產生連結</div>
-  <div style="display:flex;gap:8px">
+  <div style="display:flex;gap:8px;margin-bottom:10px">
     <button class="btn btn-primary" style="font-size:12px;padding:7px 16px" onclick="copyUrl()">複製連結</button>
     <button class="btn btn-ghost" style="font-size:12px;padding:7px 16px" onclick="openUrl()">預覽</button>
+    <button class="btn btn-ghost" style="font-size:12px;padding:7px 16px" onclick="shortenUrl()" id="shortenBtn">✂️ 產生短網址</button>
+  </div>
+  <div id="shortUrlBox" style="display:none">
+    <div style="font-size:11px;color:#546e7a;margin-bottom:6px;font-weight:500">短網址</div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <div class="gen-url" id="shortUrl" style="flex:1;margin-bottom:0"></div>
+      <button class="btn btn-primary" style="font-size:12px;padding:7px 16px;white-space:nowrap" onclick="copyShortUrl()">複製短網址</button>
+    </div>
   </div>
 </div>
 
@@ -683,6 +691,31 @@ function copyUrl() {
 function openUrl() {
   const url = document.getElementById('genUrl').textContent;
   if (!url.startsWith('請')) window.open(url, '_blank');
+}
+
+async function shortenUrl() {
+  const url = document.getElementById('genUrl').textContent;
+  if (url.startsWith('請')) { alert('請先填寫資料產生連結'); return; }
+  const btn = document.getElementById('shortenBtn');
+  btn.textContent = '產生中…';
+  btn.disabled = true;
+  try {
+    const res = await fetch('https://tinyurl.com/api-create.php?url=' + encodeURIComponent(url));
+    if (!res.ok) throw new Error();
+    const short = await res.text();
+    document.getElementById('shortUrl').textContent = short;
+    document.getElementById('shortUrlBox').style.display = 'block';
+    btn.textContent = '✅ 已產生';
+  } catch {
+    alert('短網址產生失敗，請稍後再試，或手動使用 reurl.cc');
+    btn.textContent = '✂️ 產生短網址';
+    btn.disabled = false;
+  }
+}
+
+function copyShortUrl() {
+  const url = document.getElementById('shortUrl').textContent;
+  navigator.clipboard.writeText(url).then(()=>alert('短網址已複製！'));
 }
 </script>
 </body>
