@@ -871,6 +871,16 @@ function submitForm() {
 
   if (!ok) { window.scrollTo({top:0,behavior:'smooth'}); return; }
 
+  // 收集費用明細
+  const svcRows = [];
+  document.querySelectorAll('#svcBody tr').forEach(tr => {
+    const cells = tr.querySelectorAll('td');
+    if (cells.length >= 5) {
+      svcRows.push(cells[0].textContent+'|'+cells[1].textContent+'|'+cells[2].textContent+'|'+cells[3].textContent+'|'+cells[4].textContent);
+    }
+  });
+  const totalAmount = document.getElementById('totalAmount').textContent;
+
   const payload = {
     表單類型:'服務委託確認單',
     案件序號: document.getElementById('case_no').value,
@@ -880,6 +890,8 @@ function submitForm() {
     聯絡電話: document.getElementById('contact_tel').value,
     電子郵件: document.getElementById('contact_email').value,
     服務項目: document.getElementById('service_type').value,
+    費用明細: svcRows.join(';;'),
+    合計金額: totalAmount,
     發票抬頭: document.getElementById('invoice_title').value,
     付款方式: payMethod,
     院內計畫編號: document.getElementById('internal_plan_no')?.value||'',
