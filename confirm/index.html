@@ -157,6 +157,7 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   @page{size:A4 portrait;margin:0mm 10mm 8mm}
   html,body{margin:0!important;padding:0!important;background:#fff!important}
+  .card{background:#fff!important}
   .card{margin-top:0!important}
 
   /* 隱藏不需列印的元素 */
@@ -327,12 +328,26 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
   /* 隱藏合計金額文字列（與表格重複）*/
   .amount-display{display:none!important}
 
-  html body{font-size:13px!important}
-  .field input,.field select,.field textarea{font-size:13px!important}
-  .field label{font-size:10px!important}
-  .section-label{font-size:12px!important}
-  .svc-table td{font-size:13px!important}
-  .svc-table th{font-size:11px!important}
+  html body{font-size:14px!important}
+  .field input,.field select,.field textarea{font-size:14px!important}
+  .field label{font-size:11px!important}
+  .section-label{font-size:13px!important}
+  .svc-table td{font-size:14px!important}
+  .svc-table th{font-size:12px!important}
+
+  /* 移除所有不必要的灰底 */
+  .svc-table .total-row td{background:#fff!important}
+  .svc-table th{background:#e8f2fb!important}
+  .amount-display{background:#fff!important;border:none!important}
+  body,html,.card,.form-body,.section{background:#fff!important}
+
+  .print-apptype-info{font-size:13px!important}
+  .sig-cell .sig-title{font-size:12px!important}
+  .sig-cell .sig-date{font-size:11px!important}
+  .amount-display{font-size:13px!important}
+  .opt-group label:has(input:checked){font-size:14px!important}
+  .form-header-title{font-size:18px!important}
+  .case-val{font-size:16px!important}
 }
 </style>
 </head>
