@@ -309,7 +309,7 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
   .field:has(.apptype-group){min-height:auto!important;padding:4px 6px!important}
   .apptype-group label{min-height:auto!important}
   /* 適用對象和服務申請日期整行隱藏 */
-  .row.c2:first-of-type{display:none!important}
+  .section
 
   /* 顯示適用對象資訊在標題旁 */
   .print-apptype-info{
@@ -319,6 +319,9 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
     font-style:normal!important
   }
   .readonly-badge{display:none!important}
+
+  /* 完全隱藏適用對象+日期那行 */
+  .apptype-row{display:none!important}
 }
 </style>
 </head>
@@ -355,7 +358,7 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
     <!-- 壹、申請人基本資料 -->
     <div class="section">
       <div class="section-label">壹、申請人基本資料 <span class="readonly-badge">核心填寫</span><span class="print-apptype-info" id="printApptypeInfo" style="display:none"></span></div>
-      <div class="row c2" style="margin-bottom:12px">
+      <div class="row c2 apptype-row" style="margin-bottom:12px">
         <div class="field">
           <label>適用對象</label>
           <div class="apptype-group" id="appTypeGroup">
