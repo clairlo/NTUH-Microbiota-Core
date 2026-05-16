@@ -3,684 +3,208 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>微菌體核心技術服務委託確認單</title>
+<title>微菌體核心技術服務平台 | 台大醫院醫學研究部</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Microsoft JhengHei','Noto Sans TC',Arial,sans-serif;background:#eef2f7;min-height:100vh;padding:32px 16px;color:#1a1a1a}
-h1{font-size:0;height:0;overflow:hidden}
-.card{max-width:740px;margin:0 auto;background:#fff;border-radius:12px;box-shadow:0 2px 24px rgba(0,0,0,.10);overflow:hidden}
+body{font-family:'Microsoft JhengHei','Noto Sans TC',Arial,sans-serif;background:#eef2f7;color:#1a1a1a}
 
-/* Header */
-.form-header{background:linear-gradient(135deg,#1a4a6b 0%,#1e7fc0 100%);overflow:hidden}
-.form-header-top{padding:20px 28px 16px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
-.form-header-left .small{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:1.5px;margin-bottom:4px}
-.form-header-title{font-size:21px;font-weight:700;color:#fff;letter-spacing:2px}
-.form-header-en{font-size:9.5px;color:rgba(255,255,255,.55);margin-top:3px;letter-spacing:.3px}
-.form-header-right{text-align:right;flex-shrink:0}
-.form-header-right .case-no{font-size:10px;color:rgba(255,255,255,.6);margin-bottom:2px}
-.form-header-right .case-val{font-size:14px;font-weight:700;color:#fff;letter-spacing:1px}
-.form-header-strip{background:rgba(0,0,0,.2);padding:5px 28px;display:flex;justify-content:space-between;align-items:center}
-.form-header-strip a{color:rgba(255,255,255,.8);text-decoration:none;font-size:10px;display:inline-flex;align-items:center;gap:4px}
-.form-header-strip a svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2}
-.strip-gold{font-size:10px;color:#f5c842;font-weight:500}
-.print-date{display:none;font-size:10px;color:rgba(255,255,255,.7)}
+.nav{background:linear-gradient(135deg,#1a4a6b 0%,#1e7fc0 100%);padding:13px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-logo{display:inline-flex;flex-direction:column;gap:2px}
+.nav-logo b{font-size:13px;font-weight:700;color:#fff;letter-spacing:1px;display:block;white-space:nowrap}
+.nav-logo span{font-size:10px;color:rgba(255,255,255,.55);letter-spacing:2px}
+.nav-btn{background:rgba(255,255,255,.12);color:#fff;font-size:11px;font-weight:700;padding:7px 16px;border-radius:6px;text-decoration:none;letter-spacing:.5px;border:1px solid rgba(255,255,255,.25);white-space:nowrap;transition:background .15s}
+.nav-btn:hover{background:rgba(255,255,255,.22)}
 
-/* Body */
-.form-body{padding:24px 28px 0}
-.section{margin-bottom:22px}
-.section-label{font-size:11px;font-weight:700;color:#1a4a6b;letter-spacing:2px;margin-bottom:12px;padding-bottom:6px;border-bottom:1.5px solid #e3edf5;display:flex;align-items:center;gap:6px}
-.readonly-badge{font-size:9px;background:#e8f2fb;color:#1a4a6b;border:1px solid #90c4e8;border-radius:4px;padding:1px 6px;letter-spacing:.5px;font-weight:500}
-.user-badge{font-size:9px;background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7;border-radius:4px;padding:1px 6px;letter-spacing:.5px;font-weight:500}
+.hero{background:linear-gradient(135deg,#1a4a6b 0%,#1e7fc0 100%);padding:52px 24px 60px;text-align:center;position:relative;overflow:hidden}
 
-.row{display:grid;gap:12px;margin-bottom:12px}
-.row.c2{grid-template-columns:1fr 1fr}
-.row.c3{grid-template-columns:1fr 1fr 1fr}
-@media(max-width:560px){.row.c2,.row.c3{grid-template-columns:1fr}}
+.hero-badge{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px}
+.hero h1{font-size:26px;font-weight:700;color:#fff;letter-spacing:3px;margin-bottom:10px;line-height:1.4}
+.hero p{font-size:12px;color:rgba(255,255,255,.65);margin-bottom:28px;line-height:1.8;letter-spacing:.5px}
+.hero-btn{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);color:#fff;font-size:13px;font-weight:700;padding:11px 26px;border-radius:24px;border:1.5px solid rgba(255,255,255,.5);letter-spacing:.5px;text-decoration:none;transition:all .15s}
+.hero-btn:hover{background:rgba(255,255,255,.22)}
+.hero-btn svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2;flex-shrink:0}
 
-.field{display:flex;flex-direction:column;gap:4px}
-.field label{font-size:11px;color:#546e7a;font-weight:500}
-.field input,.field select,.field textarea{width:100%;padding:8px 11px;border:1px solid #d0dbe3;border-radius:7px;font-size:13px;font-family:inherit;background:#fff;color:#1a1a1a;transition:border .15s,box-shadow .15s;outline:none}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:#1a4a6b;box-shadow:0 0 0 3px rgba(26,74,107,.10)}
-.field textarea{resize:vertical;min-height:64px;line-height:1.5}
+.body{max-width:720px;margin:0 auto;padding:32px 20px 48px}
+.sec-title{font-size:14px;font-weight:700;color:#90a4ae;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.sec-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,#c8d8e8,transparent)}
 
-/* Readonly fields */
-.field input[readonly],.field select[disabled]{background:#f5f8fb;color:#546e7a;cursor:default;border-color:#e0e8f0}
+.about{background:#fff;border-radius:12px;padding:24px;margin-bottom:28px;border:1px solid #e0e8f0;position:relative;overflow:hidden}
+.about::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,#1a4a6b,#1e7fc0)}
+.about-title{font-size:15px;font-weight:700;color:#1a4a6b;margin-bottom:8px;letter-spacing:.5px;padding-left:4px}
+.about-text{font-size:14px;color:#7a8a94;line-height:1.9;margin-bottom:16px;padding-left:4px}
+.tags{display:flex;flex-wrap:wrap;gap:7px;padding-left:4px}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:20px;font-size:13px;color:#1e7fc0;border:1px solid #90c4e8;background:#fff;letter-spacing:.3px}
 
-/* Applicant type */
-.apptype-group{display:flex;flex-direction:column;gap:6px;margin-top:4px}
-.apptype-group label{display:flex;align-items:center;gap:8px;font-size:13px;padding:7px 12px;border:1px solid #d0dbe3;border-radius:7px;background:#f5f8fb;color:#546e7a;cursor:default}
-.apptype-group label.checked{background:#e8f2fb;border-color:#1a4a6b;color:#1a4a6b;font-weight:500}
-.apptype-group input[type=checkbox]{width:14px;height:14px;accent-color:#1a4a6b;pointer-events:none}
+.svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px}
+@media(max-width:480px){.svc-grid{grid-template-columns:1fr}}
+.svc{background:#fff;border-radius:12px;padding:18px;border:1px solid #e0e8f0;display:flex;align-items:flex-start;gap:14px}
+.svc-ico{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}.svc-content{flex:1;min-width:0}.material-symbols-outlined{font-size:24px}
+.svc-name{font-size:14px;font-weight:700;color:#1a4a6b;margin-bottom:6px;line-height:1.4}
+.svc-desc{font-size:13px;color:#90a4ae;line-height:1.6}
 
-/* Opt group for user-editable */
-.opt-group{display:flex;flex-wrap:wrap;gap:7px 10px;margin-top:4px}
-.opt-group label{display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;padding:6px 11px;border:1px solid #d0dbe3;border-radius:7px;transition:all .15s;user-select:none}
-.opt-group label:hover{background:#f0f7ff;border-color:#a8c8e8}
-.opt-group input[type=radio]{width:14px;height:14px;accent-color:#1a4a6b;cursor:pointer;flex-shrink:0}
-.opt-group label:has(input:checked){background:#e8f2fb;border-color:#1a4a6b}
-.opt-group.error{outline:2px solid #e24b4a;border-radius:8px;padding:4px}
-
-/* Payment sub */
-.pay-sub{background:#f7fafd;border:1px solid #ddeaf4;border-radius:8px;padding:14px 16px;margin-top:10px;display:none}
-.pay-sub.open{display:block}
-.pay-sub-title{font-size:11px;font-weight:700;color:#2e6a96;margin-bottom:10px;padding-left:4px;border-left:3px solid #2e6a96}
-
-/* Notice */
-.notice{border:1px solid #f0b429;background:#fffdf0;border-radius:8px;padding:10px 14px;font-size:12px;color:#7a5c00;line-height:1.6;margin-bottom:16px}
-.notice strong{color:#b7791f}
-.notice-blue{border:1px solid #90c4e8;background:#f0f7ff;border-radius:8px;padding:10px 14px;font-size:12px;color:#1a4a6b;line-height:1.6;margin-bottom:16px}
-
-/* Service table */
-.svc-table{width:100%;border-collapse:collapse;margin-bottom:8px;font-size:13px}
-.svc-table th{background:#e8f2fb;color:#1a4a6b;font-size:11px;font-weight:700;padding:7px 10px;border:1px solid #c8dded;text-align:left}
-.svc-table td{border:1px solid #d0dbe3;padding:8px 10px;vertical-align:middle;font-size:13px;color:#546e7a;background:#f5f8fb}
-.svc-table .total-row td{background:#e8f2fb;font-weight:700;color:#1a4a6b}
-.svc-table .center{text-align:center}
-
-/* Amount words */
-.amount-display{background:#f0f7ff;border:1px solid #b8d8f0;border-radius:7px;padding:10px 14px;font-size:13px;color:#1a4a6b;font-weight:500;margin-top:8px}
-
-/* Error */
-.field.error input,.field.error select,.field.error textarea{border-color:#e24b4a;box-shadow:0 0 0 3px rgba(226,75,74,.10)}
-.err-msg{font-size:11px;color:#a32d2d;margin-top:3px;display:none}
-.field.error .err-msg{display:block}
-
-/* Signature block */
-.sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
-@media(max-width:560px){.sig-grid{grid-template-columns:1fr}}
-.sig-cell{border:1px solid #d0dbe3;border-radius:8px;padding:16px 14px;text-align:center}
-.sig-cell.large{min-height:110px}
-.sig-cell .sig-title{font-size:11px;color:#546e7a;margin-bottom:32px;font-weight:500}
-.sig-cell.large .sig-title{margin-bottom:48px}
-.sig-cell .sig-line{border-bottom:1px solid #ccc;margin:0 12px}
-.sig-cell .sig-date{font-size:10px;color:#90a4ae;margin-top:8px}
-
-/* Actions */
-.form-actions{padding:16px 28px 24px;display:flex;gap:10px;justify-content:flex-end;border-top:1px solid #eef2f6;margin-top:8px}
-.btn{padding:9px 22px;border-radius:8px;font-size:13px;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all .15s;font-weight:500;border:none}
-.btn-ghost{background:#fff;border:1px solid #c8d6e0;color:#1a4a6b}
-.btn-ghost:hover{background:#f0f7ff;border-color:#1a4a6b}
-.btn-primary{background:#1a4a6b;color:#fff}
-.btn-primary:hover{background:#163d5a}
-#successMsg{display:none;padding:14px 28px;background:#e8f5e9;border-top:1px solid #c8e6c9;color:#2e7d32;font-size:13px;text-align:center}
-
-/* Link generator */
-.gen-card{max-width:740px;margin:20px auto 0;background:#fff;border-radius:12px;box-shadow:0 2px 24px rgba(0,0,0,.10);padding:20px 24px}
-.gen-title{font-size:13px;font-weight:700;color:#1a4a6b;margin-bottom:14px;display:flex;align-items:center;gap:6px}
-.gen-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-@media(max-width:560px){.gen-grid{grid-template-columns:1fr}}
-.gen-field{display:flex;flex-direction:column;gap:3px}
-.gen-field label{font-size:11px;color:#546e7a}
-.gen-field input,.gen-field select{padding:7px 10px;border:1px solid #d0dbe3;border-radius:7px;font-size:12px;font-family:inherit;outline:none}
-.gen-field input:focus{border-color:#1a4a6b}
-.gen-url{background:#f5f8fb;border:1px solid #d0dbe3;border-radius:7px;padding:8px 12px;font-size:11px;color:#546e7a;word-break:break-all;margin-bottom:10px;min-height:36px;line-height:1.5}
-.gen-svc-rows{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
-.gen-svc-row{display:grid;grid-template-columns:130px 1fr 80px 60px auto;gap:6px;align-items:center}
-.gen-svc-row select,.gen-svc-row input{padding:5px 8px;border:1px solid #d0dbe3;border-radius:6px;font-size:12px;font-family:inherit;outline:none}
-.gen-svc-row select:focus,.gen-svc-row input:focus{border-color:#1a4a6b}
-.gen-add-btn{font-size:12px;color:#1a7fc0;cursor:pointer;background:none;border:1px dashed #90c4e8;border-radius:6px;padding:5px 12px;display:inline-flex;align-items:center;gap:4px}
-.gen-del-btn{background:none;border:none;cursor:pointer;color:#b0bec5;font-size:16px;padding:2px 5px}
-.gen-del-btn:hover{color:#e24b4a}
-
-/* Print */
-@media print{
-  body{background:#fff;padding:0}
-  .card{box-shadow:none;border-radius:0;max-width:none}
-  .form-actions,#successMsg,.gen-card{display:none!important}
-  .form-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .form-header-strip{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .section-label{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .svc-table th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .pay-sub{display:block!important}
-  .print-date{display:inline!important}
-  .sig-cell{break-inside:avoid}
-  .form-body{padding:14px 20px 0}
-  .section{margin-bottom:14px}
-  .field label{font-size:10px}
-  .field input,.field select,.field textarea{padding:4px 8px;font-size:12px}
-  @page{size:A4;margin:12mm 14mm}
+.flow{background:#fff;border-radius:12px;padding:20px;margin-bottom:28px;border:1px solid #e0e8f0}
+.flow-steps{display:flex;align-items:center;gap:4px;margin-top:12px;flex-wrap:wrap}
+.step{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;min-width:70px}
+.step-n{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
+.step-n.s1{background:#9ab0d0}
+.step-n.s2{background:#8a8ab0}
+.step-n.s3{background:#5a9fd4}
+.step-n.s4{background:#4a5a9b}
+.step-t{font-size:14px;color:#7a8a94;text-align:center;line-height:1.4}
+.arr{color:#d0dbe3;font-size:16px;margin-bottom:16px;flex-shrink:0}
+@media(max-width:480px){
+  .flow-steps{flex-direction:column;align-items:flex-start;gap:0;width:100%}
+  .step{flex-direction:row;align-items:center;gap:14px;flex:none;width:100%;padding:10px 0;border-bottom:1px solid #f0f4f7}
+  .step:last-child{border-bottom:none}
+  .step-t{text-align:left;flex:1;font-size:14px;color:#546e7a}
+  .arr{transform:rotate(90deg);margin:0 0 0 9px}
 }
+
+.info{background:#fff;border-radius:12px;padding:20px;border:1px solid #e0e8f0}
+.info-row{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid #f0f4f7}
+.info-row:last-child{border-bottom:none;padding-bottom:0}
+.info-row:first-child{padding-top:0}
+.info-ico{width:32px;height:32px;background:#f0f6fb;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.info-name{font-size:14px;font-weight:500;color:#1a1a1a;margin-bottom:3px}
+.info-detail{font-size:13px;color:#90a4ae;display:flex;flex-wrap:wrap;gap:10px}
+.info-detail a{color:#1e7fc0;text-decoration:none}
+.info-detail a:hover{text-decoration:underline}
+
+.apply-wrap{text-align:center;padding:8px 0 16px}
+.apply-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#1a4a6b,#1e7fc0);color:#fff;font-size:13px;font-weight:700;padding:12px 32px;border-radius:24px;text-decoration:none;letter-spacing:.5px;transition:opacity .15s}
+.apply-btn:hover{opacity:.9}
+.apply-btn svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2;flex-shrink:0}
+
+.footer{text-align:center;padding:18px;font-size:10px;color:#b0bec5;border-top:1px solid #e0e8f0;background:#fff}
 </style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0">
 </head>
 <body>
-<h1>微菌體核心技術服務委託確認單</h1>
 
-<div class="card">
-  <!-- Header -->
-  <div class="form-header">
-    <div class="form-header-top">
-      <div class="form-header-left">
-        <div class="small">微菌體核心技術服務平台</div>
-        <div class="form-header-title">服務委託確認單</div>
-        <div class="form-header-en">NTUH Microbiome Core Facility Service Confirmation Form</div>
-      </div>
-      <div class="form-header-right">
-        <div class="case-no">案件序號</div>
-        <div class="case-val" id="caseNoDisplay">—</div>
-      </div>
-    </div>
-    <div class="form-header-strip">
-      <a href="/"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>首頁</a>
-      <span class="strip-gold">台大醫院　醫學研究部</span>
-      <span class="print-date" id="printDate"></span>
-    </div>
+<nav class="nav">
+  <div class="nav-logo">
+    <b>微菌體核心技術服務平台</b>
+    <span>NTUH Microbiome Core</span>
   </div>
+  <a class="nav-btn" href="/apply/">委託申請</a>
+</nav>
 
-  <div class="form-body">
-
-    <div class="notice-blue">
-      本確認單由核心人員開案後寄送，請確認資料無誤後填寫<strong>發票抬頭</strong>及<strong>付款方式</strong>，列印後由<strong>計畫主持人簽名</strong>，送交核心人員。
-    </div>
-
-    <!-- 壹、申請人基本資料 -->
-    <div class="section">
-      <div class="section-label">壹、申請人基本資料 <span class="readonly-badge">核心填寫</span></div>
-      <div class="row c2" style="margin-bottom:12px">
-        <div class="field">
-          <label>適用對象</label>
-          <div class="apptype-group" id="appTypeGroup">
-            <label id="lbl_type1"><input type="checkbox" id="type1" disabled>台大醫院及台大醫學校區同仁</label>
-            <label id="lbl_type2"><input type="checkbox" id="type2" disabled>台灣大學非醫學校區同仁</label>
-            <label id="lbl_type3"><input type="checkbox" id="type3" disabled>其他單位</label>
-          </div>
-        </div>
-        <div>
-          <div class="field" style="margin-bottom:10px">
-            <label>案件序號</label>
-            <input id="case_no" readonly>
-          </div>
-          <div class="field">
-            <label>服務申請日期</label>
-            <input id="apply_date" readonly>
-          </div>
-        </div>
-      </div>
-      <div class="row c2">
-        <div class="field">
-          <label>計畫主持人（PI）</label>
-          <input id="pi_name" readonly>
-        </div>
-        <div class="field">
-          <label>單位 / 機構名稱</label>
-          <input id="institute" readonly>
-        </div>
-      </div>
-      <div class="row c3">
-        <div class="field">
-          <label>聯絡人姓名</label>
-          <input id="contact_name" readonly>
-        </div>
-        <div class="field">
-          <label>聯絡電話</label>
-          <input id="contact_tel" readonly>
-        </div>
-        <div class="field">
-          <label>電子郵件</label>
-          <input id="contact_email" readonly>
-        </div>
-      </div>
-    </div>
-
-    <!-- 貳、服務項目及費用明細 -->
-    <div class="section">
-      <div class="section-label">貳、服務項目及費用明細 <span class="readonly-badge">核心填寫</span></div>
-      <div class="field" style="margin-bottom:12px">
-        <label>委託服務平台</label>
-        <input id="service_type" readonly>
-      </div>
-      <table class="svc-table">
-        <thead>
-          <tr>
-            <th style="width:80px">代碼</th>
-            <th>服務收費項目</th>
-            <th style="width:100px" class="center">單價（元）</th>
-            <th style="width:60px" class="center">數量</th>
-            <th style="width:100px" class="center">小計（元）</th>
-          </tr>
-        </thead>
-        <tbody id="svcBody"></tbody>
-        <tfoot>
-          <tr class="total-row">
-            <td colspan="4" style="text-align:right;padding-right:14px;font-size:11px">合計金額（新台幣）</td>
-            <td class="center" id="totalAmount">—</td>
-          </tr>
-        </tfoot>
-      </table>
-      <div class="amount-display" id="amountWords">—</div>
-    </div>
-
-    <!-- 參、繳費資訊 -->
-    <div class="section">
-      <div class="section-label">參、繳費資訊 <span class="user-badge">請填寫</span></div>
-
-      <div class="field" style="margin-bottom:14px">
-        <label>發票抬頭 <span style="color:#e24b4a">*</span></label>
-        <input id="invoice_title" placeholder="請填寫正確發票抬頭">
-        <span class="err-msg">請填寫發票抬頭</span>
-      </div>
-
-      <div class="field">
-        <label>付款方式 <span style="color:#e24b4a">*</span></label>
-        <div class="opt-group" id="pay_method_grp">
-          <label><input type="radio" name="pay_method" value="現金" onchange="showPaySub('cash')"><span>💵 現金繳費</span></label>
-          <label><input type="radio" name="pay_method" value="院內計畫扣款" onchange="showPaySub('internal')"><span>🏥 院內計畫扣款</span></label>
-          <label><input type="radio" name="pay_method" value="開立預字收據（院外匯款）" onchange="showPaySub('external')"><span>🏦 開立預字收據（院外匯款）</span></label>
-        </div>
-        <span class="err-msg" id="pay_err" style="display:none;font-size:11px;color:#a32d2d;margin-top:3px">請選擇付款方式</span>
-      </div>
-
-      <!-- 現金 -->
-      <div class="pay-sub" id="sub_cash">
-        <div class="pay-sub-title">現金繳費說明</div>
-        <div class="notice" style="margin-bottom:0;font-size:12px">
-          請持本確認單至<strong>台大醫院東址1樓出納組</strong>繳費，取得收據後影印一份回傳核心（yilinglo@ntuh.gov.tw），並將申請單正本送交核心人員。
-        </div>
-      </div>
-
-      <!-- 院內計畫扣款 -->
-      <div class="pay-sub" id="sub_internal">
-        <div class="pay-sub-title">院內計畫扣款資訊</div>
-        <div class="notice" style="margin-bottom:12px;font-size:12px">
-          ⚠️ 請確認計畫中<strong>需預留款項</strong>，以免主計無法扣款。清冊每月最後一週提交。
-        </div>
-        <div class="row c2">
-          <div class="field">
-            <label>院內計畫編號 <span style="color:#e24b4a">*</span></label>
-            <input id="internal_plan_no" placeholder="請填寫院內計畫編號">
-          </div>
-          <div class="field">
-            <label>計畫主持人（如與申請人不同）</label>
-            <input id="internal_pi" placeholder="選填">
-          </div>
-        </div>
-      </div>
-
-      <!-- 院外匯款 -->
-      <div class="pay-sub" id="sub_external">
-        <div class="pay-sub-title">院外匯款資訊</div>
-        <div class="notice" style="margin-bottom:12px;font-size:12px">
-          ⚠️ 預字收據作業時間較長，需有<strong>2個月以上計畫期限</strong>。匯款完成後請將匯款單回傳核心留存。
-        </div>
-        <div class="row c2">
-          <div class="field">
-            <label>計畫編號（院外）<span style="color:#e24b4a">*</span></label>
-            <input id="external_plan_no" placeholder="例：科技部計畫編號">
-          </div>
-          <div class="field">
-            <label>銷帳帳字號</label>
-            <input id="account_code" placeholder="由核心人員提供">
-          </div>
-        </div>
-        <div class="field">
-          <label>匯款帳戶</label>
-          <input value="台大醫院 401專戶" readonly>
-        </div>
-      </div>
-    </div>
-
-    <!-- 肆、備註 -->
-    <div class="section">
-      <div class="section-label">肆、備註 <span class="user-badge">請填寫</span></div>
-      <div class="field">
-        <textarea id="notes" placeholder="如有其他說明事項請填寫"></textarea>
-      </div>
-    </div>
-
-    <!-- 伍、簽章 -->
-    <div class="section">
-      <div class="section-label">伍、簽章</div>
-      <div class="notice" style="margin-bottom:12px;font-size:12px">
-        請列印本確認單，由<strong>計畫主持人簽名或蓋章</strong>後，正本送交核心人員，影本由申請人自存。
-      </div>
-      <div class="sig-grid">
-        <div class="sig-cell">
-          <div class="sig-title">計畫主持人 簽章</div>
-          <div class="sig-line"></div>
-          <div class="sig-date">日期：　　年　　月　　日</div>
-        </div>
-        <div class="sig-cell">
-          <div class="sig-title">技術員 簽章</div>
-          <div class="sig-line"></div>
-          <div class="sig-date">日期：　　年　　月　　日</div>
-        </div>
-        <div class="sig-cell">
-          <div class="sig-title">核心負責人 簽章</div>
-          <div class="sig-line"></div>
-          <div class="sig-date">日期：　　年　　月　　日</div>
-        </div>
-        <div class="sig-cell large">
-          <div class="sig-title">資源提供單位主管 核章</div>
-          <div class="sig-line"></div>
-          <div class="sig-date">日期：　　年　　月　　日</div>
-        </div>
-      </div>
-    </div>
-
+<div class="hero">
+  <img src="data:image/svg+xml;base64,CjwhLS0gVXBsb2FkZWQgdG86IFNWRyBSZXBvLCB3d3cuc3ZncmVwby5jb20sIEdlbmVyYXRvcjogU1ZHIFJlcG8gTWl4ZXIgVG9vbHMgLS0+CjxzdmcgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjkpIiBoZWlnaHQ9IjIwMCIgd2lkdGg9IjIwMCIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgCgkgdmlld0JveD0iMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik02MC4wNTUsMzE5LjNjLTAuMTUxLTAuNjUyLTAuMzI3LTEuMjgtMC41NzgtMS44ODJjLTAuMjUtMC42MDMtMC41NzctMS4yMDYtMC45MjgtMS43MzMKCQkJYy0wLjM3Ni0wLjU1Mi0wLjgwNC0xLjA3OC0xLjI1NS0xLjUyOWMtMi4zMzUtMi4zMzYtNS43OTgtMy40MTQtOS4wNjEtMi43NjJjLTAuNjI3LDAuMTUyLTEuMjc5LDAuMzI2LTEuODgyLDAuNTc5CgkJCWMtMC42MDIsMC4yNS0xLjE3OSwwLjU3Ni0xLjczMiwwLjkyOWMtMC41NTIsMC4zNzUtMS4wNTQsMC43NzctMS41MzEsMS4yNTVjLTAuNDUyLDAuNDUxLTAuODc5LDAuOTc4LTEuMjI5LDEuNTI5CgkJCWMtMC4zNzcsMC41MjctMC42NzgsMS4xMy0wLjkyOSwxLjczM2MtMC4yNTEsMC42MDMtMC40NTIsMS4yMy0wLjU3NywxLjg4MmMtMC4xMjYsMC42MjctMC4yMDEsMS4zMDQtMC4yMDEsMS45NTgKCQkJYzAsMi42MzUsMS4wOCw1LjIyLDIuOTM2LDcuMDc2YzAuNDc3LDAuNDc4LDAuOTc5LDAuOTA0LDEuNTMxLDEuMjU1YzAuNTUzLDAuMzc3LDEuMTMsMC42NzksMS43MzIsMC45MjkKCQkJYzAuNjAzLDAuMjUyLDEuMjU1LDAuNDUxLDEuODgyLDAuNTc4YzAuNjUzLDAuMTI1LDEuMzA1LDAuMTc0LDEuOTU4LDAuMTc0YzIuNjYsMCw1LjI0NS0xLjA1NCw3LjEwMy0yLjkzNgoJCQljMS44ODItMS44NTUsMi45MzYtNC40NDEsMi45MzYtNy4wNzZDNjAuMjMxLDMyMC42MDQsNjAuMTgsMzE5LjkyOCw2MC4wNTUsMzE5LjN6Ii8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMTM3LjYwOCw0MjQuNTg3Yy0yLjMzNS0yLjMzNi01Ljc5OC0zLjQxNC05LjA2MS0yLjc2MmMtMC42MjcsMC4xNTItMS4yNzksMC4zMjYtMS44ODIsMC41NzgKCQkJYy0wLjYwMiwwLjI1LTEuMTc5LDAuNTc2LTEuNzMyLDAuOTI5Yy0wLjU1MiwwLjM3NS0xLjA1NCwwLjgwMS0xLjUzMSwxLjI1NWMtMS44NTcsMS44NTUtMi45MzYsNC40NDEtMi45MzYsNy4xMDMKCQkJYzAsMC42NTIsMC4wNzUsMS4zMDQsMC4yMDEsMS45NTZjMC4xMjUsMC42MjcsMC4zMjYsMS4yNTUsMC41NzcsMS44ODJjMC4yNTEsMC42MDMsMC41NTIsMS4xODEsMC45MjksMS43MzMKCQkJYzAuMzUsMC41NTEsMC43NzcsMS4wNTQsMS4yMjksMS41MzJjMS44ODIsMS44NTUsNC40NjcsMi45MDksNy4xMDMsMi45MDljMC42NTIsMCwxLjMzLTAuMDQ5LDEuOTU3LTAuMTc0CgkJCWMwLjY1My0wLjEyOCwxLjI4LTAuMzI2LDEuODgyLTAuNTc5YzAuNjAzLTAuMjUsMS4yMDQtMC41NTEsMS43MzItMC45MjljMC41NTMtMC4zNTEsMS4wOC0wLjc3NywxLjUzMi0xLjIyOAoJCQljMC40NzctMC40NzgsMC44NzktMC45OCwxLjI1NS0xLjUzMmMwLjM1LTAuNTUxLDAuNjc4LTEuMTMsMC45MjgtMS43MzNjMC4yNTEtMC42MjcsMC40MjgtMS4yNTUsMC41NTMtMS44ODIKCQkJYzAuMTUxLTAuNjUyLDAuMjAxLTEuMzA0LDAuMjAxLTEuOTU2QzE0MC41NDQsNDI5LjAyOCwxMzkuNDksNDI2LjQ0MiwxMzcuNjA4LDQyNC41ODd6Ii8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMjM4LDQ4NC44MjJjLTAuNDUyLTAuNDUzLTAuOTc5LTAuODgtMS41MzItMS4yNTVjLTAuNTI3LTAuMzUzLTEuMTI5LTAuNjc5LTEuNzMyLTAuOTI5CgkJCWMtMC42MDItMC4yNTMtMS4yMjktMC40MjctMS44ODItMC41NTJjLTEuMjc5LTAuMjc3LTIuNjM1LTAuMjc3LTMuOTE2LDBjLTAuNjUyLDAuMTI1LTEuMjc5LDAuMjk5LTEuODgyLDAuNTUyCgkJCWMtMC42MDIsMC4yNS0xLjE3OSwwLjU3Ni0xLjczMiwwLjkyOWMtMC41NTIsMC4zNzUtMS4wNTQsMC44MDEtMS41MzEsMS4yNTVjLTEuODU3LDEuODU1LTIuOTM2LDQuNDY2LTIuOTM2LDcuMTAzCgkJCWMwLDAuNjUyLDAuMDc1LDEuMzA0LDAuMjAxLDEuOTU2YzAuMTI1LDAuNjI4LDAuMzI2LDEuMjgyLDAuNTc3LDEuODgyYzAuMjUxLDAuNjAzLDAuNTUyLDEuMTgxLDAuOTI5LDEuNzMzCgkJCWMwLjM1LDAuNTUxLDAuNzc3LDEuMDU0LDEuMjI5LDEuNTMyYzAuNDc3LDAuNDUxLDAuOTc5LDAuODc3LDEuNTMxLDEuMjI4YzAuNTUzLDAuMzc4LDEuMTMsMC42NzksMS43MzIsMC45MjkKCQkJYzAuNjAzLDAuMjUzLDEuMjU1LDAuNDUxLDEuODgyLDAuNTc4YzAuNjUzLDAuMTI1LDEuMzA1LDAuMjAxLDEuOTU4LDAuMjAxYzIuNjM1LDAsNS4yMjEtMS4wODEsNy4xMDMtMi45MzYKCQkJYzAuNDUxLTAuNDc4LDAuODc5LTAuOTgsMS4yNTUtMS41MzJjMC4zNS0wLjU1MSwwLjY1Mi0xLjEzLDAuOTAzLTEuNzMzYzAuMjUxLTAuNjAxLDAuNDUyLTEuMjU1LDAuNTc3LTEuODgyCgkJCWMwLjEyNS0wLjY1MiwwLjIwMS0xLjMwNCwwLjIwMS0xLjk1NkMyNDAuOTM2LDQ4OS4yNjMsMjM5Ljg1Nyw0ODYuNjc4LDIzOCw0ODQuODIyeiIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTg3LjQxMiwxMDMuMzMyYy0yLjMzNS0yLjMzNi01Ljc5OC0zLjQxNC05LjA2MS0yLjczNWMtMC42NTIsMC4xMjUtMS4yOCwwLjI5OS0xLjg4MiwwLjU1MgoJCQljLTAuNjAyLDAuMjUtMS4xNzksMC41NzYtMS43MzIsMC45MjljLTAuNTUyLDAuMzc1LTEuMDU0LDAuNzc3LTEuNTMxLDEuMjU1Yy0xLjg1NywxLjg1NS0yLjkzNiw0LjQ0MS0yLjkzNiw3LjEwMwoJCQljMCwwLjY1MiwwLjA3NSwxLjMwNCwwLjIwMSwxLjk1NmMwLjEyNSwwLjYyNywwLjMyNiwxLjI4MiwwLjU3NywxLjg4MmMwLjI1MSwwLjYwMywwLjU1MiwxLjE4MSwwLjkyOSwxLjczMwoJCQljMC4zNSwwLjU1MSwwLjc3NywxLjA1NCwxLjIyOSwxLjUwNWMxLjg4MiwxLjg4Miw0LjQ2NywyLjk2Myw3LjEwMywyLjk2M2MyLjYzNSwwLDUuMjQ1LTEuMDgxLDcuMTAzLTIuOTYzCgkJCWMwLjQ3Ny0wLjQ1MSwwLjg3OS0wLjk1MywxLjI1NS0xLjUwNWMwLjM1LTAuNTUxLDAuNjc4LTEuMTMsMC45MjgtMS43MzNjMC4yNTEtMC42MDEsMC40MjgtMS4yNTUsMC41NTMtMS44ODIKCQkJYzAuMTUxLTAuNjUyLDAuMjAxLTEuMzA0LDAuMjAxLTEuOTU2QzkwLjM0OCwxMDcuNzczLDg5LjI5NCwxMDUuMTg3LDg3LjQxMiwxMDMuMzMyeiIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTE5Ny44NDMsMTIuOTc5Yy0yLjMzNS0yLjMzNi01Ljc5OC0zLjQxNC05LjA2MS0yLjczNWMtMC42MjcsMC4xMjUtMS4yNzksMC4yOTktMS44ODIsMC41NTIKCQkJYy0wLjYwMiwwLjI1LTEuMTc5LDAuNTc2LTEuNzMyLDAuOTI5Yy0wLjU1MiwwLjM3NS0xLjA1NCwwLjc3Ny0xLjUzMSwxLjI1NWMtMS44NTcsMS44NTUtMi45MzYsNC40NDEtMi45MzYsNy4xMDMKCQkJYzAsMi42MzUsMS4wOCw1LjIyLDIuOTM2LDcuMDc2YzAuNDc3LDAuNDc4LDAuOTc5LDAuOTA0LDEuNTMxLDEuMjU1YzAuNTUzLDAuMzc4LDEuMTMsMC42NzksMS43MzIsMC45MjkKCQkJYzAuNjAzLDAuMjUzLDEuMjU1LDAuNDUzLDEuODgyLDAuNTc4YzAuNjUzLDAuMTI1LDEuMzA1LDAuMjAxLDEuOTU4LDAuMjAxYzAuNjUyLDAsMS4zMy0wLjA3NiwxLjk1Ny0wLjIwMQoJCQljMC42NTMtMC4xMjUsMS4yOC0wLjMyNiwxLjg4Mi0wLjU3OGMwLjYwMy0wLjI1LDEuMTgtMC41NTEsMS43MzItMC45MjljMC41NTMtMC4zNTEsMS4wNTUtMC43NzcsMS41MzItMS4yNTUKCQkJYzEuODU3LTEuODU2LDIuOTM2LTQuNDQxLDIuOTM2LTcuMDc2QzIwMC43OCwxNy40MiwxOTkuNzI2LDE0LjgzNCwxOTcuODQzLDEyLjk3OXoiLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik0zMjEuMDQ5LDE5OC44MDVjLTAuMTI1LTAuNjI3LTAuMzAxLTEuMjU1LTAuNTUzLTEuODU4Yy0wLjI1LTAuNjAzLTAuNTc3LTEuMjA2LTAuOTI4LTEuNzMzCgkJCWMtMC4zNzYtMC41NTItMC43NzgtMS4wNzgtMS4yNTUtMS41MjljLTAuNDUyLTAuNDUzLTAuOTc5LTAuODgtMS41MzItMS4yNTVjLTAuNTI3LTAuMzUzLTEuMTI5LTAuNjc5LTEuNzMyLTAuOTI5CgkJCWMtMC42MDItMC4yNTMtMS4yMjktMC40MjctMS44ODItMC41NTJjLTEuMjc5LTAuMjc3LTIuNjEtMC4yNzctMy45MTYsMGMtMC42NTIsMC4xMjUtMS4yOCwwLjI5OS0xLjg4MiwwLjU1MgoJCQljLTAuNjAyLDAuMjUtMS4xNzksMC41NzYtMS43MzIsMC45MjljLTAuNTUyLDAuMzc1LTEuMDU0LDAuODAxLTEuNTMxLDEuMjU1Yy0wLjQ1MiwwLjQ1MS0wLjg3OSwwLjk3OC0xLjIyOSwxLjUyOQoJCQljLTAuMzc4LDAuNTI3LTAuNjc4LDEuMTMtMC45MjksMS43MzNjLTAuMjUxLDAuNjAzLTAuNDUyLDEuMjMtMC41NzcsMS44NThjLTAuMTI2LDAuNjUyLTAuMjAxLDEuMzI4LTAuMjAxLDEuOTgzCgkJCWMwLDAuNjUyLDAuMDc1LDEuMzA0LDAuMjAxLDEuOTU2YzAuMTI1LDAuNjI3LDAuMzI2LDEuMjU1LDAuNTc3LDEuODgyYzAuMjUxLDAuNjAzLDAuNTUyLDEuMTgxLDAuOTI5LDEuNzMzCgkJCWMwLjM1LDAuNTUxLDAuNzc3LDEuMDU0LDEuMjI5LDEuNTA1YzEuODgyLDEuODgyLDQuNDY3LDIuOTYzLDcuMTAzLDIuOTYzYzAuNjUyLDAsMS4zMy0wLjA3NiwxLjk1Ny0wLjIwMQoJCQljMC42NTMtMC4xMjUsMS4yODEtMC4zMjYsMS44ODItMC41NzhjMC42MDMtMC4yNSwxLjIwNC0wLjU1MSwxLjczMi0wLjkyOWMwLjU1My0wLjM1MSwxLjA4LTAuNzc3LDEuNTMyLTEuMjU1CgkJCWMwLjQ3Ny0wLjQ1MSwwLjg3OS0wLjk1MywxLjI1NS0xLjUwNWMwLjM1LTAuNTUxLDAuNjUyLTEuMTMsMC45MDMtMS43MzNjMC4yNTEtMC42MjcsMC40NTItMS4yNTUsMC41NzctMS44ODIKCQkJYzAuMTI1LTAuNjUyLDAuMjAxLTEuMzA0LDAuMjAxLTEuOTU2QzMyMS4yNSwyMDAuMTM0LDMyMS4xNzQsMTk5LjQ1NywzMjEuMDQ5LDE5OC44MDV6Ii8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMjMxLjA1LDE4MC43MDJjLTExLjk5OCwwLTIyLjgyNyw1LjMwNy0zMC4xOTEsMTMuNjU5Yy03LjM2NS04LjM1My0xOC4wMS0xMy42NTktMzAuMDA3LTEzLjY1OQoJCQljLTIyLjE0MiwwLTQwLjA0NSwxNy45ODEtNDAuMDQ1LDQwLjA4MXYxMjAuNjJjMCwyMi4xMDMsMTcuODY3LDQwLjA4Myw0MC4wMDksNDAuMDgzYzExLjk5OCwwLDIyLjY3OS01LjMwNiwzMC4wNDQtMTMuNjU5CgkJCWM3LjM2NCw4LjM1MywxOC4yMywxMy42NTksMzAuMjI4LDEzLjY1OWMyMi4xNDIsMCw0MC4yNjgtMTcuOTgsNDAuMjY4LTQwLjA4M3YtMTIwLjYyCgkJCUMyNzEuMzU1LDE5OC42ODMsMjUzLjE5MywxODAuNzAyLDIzMS4wNSwxODAuNzAyeiBNMTkxLjA0MiwzNDEuNDAzYzAsMTEuMDMyLTkuMDA3LDIwLjAwNS0yMC4wNzgsMjAuMDA1CgkJCXMtMjAuMDc4LTguOTczLTIwLjA3OC0yMC4wMDV2LTEyMC42MmMwLTExLjAzLDkuMDA3LTIwLjAwMywyMC4wNzgtMjAuMDAzYzExLjA3MSwwLDIwLjA3OCw4Ljk3MywyMC4wNzgsMjAuMDAzVjM0MS40MDN6CgkJCSBNMjUxLjI3NywzNDEuNDAzYzAsMTEuMDMyLTkuMDA3LDIwLjAwNS0yMC4wNzgsMjAuMDA1Yy0xMS4wNzEsMC0yMC4wNzgtOC45NzMtMjAuMDc4LTIwLjAwNXYtMTIwLjYyCgkJCWMwLTExLjAzLDkuMDA3LTIwLjAwMywyMC4wNzgtMjAuMDAzYzExLjA3MSwwLDIwLjA3OCw4Ljk3MywyMC4wNzgsMjAuMDAzVjM0MS40MDN6Ii8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNDk4LjM0MSw0MTEuNDA2YzguMzUzLTcuMzYzLDEzLjY1OS0xOC4xMiwxMy42NTktMzAuMTE4YzAtMjIuMTQyLTE3Ljk4LTQwLjM1My00MC4wODItNDAuMzUzaC0xMjAuNjIKCQkJYy0yMi4xMDIsMC00MC4wODIsMTguMjExLTQwLjA4Miw0MC4zNTNjMCwxMS45OTgsNS4zMDcsMjIuODUzLDEzLjY1OSwzMC4yMThjLTguMzUzLDcuMzY1LTEzLjY1OSwxNy45NzMtMTMuNjU5LDI5Ljk2OAoJCQljMCwyMi4xNDIsMTcuOTgsNDAuMDEsNDAuMDgyLDQwLjAxaDEyMC42MmMyMi4xMDIsMCw0MC4wODItMTcuODE5LDQwLjA4Mi0zOS45NjFDNTEyLDQyOS41MjgsNTA2LjY5NCw0MTguNzcxLDQ5OC4zNDEsNDExLjQwNnoKCQkJIE00NzEuOTE4LDQ2MS40MDZoLTEyMC42MmMtMTEuMDMxLDAtMjAuMDA0LTkuMDA3LTIwLjAwNC0yMC4wNzhjMC0xMS4wNzEsOC45NzMtMjAuMDc4LDIwLjAwNC0yMC4wNzhoMTIwLjYyCgkJCWMxMS4wMzEsMCwyMC4wMDQsOS4wMDcsMjAuMDA0LDIwLjA3OEM0OTEuOTIyLDQ1Mi4zOTgsNDgyLjk0OSw0NjEuNDA2LDQ3MS45MTgsNDYxLjQwNnogTTQ3MS45MTgsNDAxLjE3aC0xMjAuNjIKCQkJYy0xMS4wMzEsMC0yMC4wMDQtOS4wMDctMjAuMDA0LTIwLjA3OGMwLTExLjA3MSw4Ljk3My0yMC4wNzgsMjAuMDA0LTIwLjA3OGgxMjAuNjJjMTEuMDMxLDAsMjAuMDA0LDkuMDA3LDIwLjAwNCwyMC4wNzgKCQkJQzQ5MS45MjIsMzkyLjE2Myw0ODIuOTQ5LDQwMS4xNyw0NzEuOTE4LDQwMS4xN3oiLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik00MC4xNTcsMzkxLjUyNkMxOC4wMTUsMzkxLjUyNiwwLDQwOS41NDEsMCw0MzEuNjgzYzAsMjIuMTQyLDE4LjAxNSw0MC4xNTcsNDAuMTU3LDQwLjE1NwoJCQljMjIuMTQyLDAsNDAuMTU3LTE4LjAxNSw0MC4xNTctNDAuMTU3QzgwLjMxNCw0MDkuNTQxLDYyLjI5OSwzOTEuNTI2LDQwLjE1NywzOTEuNTI2eiBNNDAuMTU3LDQ1MS43NjEKCQkJYy0xMS4wNzEsMC0yMC4wNzgtOS4wMDctMjAuMDc4LTIwLjA3OGMwLTExLjA3MSw5LjAwNy0yMC4wNzgsMjAuMDc4LTIwLjA3OGMxMS4wNzEsMCwyMC4wNzgsOS4wMDcsMjAuMDc4LDIwLjA3OAoJCQlDNjAuMjM1LDQ0Mi43NTQsNTEuMjI4LDQ1MS43NjEsNDAuMTU3LDQ1MS43NjF6Ii8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNDcxLjg0MywxMC4wMzVjLTIyLjE0MiwwLTQwLjE1NywxOC4wMTUtNDAuMTU3LDQwLjE1N2MwLDIyLjE0MiwxOC4wMTUsNDAuMTU3LDQwLjE1Nyw0MC4xNTcKCQkJYzIyLjE0MiwwLDQwLjE1Ny0xOC4wMTUsNDAuMTU3LTQwLjE1N0M1MTIsMjguMDUsNDkzLjk4NSwxMC4wMzUsNDcxLjg0MywxMC4wMzV6IE00NzEuODQzLDcwLjI3MQoJCQljLTExLjA3MSwwLTIwLjA3OC05LjAwNy0yMC4wNzgtMjAuMDc4YzAtMTEuMDcxLDkuMDA3LTIwLjA3OCwyMC4wNzgtMjAuMDc4YzExLjA3MSwwLDIwLjA3OCw5LjAwNywyMC4wNzgsMjAuMDc4CgkJCUM0OTEuOTIyLDYxLjI2NCw0ODIuOTE0LDcwLjI3MSw0NzEuODQzLDcwLjI3MXoiLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik00NzEuNjQ4LDI4OS4xNjVjLTEuMDg4LTUuNDM4LTYuMzc5LTguOTc1LTExLjgxNC03Ljg3NWMtMC4zNDcsMC4wNzEtMzUuNDI5LDYuNzgyLTYwLjkzOS0xNC4xMwoJCQljLTE4LjIxMS0xNC45MjktMjcuNDQ1LTQwLjY0LTI3LjQ0NS03Ni40MTljMC00NC40MTctMTEuNzYxLTc3LjQ2My0zNC45NTctOTguMjI1Yy0yOS4wNjQtMjYuMDE1LTY1LjAyOS0yMi4zNTMtNjYuNTQ0LTIyLjE4NAoJCQljLTUuNDk0LDAuNjEtOS40MzksNS41NDctOC44NTIsMTEuMDQyYzAuNTg3LDUuNDk3LDUuNTE4LDkuNDgsMTEuMDI4LDguOTE5YzAuMjg3LTAuMDMsMjguOTQtMi43MDgsNTEuMTgsMTcuMzY4CgkJCWMxOC42MjQsMTYuODA5LDI4LjA2Niw0NC43NjIsMjguMDY2LDgzLjA4MWMwLDQyLjA4MywxMS43MDYsNzMuMDIsMzQuNzk0LDkxLjk0NmMyMC4wNzEsMTYuNDU2LDQzLjk4MSwxOS43NTIsNTkuOTE5LDE5Ljc1MgoJCQljMTAuMDg4LDAsMTYuOTgzLTEuMzIxLDE3LjY4OC0xLjQ2M0M0NjkuMjEsMjk5Ljg5MSw0NzIuNzM1LDI5NC42MDIsNDcxLjY0OCwyODkuMTY1eiIvPgoJPC9nPgo8L2c+Cjwvc3ZnPg==" style="position:absolute;right:-30px;top:-10px;width:220px;height:220px;opacity:.12;transform:rotate(15deg);z-index:0" alt="">
+  <img src="data:image/svg+xml;base64,CjwhLS0gVXBsb2FkZWQgdG86IFNWRyBSZXBvLCB3d3cuc3ZncmVwby5jb20sIEdlbmVyYXRvcjogU1ZHIFJlcG8gTWl4ZXIgVG9vbHMgLS0+CjxzdmcgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjkpIiBoZWlnaHQ9IjIwMCIgd2lkdGg9IjIwMCIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgCgkgdmlld0JveD0iMCAwIDUxMi4wMDEgNTEyLjAwMSIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTUxMi4wMDEsMTI0Ljg1OGMwLTUuNDc4LTQuNDQtOS45MTktOS45MTktOS45MTloLTIzLjQ2NGMtNS44MDktMjQuNDUtMTkuODM4LTQ2LjUzNi00MC4yNzctNjIuMjU1CgkJCWMtMTYuNTMyLTEyLjcxNS0zNi4wMTMtMjAuMzEyLTU2LjE1Mi0yMi40MTRsMi42MjMtMTguMjIzYzAuNzgtNS40MjItMi45ODQtMTAuNDUxLTguNDA1LTExLjIzMQoJCQljLTUuNDEzLTAuNzc2LTEwLjQ0OSwyLjk4Mi0xMS4yMzEsOC40MDVsLTIuOTg5LDIwLjc3NGMtOC4xNjksMC42MjctMTYuMzIxLDIuMTY4LTI0LjMxMiw0LjYzOUwzMjIuMTksMTcuODMyCgkJCWMtMy43MzYtNC4wMDUtMTAuMDEzLTQuMjIyLTE0LjAyLTAuNDgzYy00LjAwMywzLjczNy00LjIxOSwxMC4wMTQtMC40ODEsMTQuMDE5bDEwLjEzMywxMC44NTUKCQkJYy0zNS42NSwxNy4yMzktNTkuNjQ0LDUyLjQ5NC02Mi40NTQsOTMuNDczYy0yLjYyMSwzOC4yMTctMTkuMzM2LDc0LjUzNi00Ny4wNjQsMTAyLjI2NAoJCQljLTE4Ljk0NSwxOC45NDUtNDEuOTAxLDMyLjc0My02Ni43MzEsNDAuNDIzdi0xNi4zNjFjMC01LjQ3OC00LjQ0LTkuOTE5LTkuOTE5LTkuOTE5Yy01LjQ3OSwwLTkuOTE5LDQuNDQxLTkuOTE5LDkuOTE5djIxLjEwOQoJCQljLTUuMTg0LDAuODktMTAuNDIyLDEuNTMtMTUuNjk2LDEuODkzYy00LjUxLDAuMzA5LTguOTQ4LDAuODgzLTEzLjMwNSwxLjY5M2wtNS44NTUtMTYuNzg3CgkJCWMtMS44MDQtNS4xNzItNy40NTgtNy45MDQtMTIuNjMyLTYuMTAxYy01LjE3MiwxLjgwNC03LjkwNSw3LjQ1OS02LjEwMSwxMi42MzJsNS40MjksMTUuNTc0CgkJCWMtMzEuMzE4LDExLjcyNy01Ni4wNjEsMzYuODItNjYuNjcxLDY5LjQ3bC0xLjQ2Nyw0LjUxOWMtMTEuMzE2LDM0LjgyMi00Ljc0MSw3Mi45NDIsMTcuNTg2LDEwMS45NzMKCQkJYzIxLjA2MSwyNy4zODcsNTMuNTQ2LDQzLjI4OCw4Ny44NDIsNDMuMjg4YzIuMDEyLDAsNC4wMzItMC4wNTYsNi4wNTYtMC4xNjVjNTEuMjU4LTIuNzk3LDEwMS41NDYtMTYuMTcyLDE0Ny44MTUtMzkuMDg2CgkJCWw3LjQ4MiwxOC41NTNjMS41NTksMy44NjYsNS4yNzYsNi4yMTIsOS4yMDQsNi4yMTJjMS4yMzUsMCwyLjQ5LTAuMjMzLDMuNzA2LTAuNzIyYzUuMDgxLTIuMDQ5LDcuNTM4LTcuODI4LDUuNDktMTIuOTA4CgkJCWwtOC4yNDUtMjAuNDQ1YzQuNzczLTIuNjc3LDkuNDkzLTUuNDYzLDE0LjE2My04LjM1MWwyMS45MTIsMTcuODVjMS44NDEsMS41LDQuMDU1LDIuMjI4LDYuMjU3LDIuMjI4CgkJCWMyLjg4LDAsNS43MzYtMS4yNDcsNy42OTYtMy42NTRjMy40Ni00LjI0NywyLjgyMi0xMC40OTYtMS40MjYtMTMuOTU1bC0xNy4wMjktMTMuODcyYzYuMzMyLTQuMzk2LDEyLjUyMi04Ljk3NywxOC41NzEtMTMuNzIzCgkJCWwxNy45NjQsMTAuMzU5YzEuNTYyLDAuOTAxLDMuMjY1LDEuMzI4LDQuOTQ2LDEuMzI4YzMuNDI5LDAsNi43NjUtMS43ODEsOC42MDItNC45NjZjMi43MzYtNC43NDUsMS4xMDgtMTAuODEtMy42MzctMTMuNTQ4CgkJCWwtMTEuNTc0LTYuNjc0YzM4LjExMy0zMy4zNDUsNjkuNjItNzMuODE1LDkyLjQxNS0xMTkuMDM1YzIuNDY1LTQuODkyLDAuNS0xMC44NTctNC4zOTItMTMuMzIyCgkJCWMtNC44ODktMi40NjUtMTAuODU3LTAuNDk5LTEzLjMyMiw0LjM5MmMtMjguNzY4LDU3LjA2OS03Mi4xNTUsMTA2LjE4My0xMjUuNDcxLDE0Mi4wMjkKCQkJYy01NC42LDM2LjcwOC0xMTcuNjA3LDU3Ljk3Ni0xODIuMjEsNjEuNTAyYy0zMC4zOTksMS42NDctNTguNTA5LTExLjI0Ni03Ny4wOTEtMzUuNDA3Yy0xOC42MDktMjQuMi0yMy44NzQtNTQuNzI1LTE0LjQ0MS04My43NTYKCQkJbDEuNDY0LTQuNTExYzExLjU1Mi0zNS41NTQsNDMuNTkxLTYwLjIxNCw4MS42MjItNjIuODIyYzQyLjk5OC0yLjk0OSw4My44MTYtMjEuNzExLDExNC45MzQtNTIuODI3CgkJCWMzMS4xMTctMzEuMTE4LDQ5Ljg3OC03MS45MzYsNTIuODI3LTExNC45MzVjMi42MDktMzguMDMsMjcuMjY3LTcwLjA2OCw2Mi44MTgtODEuNjIxbDQuNTE5LTEuNDY4CgkJCWMyOS4wMjQtOS40MzEsNTkuNTUxLTQuMTY3LDgzLjc1MiwxNC40NDVjMjQuMTYxLDE4LjU4MiwzNy4wNjUsNDYuNjc5LDM1LjQwNiw3Ny4wOTFjLTEuOTgsMzYuMjc5LTkuNDkyLDcyLjAxOC0yMi4zMjcsMTA2LjIyNAoJCQljLTEuOTI0LDUuMTI5LDAuNjc0LDEwLjg0Nyw1LjgwMywxMi43NzJjNS4xMjksMS45MjMsMTAuODQ3LTAuNjcyLDEyLjc3LTUuODAyYzUuNTM2LTE0Ljc1NiwxMC4xMTctMjkuNzg1LDEzLjc2Mi00NS4wMTEKCQkJbDE5LjQ1MSw4LjU0MWMxLjI5NywwLjU3LDIuNjUyLDAuODQsMy45ODMsMC44NGMzLjgxNywwLDcuNDU1LTIuMjE1LDkuMDg3LTUuOTMzYzIuMjAyLTUuMDE1LTAuMDc4LTEwLjg2Ny01LjA5NC0xMy4wNzEKCQkJbC0yMy4yNDEtMTAuMjA2YzIuODU5LTE1LjYxLDQuNzQ3LTMxLjM5MSw1LjYxMy00Ny4yNzNjMC4yMTYtMy45NTcsMC4yMDYtNy44OTQsMC4wMDMtMTEuODA0aDIwLjYxNwoJCQlDNTA3LjU1OSwxMzQuNzc4LDUxMi4wMDEsMTMwLjMzNiw1MTIuMDAxLDEyNC44NTh6Ii8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMzUzLjM0MywxMzMuMzkyYy0xOC45NDUsMC0zNC4zNiwxNS40MTQtMzQuMzYsMzQuMzZjMCwxOC45NDcsMTUuNDE0LDM0LjM2LDM0LjM2LDM0LjM2CgkJCWMxOC45NDUsMCwzNC4zNTgtMTUuNDE0LDM0LjM1OC0zNC4zNlMzNzIuMjg5LDEzMy4zOTIsMzUzLjM0MywxMzMuMzkyeiBNMzUzLjM0MywxODIuMjc0Yy04LjAwOCwwLTE0LjUyMS02LjUxNS0xNC41MjEtMTQuNTIxCgkJCXM2LjUxNS0xNC41MjEsMTQuNTIxLTE0LjUyMWM4LjAwNywwLDE0LjUyLDYuNTE1LDE0LjUyLDE0LjUyMVMzNjEuMzUsMTgyLjI3NCwzNTMuMzQzLDE4Mi4yNzR6Ii8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMTc5LjgxNCwzNzQuMzA4Yy05LjUwNiwwLTE4LjYxOSwzLjUxNS0yNS42NTYsOS44OThjLTQuMDU4LDMuNjgxLTQuMzY0LDkuOTUyLTAuNjg1LDE0LjAxMQoJCQljMy42ODEsNC4wNTgsOS45NTMsNC4zNjMsMTQuMDExLDAuNjg1YzMuMzgyLTMuMDY2LDcuNzYxLTQuNzU1LDEyLjMzLTQuNzU1YzEwLjEyNCwwLDE4LjM2Miw4LjIzNywxOC4zNjIsMTguMzYyCgkJCXMtOC4yMzgsMTguMzYxLTE4LjM2MiwxOC4zNjFjLTcuMzk4LDAtMTQuMDQxLTQuNDA0LTE2LjkyNS0xMS4yMTljLTIuMTMzLTUuMDQ0LTcuOTU5LTcuNDA1LTEyLjk5OS01LjI3CgkJCWMtNS4wNDUsMi4xMzUtNy40MDYsNy45NTUtNS4yNywxMy4wMDFjNS45OTUsMTQuMTcxLDE5LjgxLDIzLjMyNywzNS4xOTQsMjMuMzI3YzIxLjA2NCwwLDM4LjItMTcuMTM4LDM4LjItMzguMgoJCQlTMjAwLjg3OCwzNzQuMzA4LDE3OS44MTQsMzc0LjMwOHoiLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik0zMzQuNDg5LDIzMi41NTJjLTI3LjgwMiwwLTUwLjQyMiwyMi42MTktNTAuNDIyLDUwLjQyczIyLjYxOSw1MC40Miw1MC40MjIsNTAuNDJjMjcuODAyLDAsNTAuNDItMjIuNjE5LDUwLjQyLTUwLjQyCgkJCVMzNjIuMjksMjMyLjU1MiwzMzQuNDg5LDIzMi41NTJ6IE0zMzQuNDg5LDMxMy41NTRjLTE2Ljg2NCwwLTMwLjU4NC0xMy43Mi0zMC41ODQtMzAuNTgyczEzLjcyLTMwLjU4MiwzMC41ODQtMzAuNTgyCgkJCXMzMC41ODIsMTMuNzIsMzAuNTgyLDMwLjU4MlMzNTEuMzUzLDMxMy41NTQsMzM0LjQ4OSwzMTMuNTU0eiIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTE3MS40OTMsMTQ0LjIyM2M1LjkzNC04LjI2OCw5LjQ0My0xOC4zOTEsOS40NDMtMjkuMzIzYzAtMTIuMDY2LTQuMjY0LTIzLjE1MS0xMS4zNTktMzEuODM5bDEzLjk0LTEzLjk0CgkJCWMzLjg3NS0zLjg3NCwzLjg3NS0xMC4xNTMsMC4wMDEtMTQuMDI3cy0xMC4xNTMtMy44NzUtMTQuMDI4LDBsLTE1LjMwMiwxNS4zMDNjLTcuMDY0LTMuNzczLTE1LjEyMS01LjkyLTIzLjY3MS01LjkyCgkJCWMtMjcuODAxLDAtNTAuNDIsMjIuNjE5LTUwLjQyLDUwLjQyMmMtMC4wMDMsMjQuOTAxLDE4LjE0OSw0NS42Myw0MS45MTMsNDkuNjg2bDIuNjgyLDE1Ljg0MwoJCQljMC44MTksNC44NDIsNS4wMTYsOC4yNjUsOS43NjgsOC4yNjVjMC41NDksMCwxLjEwNy0wLjA0NiwxLjY2OC0wLjE0YzUuNDAxLTAuOTE0LDkuMDM4LTYuMDM1LDguMTI0LTExLjQzNWwtMi4yMjQtMTMuMTQxCgkJCWM1LjM2OC0xLjI1OSwxMC40MS0zLjM3LDE0Ljk2OS02LjE5NmwxMi4xMjgsMTIuMTI4YzEuOTM4LDEuOTM2LDQuNDc3LDIuOTA2LDcuMDE1LDIuOTA2czUuMDc3LTAuOTY4LDcuMDE1LTIuOTA2CgkJCWMzLjg3NC0zLjg3NCwzLjg3NC0xMC4xNTQsMC0xNC4wMjdMMTcxLjQ5MywxNDQuMjIzeiBNMTMwLjUxNCwxNDUuNDgxYy0xNi44NjQsMC0zMC41ODItMTMuNzItMzAuNTgyLTMwLjU4MgoJCQljMC0xNi44NjQsMTMuNzE5LTMwLjU4NCwzMC41ODItMzAuNTg0czMwLjU4MiwxMy43MiwzMC41ODIsMzAuNTg0QzE2MS4wOTYsMTMxLjc2MSwxNDcuMzc4LDE0NS40ODEsMTMwLjUxNCwxNDUuNDgxeiIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPGNpcmNsZSBjeD0iMzc5LjE4NiIgY3k9IjEwNS42MDUiIHI9IjkuOTE5Ii8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8Y2lyY2xlIGN4PSIzOTcuMzMxIiBjeT0iMjA3LjcwNSIgcj0iOS45MTkiLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxjaXJjbGUgY3g9IjMxOS4xMjkiIGN5PSIzNTQuMjAzIiByPSI5LjkxOSIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPGNpcmNsZSBjeD0iMjI3Ljc1NSIgY3k9IjMxOS42MTgiIHI9IjkuOTE5Ii8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8Y2lyY2xlIGN4PSIxMDguMjM3IiBjeT0iMzk0LjY5OSIgcj0iOS45MTkiLz4KCTwvZz4KPC9nPgo8L3N2Zz4=" style="position:absolute;left:-10px;bottom:-10px;width:180px;height:180px;opacity:.14;transform:rotate(-20deg);z-index:0" alt="">
+  <div class="hero-badge">
+    <div style="width:24px;height:1px;background:rgba(245,200,66,.4)"></div>
+    <span style="font-size:11px;color:#f5c842;letter-spacing:2px;font-weight:500">台大醫院　醫學研究部</span>
+    <div style="width:24px;height:1px;background:rgba(245,200,66,.4)"></div>
   </div>
-
-  <!-- Actions -->
-  <div class="form-actions">
-    <button class="btn btn-ghost" onclick="window.print()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-      列印 / 存成PDF
-    </button>
-    <button class="btn btn-primary" onclick="submitForm()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-      送出確認
-    </button>
-  </div>
-  <div id="successMsg">✅ 確認單已送出！核心人員將盡快確認並與您聯繫。</div>
+  <h1>微菌體核心技術<br>服務平台</h1>
+  <p>提供專業微菌體相關研究技術服務<br>歡迎各研究團隊提出委託申請</p>
+  <a class="hero-btn" href="/apply/">
+    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    填寫委託申請表
+  </a>
 </div>
 
-<!-- 核心人員連結產生器 -->
-<div class="gen-card" id="genCard" style="display:none">
-  <div class="gen-title">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1a4a6b" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-    核心人員專區 — 產生預填連結
-  </div>
+<div class="body">
 
-  <div class="gen-grid">
-    <div class="gen-field" style="grid-column:1/-1">
-    <label>案件序號 *</label>
-    <div style="display:flex;gap:8px">
-      <input id="g_case_no" placeholder="例：MBC-2026-001" oninput="genUrl()" style="flex:1">
-      <button id="queryBtn" class="btn btn-primary" style="font-size:12px;padding:7px 16px;white-space:nowrap" onclick="queryCase()">
-        🔍 從申請表查詢
-      </button>
-    </div>
-    <span style="font-size:10px;color:#90a4ae;margin-top:2px">輸入案件序號後點「從申請表查詢」，自動帶入申請人資料</span>
-  </div>
-    <div class="gen-field"><label>服務申請日期 *</label><input id="g_apply_date" type="date" oninput="genUrl()"></div>
-    <div class="gen-field"><label>計畫主持人（PI）*</label><input id="g_pi" placeholder="姓名" oninput="genUrl()"></div>
-    <div class="gen-field"><label>單位 / 機構名稱 *</label><input id="g_institute" placeholder="單位名稱" oninput="genUrl()"></div>
-    <div class="gen-field"><label>聯絡人姓名</label><input id="g_contact" placeholder="聯絡人" oninput="genUrl()"></div>
-    <div class="gen-field"><label>聯絡電話</label><input id="g_tel" placeholder="電話" oninput="genUrl()"></div>
-    <div class="gen-field" style="grid-column:1/-1"><label>電子郵件</label><input id="g_email" placeholder="email" oninput="genUrl()"></div>
-    <div class="gen-field" style="grid-column:1/-1">
-      <label>委託服務平台</label>
-      <select id="g_service" onchange="genUrl()">
-        <option value="">請選擇</option>
-        <option value="微菌批次樣品製備平台">微菌批次樣品製備平台</option>
-        <option value="腸道厭氧菌分離純化培養平台">腸道厭氧菌分離純化培養平台</option>
-      </select>
-    </div>
-    <div class="gen-field" style="grid-column:1/-1">
-      <label>適用對象</label>
-      <select id="g_apptype" onchange="genUrl()">
-        <option value="">請選擇</option>
-        <option value="1">台大醫院及台大醫學校區同仁</option>
-        <option value="2">台灣大學非醫學校區同仁</option>
-        <option value="3">其他單位</option>
-      </select>
+  <div class="sec-title">關於我們</div>
+  <div class="about">
+    <div class="about-title">🔬 建立腸道微菌體與轉譯醫學之研究平台</div>
+    <div class="about-text">提供產學研醫各界對於腸道微菌叢之分離、培養、鑑定、保存、微菌樣品製備等相關需求。藉由腸道菌分離與功能驗證，揭示微菌體在病生理機制中扮演的關鍵角色，提供臨床新型診斷、預後與介入方向，包括微菌叢移植、活菌生醫療法及次世代益生菌開發，以期達成微菌轉譯研究與精準醫學之實質效益。</div>
+    <div class="tags">
+      <span class="tag">🔄 微菌叢移植</span>
+      <span class="tag">🧫 活菌生醫療法</span>
+      <span class="tag">🌱 次世代益生菌開發</span>
+      <span class="tag">🎯 精準醫學應用</span>
     </div>
   </div>
 
-  <div style="font-size:11px;color:#546e7a;margin-bottom:8px;font-weight:500">費用明細項目</div>
-  <div class="gen-svc-rows" id="genSvcRows">
-    <div class="gen-svc-row">
-      <select onchange="genUrl();autoFillName(this)">
-        <option value="">選擇代碼</option>
-        <option value="R1101">R1101</option>
-        <option value="R1102">R1102</option>
-      </select>
-      <input placeholder="服務收費項目名稱" oninput="genUrl()" class="svc-name-input">
-      <input type="number" placeholder="單價" oninput="genUrl()" class="svc-price-input">
-      <input type="number" placeholder="數量" oninput="genUrl()" class="svc-qty-input">
-      <button class="gen-del-btn" onclick="delGenRow(this)">×</button>
+  <div class="sec-title">服務項目</div>
+  <div class="svc-grid">
+    <div class="svc">
+      <div class="svc-ico" style="background:linear-gradient(135deg,#b8d8f8,#90c4f0)">
+        <span class="material-symbols-outlined" style="color:#1a4a6b">biotech</span>
+      </div>
+      <div class="svc-content">
+        <div class="svc-name">微菌批次樣品製備平台</div>
+        <div class="svc-desc">純菌製備及糞便樣品前處理（動物 FMT 實驗用），提供活體或體外試驗，驗證微菌對病生理的影響。</div>
+      </div>
+    </div>
+    <div class="svc">
+      <div class="svc-ico" style="background:linear-gradient(135deg,#a8e8dc,#7cd4c4)">
+        <span class="material-symbols-outlined" style="color:#1a6b5a">microbiology</span>
+      </div>
+      <div class="svc-content">
+        <div class="svc-name">腸道厭氧菌分離純化培養平台</div>
+        <div class="svc-desc">自糞便中分離純化目標菌種，以進一步針對目標菌種進行功能驗證。</div>
+      </div>
     </div>
   </div>
-  <button class="gen-add-btn" onclick="addGenRow()" style="margin-bottom:12px">＋ 新增項目</button>
 
-  <div style="font-size:11px;color:#546e7a;margin-bottom:6px;font-weight:500">產生的連結</div>
-  <div class="gen-url" id="genUrl">請填寫上方資料後自動產生連結</div>
-  <div style="display:flex;gap:8px">
-    <button class="btn btn-primary" style="font-size:12px;padding:7px 16px" onclick="copyUrl()">複製連結</button>
-    <button class="btn btn-ghost" style="font-size:12px;padding:7px 16px" onclick="openUrl()">預覽</button>
+  <div class="sec-title">申請流程</div>
+  <div class="flow">
+    <div class="flow-steps">
+      <div class="step"><div class="step-n s1">1</div><div class="step-t">填寫線上申請表</div></div>
+      <div class="arr">›</div>
+      <div class="step"><div class="step-n s2">2</div><div class="step-t">核心人員 2 日內聯繫</div></div>
+      <div class="arr">›</div>
+      <div class="step"><div class="step-n s3">3</div><div class="step-t">雙方討論確認需求</div></div>
+      <div class="arr">›</div>
+      <div class="step"><div class="step-n s4">4</div><div class="step-t">正式立案執行服務</div></div>
+    </div>
   </div>
+
+  <div class="sec-title">核心資訊</div>
+  <div class="info" style="margin-bottom:28px">
+    <div class="info-row">
+      <div class="info-ico">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1a4a6b" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <div>
+        <div class="info-name">核心位置</div>
+        <div class="info-detail">台大藥學專業學院（水森館）五樓　R521/523 微菌治療研發中心</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-title">聯絡資訊</div>
+  <div class="info">
+    <div class="info-row">
+      <div class="info-ico">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1a4a6b" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div>
+        <div class="info-name">羅翊菱 博士</div>
+        <div class="info-detail">
+          <span>分機 264128</span>
+          <a href="mailto:yilinglo@ntuh.gov.tw">yilinglo@ntuh.gov.tw</a>
+        </div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-ico">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1a4a6b" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div>
+        <div class="info-name">楊聿婷 小姐</div>
+        <div class="info-detail">
+          <span>分機 264127</span>
+          <a href="mailto:yutangyang@ntuh.gov.tw">yutangyang@ntuh.gov.tw</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="apply-wrap">
+    <a class="apply-btn" href="/apply/">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      填寫委託申請表
+    </a>
+  </div>
+
 </div>
 
-<script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzKGrTAUnFtQ93dKd_ReoS9JqXb7PdmpPtrZN2icmKUjjjelbQv7E7Sd9pUmXWzzDi2OQ/exec';
-const CODE_NAMES = {'R1101':'腸道厭氧菌分離純化','R1102':'微菌批次樣品製備'};
+<div class="footer">© 2026 NTUH Microbiome Core Facility　｜　ntuh-microbiome-core.org</div>
 
-// Show staff section if ?staff=1
-if (new URLSearchParams(location.search).get('staff') === '1') {
-  document.getElementById('genCard').style.display = 'block';
-}
-
-// Query case data from Google Sheets
-async function queryCase() {
-  const caseNo = document.getElementById('g_case_no').value.trim();
-  if (!caseNo) { alert('請先填寫案件序號'); return; }
-
-  const btn = document.getElementById('queryBtn');
-  btn.textContent = '查詢中…';
-  btn.disabled = true;
-
-  try {
-    const res = await fetch(SCRIPT_URL + '?action=query&case=' + encodeURIComponent(caseNo));
-    const json = await res.json();
-
-    if (json.status === 'ok') {
-      const d = json.data;
-      document.getElementById('g_pi').value        = d['計畫主持人'] || '';
-      document.getElementById('g_institute').value = d['委託單位']   || '';
-      document.getElementById('g_contact').value   = d['聯絡人']     || '';
-      document.getElementById('g_tel').value       = d['電話']       || '';
-      document.getElementById('g_email').value     = d['電子郵件']   || '';
-      // Auto select service type
-      const svc = d['委託服務'] || '';
-      const sel = document.getElementById('g_service');
-      for (let i=0; i<sel.options.length; i++) {
-        if (sel.options[i].value === svc) { sel.selectedIndex = i; break; }
-      }
-      btn.textContent = '✅ 查詢成功';
-      genUrl();
-    } else if (json.status === 'not_found') {
-      alert('找不到案件序號「' + caseNo + '」，請確認是否已在 Google Sheets 填入案件序號。');
-      btn.textContent = '查詢';
-    } else {
-      alert('查詢失敗：' + json.message);
-      btn.textContent = '查詢';
-    }
-  } catch(err) {
-    alert('連線失敗，請稍後再試。');
-    btn.textContent = '查詢';
-  }
-  btn.disabled = false;
-}
-
-// Print date
-document.getElementById('printDate').textContent = '列印日期：' + new Date().toLocaleDateString('zh-TW');
-
-// Read URL params and fill form
-const params = new URLSearchParams(location.search);
-function setVal(id, key) {
-  const el = document.getElementById(id);
-  if (el && params.get(key)) el.value = params.get(key);
-}
-setVal('case_no','case'); document.getElementById('caseNoDisplay').textContent = params.get('case')||'—';
-setVal('apply_date','date');
-setVal('pi_name','pi');
-setVal('institute','inst');
-setVal('contact_name','contact');
-setVal('contact_tel','tel');
-setVal('contact_email','email');
-setVal('service_type','service');
-
-// Applicant type
-const appType = params.get('apptype');
-if (appType) {
-  ['1','2','3'].forEach(t => {
-    const cb = document.getElementById('type'+t);
-    const lbl = document.getElementById('lbl_type'+t);
-    if (t === appType) { cb.checked = true; lbl.classList.add('checked'); }
-  });
-}
-
-// Service items
-const items = params.get('items');
-if (items) {
-  const tbody = document.getElementById('svcBody');
-  tbody.innerHTML = '';
-  let total = 0;
-  items.split('|').forEach(item => {
-    const [code, name, price, qty] = item.split(',');
-    const p = parseFloat(price)||0, q = parseFloat(qty)||0;
-    const sub = p * q;
-    total += sub;
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${code||''}</td><td>${name||''}</td><td class="center">${p?p.toLocaleString():''}</td><td class="center">${q||''}</td><td class="center">${sub?sub.toLocaleString()+' 元':'—'}</td>`;
-    tbody.appendChild(tr);
-  });
-  document.getElementById('totalAmount').textContent = total ? total.toLocaleString()+' 元' : '—';
-  document.getElementById('amountWords').textContent = total ? numToChinese(total) : '—';
-}
-
-// Show/hide payment sub
-function showPaySub(type) {
-  ['cash','internal','external'].forEach(t => {
-    document.getElementById('sub_'+t).classList.toggle('open', t===type);
-  });
-  document.getElementById('pay_err').style.display = 'none';
-}
-
-// Number to Chinese
-function numToChinese(n) {
-  if (!n || n===0) return '—';
-  const units=['','拾','佰','仟','萬','拾萬','佰萬','仟萬','億'];
-  const digits=['零','壹','貳','參','肆','伍','陸','柒','捌','玖'];
-  let s=Math.round(n).toString(), result='';
-  for(let i=0;i<s.length;i++){
-    const d=parseInt(s[i]),u=units[s.length-1-i];
-    if(d!==0) result+=digits[d]+u;
-    else if(result&&!result.endsWith('零')) result+='零';
-  }
-  return '新台幣 '+result.replace(/零+$/,'')+' 元整';
-}
-
-// Validation & submit
-function submitForm() {
-  let ok = true;
-  function chk(id, msg) {
-    const el = document.getElementById(id);
-    const f = el?.closest('.field');
-    const empty = !el?.value?.trim();
-    f?.classList.toggle('error', empty);
-    if (empty && msg) { const e=f?.querySelector('.err-msg'); if(e) e.textContent=msg; }
-    return !empty;
-  }
-  ok = chk('invoice_title','請填寫發票抬頭') && ok;
-  const payMethod = document.querySelector('input[name=pay_method]:checked')?.value;
-  if (!payMethod) { document.getElementById('pay_method_grp').classList.add('error'); document.getElementById('pay_err').style.display='block'; ok=false; }
-  else { document.getElementById('pay_method_grp').classList.remove('error'); }
-
-  if (!ok) { window.scrollTo({top:0,behavior:'smooth'}); return; }
-
-  const payload = {
-    表單類型:'服務委託確認單',
-    案件序號: document.getElementById('case_no').value,
-    計畫主持人: document.getElementById('pi_name').value,
-    單位: document.getElementById('institute').value,
-    聯絡人: document.getElementById('contact_name').value,
-    聯絡電話: document.getElementById('contact_tel').value,
-    電子郵件: document.getElementById('contact_email').value,
-    服務項目: document.getElementById('service_type').value,
-    發票抬頭: document.getElementById('invoice_title').value,
-    付款方式: payMethod,
-    院內計畫編號: document.getElementById('internal_plan_no')?.value||'',
-    院外計畫編號: document.getElementById('external_plan_no')?.value||'',
-    備註: document.getElementById('notes').value,
-    提交時間: new Date().toLocaleString('zh-TW')
-  };
-
-  const btn = document.querySelector('.btn-primary');
-  btn.disabled=true; btn.textContent='送出中…';
-  const form = new URLSearchParams();
-  Object.entries(payload).forEach(([k,v])=>form.append(k,v));
-  fetch(SCRIPT_URL,{method:'POST',body:form})
-    .then(()=>{
-      document.getElementById('successMsg').style.display='block';
-      btn.textContent='✅ 已送出';
-      window.scrollTo({top:99999,behavior:'smooth'});
-    })
-    .catch(()=>{ alert('送出失敗，請稍後再試。'); btn.disabled=false; btn.textContent='送出確認'; });
-}
-
-// Clear error on input
-document.querySelectorAll('input,select,textarea').forEach(el=>{
-  el.addEventListener('input',()=>el.closest('.field')?.classList.remove('error'));
-});
-
-// ── Link generator ──
-function autoFillName(sel) {
-  const row = sel.closest('.gen-svc-row');
-  const nameInput = row.querySelector('.svc-name-input');
-  if (CODE_NAMES[sel.value]) nameInput.value = CODE_NAMES[sel.value];
-  genUrl();
-}
-
-function addGenRow() {
-  const container = document.getElementById('genSvcRows');
-  const div = document.createElement('div');
-  div.className = 'gen-svc-row';
-  div.innerHTML = `
-    <select onchange="genUrl();autoFillName(this)">
-      <option value="">選擇代碼</option>
-      <option value="R1101">R1101</option>
-      <option value="R1102">R1102</option>
-    </select>
-    <input placeholder="服務收費項目名稱" oninput="genUrl()" class="svc-name-input">
-    <input type="number" placeholder="單價" oninput="genUrl()" class="svc-price-input">
-    <input type="number" placeholder="數量" oninput="genUrl()" class="svc-qty-input">
-    <button class="gen-del-btn" onclick="delGenRow(this)">×</button>`;
-  container.appendChild(div);
-}
-
-function delGenRow(btn) {
-  const rows = document.querySelectorAll('.gen-svc-row');
-  if (rows.length > 1) { btn.closest('.gen-svc-row').remove(); genUrl(); }
-}
-
-function genUrl() {
-  const base = location.origin + location.pathname;
-  const p = new URLSearchParams();
-  const g = id => document.getElementById(id)?.value||'';
-  if(g('g_case_no')) p.set('case', g('g_case_no'));
-  if(g('g_apply_date')) p.set('date', g('g_apply_date'));
-  if(g('g_pi')) p.set('pi', g('g_pi'));
-  if(g('g_institute')) p.set('inst', g('g_institute'));
-  if(g('g_contact')) p.set('contact', g('g_contact'));
-  if(g('g_tel')) p.set('tel', g('g_tel'));
-  if(g('g_email')) p.set('email', g('g_email'));
-  if(g('g_service')) p.set('service', g('g_service'));
-  if(g('g_apptype')) p.set('apptype', g('g_apptype'));
-
-  const rows = document.querySelectorAll('.gen-svc-row');
-  const items = [];
-  rows.forEach(row => {
-    const code = row.querySelector('select').value;
-    const name = row.querySelector('.svc-name-input').value;
-    const price = row.querySelector('.svc-price-input').value;
-    const qty = row.querySelector('.svc-qty-input').value;
-    if (name||code) items.push(`${code},${name},${price},${qty}`);
-  });
-  if (items.length) p.set('items', items.join('|'));
-
-  const url = base + '?' + p.toString();
-  document.getElementById('genUrl').textContent = url;
-}
-
-function copyUrl() {
-  const url = document.getElementById('genUrl').textContent;
-  if (url.startsWith('請')) return;
-  navigator.clipboard.writeText(url).then(()=>alert('連結已複製！'));
-}
-
-function openUrl() {
-  const url = document.getElementById('genUrl').textContent;
-  if (!url.startsWith('請')) window.open(url, '_blank');
-}
-</script>
 </body>
 </html>
