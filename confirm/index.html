@@ -747,7 +747,7 @@ async function queryCase() {
     let html = '';
     if (appType) {
       const idx = parseInt(appType) - 1;
-      if (appLabels[idx]) html += '<span>適用對象：' + appLabels[idx] + '</span>';
+      if (appLabels[idx]) html += '<span>適用對象：' + appLabels[idx] + '　　　</span>';
     }
     if (applyDate) html += '<span style="margin-left:auto">服務申請日期：' + applyDate + '</span>';
     if (html) { span.innerHTML = html; }
