@@ -155,8 +155,9 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
 /* Print */
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-  @page{size:A4 portrait;margin:10mm 12mm}
+  @page{size:A4 portrait;margin:0mm 10mm 8mm}
   html,body{margin:0!important;padding:0!important;background:#fff!important}
+  .card{margin-top:0!important}
 
   /* 隱藏不需列印的元素 */
   .form-actions,#successMsg,.gen-card,#printOverlay,
@@ -193,18 +194,8 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
 
   /* ── 適用對象：移到標題右側，一行顯示 ── */
   /* 隱藏原本的適用對象欄位 */
-  .row.c2:first-of-type{display:block!important;position:relative!important;border-bottom:none!important}
-  .row.c2:first-of-type > .field:first-child{display:none!important}
   /* 服務申請日期欄位正常顯示 */
-  .row.c2:first-of-type > div:last-child{display:block!important}
-  .row.c2:first-of-type > div:last-child .field.no-print{display:none!important}
   /* 適用對象顯示在 section-label 右側 */
-  .section-label::after{
-    content:attr(data-apptype);
-    font-size:12px!important;font-weight:600!important;
-    color:#1a4a6b!important;letter-spacing:0!important;
-    float:right!important;margin-top:1px!important
-  }
 
   /* ── Field 表格樣式 ── */
   .field{
@@ -278,24 +269,24 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
   .sig-cell{
     break-inside:avoid!important;
     border:none!important;border-right:1px solid #c5d5e0!important;
-    padding:5px 8px!important;min-height:72px!important;
-    text-align:center!important
+    padding:8px 8px!important;min-height:88px!important;
+    text-align:center!important;
+    display:flex!important;flex-direction:column!important;
+    justify-content:space-between!important
   }
   .sig-cell:last-child{border-right:none!important}
-  .sig-cell.large{min-height:72px!important}
+  .sig-cell.large{min-height:88px!important;display:flex!important;flex-direction:column!important;justify-content:space-between!important}
   .sig-cell .sig-title{
     font-size:10px!important;color:#444!important;
-    margin-bottom:16px!important;font-weight:600!important
+    margin-bottom:0!important;font-weight:600!important
   }
-  .sig-cell.large .sig-title{margin-bottom:16px!important}
+  .sig-cell.large .sig-title{margin-bottom:0!important}
   .sig-cell .sig-line{margin:0 8px!important;border-bottom:1px solid #aaa!important}
   .sig-cell .sig-date{font-size:9px!important;color:#888!important;margin-top:4px!important}
 
   /* ── 備註 ── */
   #notes{min-height:14px!important;max-height:20px!important;font-size:12px!important}
-  /* 隱藏適用對象格子（已顯示在標題旁）*/
-  .row.c2:first-of-type > .field:first-child{display:none!important}
-  /* 移除頂部空白 */
+/* 移除頂部空白 */
   @page{margin-top:8mm}
 
   .form-header-left .small{color:#546e7a!important}
@@ -307,13 +298,27 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
   .strip-gold{color:#f5c842!important}
   .form-header-strip .print-date{color:rgba(255,255,255,.8)!important}
 
-  .section-label::after{color:#1e7fc0!important;font-style:italic!important}
+  /* 隱藏適用對象和服務申請日期格子，全移到標題列 */
 
-  /* 服務申請日期移到和案件序號同行 - 顯示在 header 右側下方 */
-  .row.c2:first-of-type > div:last-child{display:flex!important;gap:0!important;flex-direction:column!important}
-  .row.c2:first-of-type > div:last-child .field{border-bottom:none!important}
-  /* 調整右欄 - 服務申請日期單獨顯示 */
-  .row.c2:first-of-type{display:grid!important;grid-template-columns:0fr 1fr!important}
+  .apptype-group{gap:1px!important;margin-top:2px!important}
+  .apptype-group label{display:flex!important;align-items:center!important;border:none!important;background:none!important;padding:1px 0!important;font-size:11px!important;color:#666!important;border-radius:0!important}
+  .apptype-group label.checked{color:#1a1a1a!important;font-weight:700!important}
+  .apptype-group input[type=checkbox]{display:none!important}
+  .apptype-group label::before{content:'□ '!important;font-size:10px!important;color:#aaa!important}
+  .apptype-group label.checked::before{content:'✓ '!important;font-size:10px!important;color:#1a4a6b!important}
+  .field:has(.apptype-group){min-height:auto!important;padding:4px 6px!important}
+  .apptype-group label{min-height:auto!important}
+  /* 適用對象和服務申請日期整行隱藏 */
+  .row.c2:first-of-type{display:none!important}
+
+  /* 顯示適用對象資訊在標題旁 */
+  .print-apptype-info{
+    display:inline!important;
+    font-size:11px!important;font-weight:400!important;
+    color:#1a4a6b!important;letter-spacing:0!important;
+    font-style:normal!important
+  }
+  .readonly-badge{display:none!important}
 }
 </style>
 </head>
@@ -349,9 +354,9 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
 
     <!-- 壹、申請人基本資料 -->
     <div class="section">
-      <div class="section-label">壹、申請人基本資料 <span class="readonly-badge">核心填寫</span></div>
+      <div class="section-label">壹、申請人基本資料 <span class="readonly-badge">核心填寫</span><span class="print-apptype-info" id="printApptypeInfo" style="display:none"></span></div>
       <div class="row c2" style="margin-bottom:12px">
-        <div class="field no-print">
+        <div class="field">
           <label>適用對象</label>
           <div class="apptype-group" id="appTypeGroup">
             <label id="lbl_type1"><input type="checkbox" id="type1" disabled>台大醫院及台大醫學校區同仁</label>
@@ -680,16 +685,21 @@ async function queryCase() {
   btn.disabled = false;
 }
 
-// Set apptype on section label for print display
+// Set apptype + date info for print
 (function() {
-  const appLabels = ['台大醫院及台大醫學校區同仁','台灣大學非醫學校區同仁','其他單位'];
-  const appType = new URLSearchParams(location.search).get('apptype');
-  const label = document.querySelector('.section-label');
-  if (appType && label) {
-    const idx = parseInt(appType) - 1;
-    if (appLabels[idx]) {
-      label.setAttribute('data-apptype', '適用對象：' + appLabels[idx]);
+  const params = new URLSearchParams(location.search);
+  const appType = params.get('apptype');
+  const applyDate = params.get('date') || '';
+  const span = document.getElementById('printApptypeInfo');
+  if (span) {
+    let parts = [];
+    const appLabels = ['台大醫院及台大醫學校區同仁','台灣大學非醫學校區同仁','其他單位'];
+    if (appType) {
+      const idx = parseInt(appType) - 1;
+      if (appLabels[idx]) parts.push('適用對象：' + appLabels[idx]);
     }
+    if (applyDate) parts.push('服務申請日期：' + applyDate);
+    if (parts.length) span.textContent = '　' + parts.join('　');
   }
 })();
 
