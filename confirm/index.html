@@ -458,7 +458,10 @@ async function queryCase() {
   btn.disabled = true;
 
   try {
-    const res = await fetch(SCRIPT_URL + '?action=query&case=' + encodeURIComponent(caseNo));
+    const form = new URLSearchParams();
+    form.append('action', 'query');
+    form.append('case', caseNo);
+    const res = await fetch(SCRIPT_URL, { method: 'POST', body: form });
     const json = await res.json();
 
     if (json.status === 'ok') {
