@@ -415,7 +415,7 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
           <div class="apptype-group" id="appTypeGroup">
             <label id="lbl_type1"><input type="checkbox" id="type1" disabled>台大醫院及台大醫學校區同仁</label>
             <label id="lbl_type2"><input type="checkbox" id="type2" disabled>台灣大學非醫學校區同仁</label>
-            <label id="lbl_type3"><input type="checkbox" id="type3" disabled>其他單位</label>
+            <label id="lbl_type3"><input type="checkbox" id="type3" disabled>其他單位（非台大醫院／台大校區）</label>
           </div>
         </div>
         <div>
@@ -645,7 +645,7 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
         <option value="">請選擇</option>
         <option value="1">台大醫院及台大醫學校區同仁</option>
         <option value="2">台灣大學非醫學校區同仁</option>
-        <option value="3">其他單位</option>
+        <option value="3">其他單位（非台大醫院／台大校區）</option>
       </select>
     </div>
   </div>
@@ -743,7 +743,7 @@ async function queryCase() {
   const applyDate = params.get('date') || '';
   const span = document.getElementById('printApptypeInfo');
   if (span) {
-    const appLabels = ['台大醫院及台大醫學校區同仁','台灣大學非醫學校區同仁','其他單位'];
+    const appLabels = ['台大醫院及台大醫學校區同仁','台灣大學非醫學校區同仁','其他單位（非台大醫院／台大校區）'];
     let html = '';
     if (appType) {
       const idx = parseInt(appType) - 1;
