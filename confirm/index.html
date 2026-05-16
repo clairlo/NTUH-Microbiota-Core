@@ -157,13 +157,169 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   @page{size:A4 portrait;margin:10mm 12mm}
+  html,body{margin:0!important;padding:0!important;background:#fff!important}
+
+  /* 隱藏不需列印的元素 */
+  .form-actions,#successMsg,.gen-card,#printOverlay,
+  .notice,.notice-blue,.pay-sub,.err-msg,
+  .no-print,.readonly-badge,.user-badge,
+  .form-header-strip a,
+  h1{display:none!important}
+
+  /* 顯示已選付款方式子區塊（隱藏說明文字）*/
+  .pay-sub.open{display:block!important}
+  .pay-sub.open .notice{display:none!important}
+  .pay-sub-title{display:none!important}
+  .print-date{display:inline!important}
+
+  /* ── Card & Header ── */
+  .card{box-shadow:none!important;border-radius:0!important;max-width:none!important}
+  .form-header{background:linear-gradient(135deg,#1a4a6b 0%,#1e7fc0 100%)!important}
+  .form-header-top{padding:8px 16px!important}
+  .form-header-title{font-size:15px!important}
+  .form-header-en{font-size:8px!important}
+  .form-header-strip{padding:3px 16px!important}
+  .strip-gold{display:block!important}
+  .case-val{font-size:13px!important}
+
+  /* ── Body layout ── */
+  .form-body{padding:6px 14px 0!important}
+  .section{margin-bottom:5px!important}
+  .section-label{
+    font-size:9px!important;font-weight:700!important;
+    color:#1a4a6b!important;letter-spacing:1.5px!important;
+    margin-bottom:4px!important;padding-bottom:3px!important;
+    border-bottom:1.5px solid #1a4a6b!important
+  }
+
+  /* ── 適用對象：移到標題右側，一行顯示 ── */
+  /* 隱藏原本的適用對象欄位 */
+  .row.c2:first-of-type{display:block!important;position:relative!important;border-bottom:none!important}
+  .row.c2:first-of-type > .field:first-child{display:none!important}
+  /* 服務申請日期欄位正常顯示 */
+  .row.c2:first-of-type > div:last-child{display:block!important}
+  .row.c2:first-of-type > div:last-child .field.no-print{display:none!important}
+  /* 適用對象顯示在 section-label 右側 */
+  .section-label::after{
+    content:attr(data-apptype);
+    font-size:9px!important;font-weight:600!important;
+    color:#1a4a6b!important;letter-spacing:0!important;
+    float:right!important;margin-top:1px!important
+  }
+
+  /* ── Field 表格樣式 ── */
+  .field{
+    border:1px solid #c5d5e0!important;border-radius:0!important;
+    padding:3px 6px 2px!important;background:#fff!important;
+    min-height:26px!important
+  }
+  .field label{
+    font-size:7.5px!important;color:#5a7a8a!important;
+    margin-bottom:1px!important;display:block!important;
+    line-height:1.2!important;font-weight:500!important;
+    text-transform:none!important
+  }
+  .field input,.field select,.field textarea{
+    border:none!important;border-radius:0!important;
+    background:transparent!important;padding:0!important;
+    font-size:11px!important;box-shadow:none!important;
+    color:#1a1a1a!important;width:100%!important;
+    line-height:1.3!important;font-family:inherit!important
+  }
+  .field input::placeholder,.field textarea::placeholder{color:transparent!important}
+  .field input[readonly],.field select[disabled]{background:transparent!important;color:#1a1a1a!important}
+  .field textarea{min-height:22px!important;border:none!important;resize:none!important}
+
+  /* 隱藏星號 */
+  .field label span[style*="color:#e24b4a"]{display:none!important}
+
+  /* ── Row 表格框線 ── */
+  .row{gap:0!important;margin-bottom:0!important;border-bottom:1px solid #c5d5e0!important}
+  .row .field{border-bottom:none!important;min-height:26px!important}
+  .row.c2 .field:first-child{border-right:none!important}
+  .row.c3 .field:not(:last-child){border-right:none!important}
+  .section > .field{border-bottom:1px solid #c5d5e0!important}
+
+  /* ── 付款方式：只顯示已選 ── */
+  .opt-group{flex-wrap:nowrap!important}
+  .opt-group label{display:none!important}
+  .opt-group label:has(input:checked){
+    display:flex!important;background:#eef6ff!important;
+    border:1px solid #1a4a6b!important;font-size:10px!important;
+    padding:3px 10px!important;border-radius:4px!important
+  }
+
+  /* ── 服務費用表格 ── */
+  .svc-table{font-size:10px!important}
+  .svc-table th{
+    background:#e3edf5!important;font-size:9px!important;
+    padding:4px 6px!important;color:#1a4a6b!important
+  }
+  .svc-table td{padding:4px 6px!important;font-size:10.5px!important}
+  .svc-table .total-row td{background:#e3edf5!important}
+  .amount-display{
+    padding:3px 8px!important;font-size:10px!important;
+    margin-top:3px!important;border:1px solid #c5d5e0!important;
+    background:#f7fbff!important
+  }
+
+  /* ── 簽章區 ── */
+  .sig-grid{
+    display:grid!important;grid-template-columns:repeat(4,1fr)!important;
+    gap:0!important;margin-top:4px!important;
+    border:1px solid #c5d5e0!important;
+    page-break-inside:avoid!important;break-inside:avoid!important
+  }
+  .sig-cell{
+    break-inside:avoid!important;
+    border:none!important;border-right:1px solid #c5d5e0!important;
+    padding:5px 8px!important;min-height:48px!important;
+    text-align:center!important
+  }
+  .sig-cell:last-child{border-right:none!important}
+  .sig-cell.large{min-height:48px!important}
+  .sig-cell .sig-title{
+    font-size:8.5px!important;color:#444!important;
+    margin-bottom:16px!important;font-weight:600!important
+  }
+  .sig-cell.large .sig-title{margin-bottom:16px!important}
+  .sig-cell .sig-line{margin:0 8px!important;border-bottom:1px solid #aaa!important}
+  .sig-cell .sig-date{font-size:8px!important;color:#888!important;margin-top:4px!important}
+
+  /* ── 備註 ── */
+  #notes{min-height:16px!important;max-height:32px!important}
+}
+  @page{size:A4 portrait;margin:10mm 12mm}
   body{background:#fff!important;padding:0!important;font-size:11px!important}
   .form-actions,#successMsg,.gen-card,.form-header-strip a,.notice,.notice-blue,.pay-sub,.err-msg,#printOverlay,.no-print,.readonly-badge,.user-badge{display:none!important}
   .pay-sub.open{display:block!important}
   .pay-sub.open .notice{display:none!important}
-  /* 移除頂部空白 */
+  /* 移除頂部空白、壓縮成一頁 */
   html,body{margin:0!important;padding:0!important}
   .card{margin:0!important}
+  /* 縮小各區塊間距 */
+  .form-body{padding:6px 16px 0!important}
+  .section{margin-bottom:6px!important}
+  .section-label{font-size:9.5px!important;margin-bottom:5px!important;padding-bottom:3px!important}
+  .form-header-top{padding:8px 16px 6px!important}
+  .form-header-title{font-size:16px!important}
+  .form-header-en{font-size:8px!important}
+  .form-header-strip{padding:3px 16px!important}
+  /* 簽章區縮小 */
+  .sig-grid{grid-template-columns:1fr 1fr!important;gap:6px!important;margin-top:4px!important}
+  .sig-cell{padding:8px 8px!important;min-height:60px!important}
+  .sig-cell.large{min-height:60px!important}
+  .sig-cell .sig-title{font-size:9px!important;margin-bottom:24px!important}
+  .sig-cell.large .sig-title{margin-bottom:24px!important}
+  .sig-cell .sig-date{font-size:9px!important;margin-top:4px!important}
+  /* 金額顯示縮小 */
+  .amount-display{padding:4px 8px!important;font-size:10px!important;margin-top:4px!important}
+  /* 表格縮小 */
+  .svc-table th{padding:4px 6px!important;font-size:9.5px!important}
+  .svc-table td{padding:4px 6px!important;font-size:10.5px!important}
+  /* 備註縮小 */
+  #notes{min-height:24px!important}
+  .field{min-height:28px!important;padding:3px 6px 2px!important}
   .print-date{display:inline!important}
   .card{box-shadow:none!important;border-radius:0!important;max-width:none!important;border:none!important}
   .form-header{background:linear-gradient(135deg,#1a4a6b 0%,#1e7fc0 100%)!important;padding:0!important}
@@ -575,6 +731,29 @@ async function queryCase() {
   }
   btn.disabled = false;
 }
+
+// Set apptype on section label for print display
+(function() {
+  const appLabels = ['台大醫院及台大醫學校區同仁','台灣大學非醫學校區同仁','其他單位'];
+  const appType = new URLSearchParams(location.search).get('apptype');
+  const label = document.querySelector('.section-label');
+  if (appType && label) {
+    const idx = parseInt(appType) - 1;
+    if (appLabels[idx]) {
+      label.setAttribute('data-apptype', '適用對象：' + appLabels[idx]);
+    }
+  }
+})();
+
+// Auto fill notes with (無) if empty before print
+window.addEventListener('beforeprint', function() {
+  const notes = document.getElementById('notes');
+  if (notes && !notes.value.trim()) notes.value = '（無）';
+});
+window.addEventListener('afterprint', function() {
+  const notes = document.getElementById('notes');
+  if (notes && notes.value === '（無）') notes.value = '';
+});
 
 // Print date
 document.getElementById('printDate').textContent = '列印日期：' + new Date().toLocaleDateString('zh-TW');
