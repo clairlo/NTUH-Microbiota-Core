@@ -242,11 +242,13 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
   /* ── 付款方式：只顯示已選 ── */
   .opt-group{flex-wrap:nowrap!important}
   .opt-group label{display:none!important}
+  .opt-group input[type=radio]{display:none!important}
   .opt-group label:has(input:checked){
     display:flex!important;background:#eef6ff!important;
     border:1px solid #1a4a6b!important;font-size:10px!important;
     padding:3px 10px!important;border-radius:4px!important
   }
+  .opt-group label:has(input:checked) input[type=radio]{display:none!important}
 
   /* ── 服務費用表格 ── */
   .svc-table{font-size:10px!important}
@@ -328,7 +330,7 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
     <div class="section">
       <div class="section-label">壹、申請人基本資料 <span class="readonly-badge">核心填寫</span></div>
       <div class="row c2" style="margin-bottom:12px">
-        <div class="field">
+        <div class="field no-print">
           <label>適用對象</label>
           <div class="apptype-group" id="appTypeGroup">
             <label id="lbl_type1"><input type="checkbox" id="type1" disabled>台大醫院及台大醫學校區同仁</label>
