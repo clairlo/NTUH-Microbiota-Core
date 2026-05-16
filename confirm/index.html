@@ -86,14 +86,13 @@ h1{font-size:0;height:0;overflow:hidden}
 .field.error .err-msg{display:block}
 
 /* Signature block */
-.sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
-@media(max-width:560px){.sig-grid{grid-template-columns:1fr}}
-.sig-cell{border:1px solid #d0dbe3;border-radius:8px;padding:16px 14px;text-align:center}
+.sig-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:8px}
+@media(max-width:560px){.sig-grid{grid-template-columns:1fr 1fr}}
+.sig-cell{border:1px solid #d0dbe3;border-radius:8px;padding:14px 14px 10px;text-align:center;display:flex;flex-direction:column;min-height:100px}
 .sig-cell.large{min-height:110px}
-.sig-cell .sig-title{font-size:11px;color:#546e7a;margin-bottom:32px;font-weight:500}
-.sig-cell.large .sig-title{margin-bottom:48px}
-.sig-cell .sig-line{border-bottom:1px solid #ccc;margin:0 12px}
-.sig-cell .sig-date{font-size:10px;color:#90a4ae;margin-top:8px}
+.sig-cell .sig-title{font-size:11px;color:#546e7a;font-weight:500;margin-bottom:auto}
+.sig-cell .sig-line{display:none}
+.sig-cell .sig-date{font-size:10px;color:#90a4ae;margin-top:10px}
 
 /* Actions */
 .form-actions{padding:16px 28px 24px;display:flex;gap:10px;justify-content:flex-end;border-top:1px solid #eef2f6;margin-top:8px}
@@ -288,84 +287,6 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
 
   /* ── 備註 ── */
   #notes{min-height:16px!important;max-height:32px!important}
-}
-  @page{size:A4 portrait;margin:10mm 12mm}
-  body{background:#fff!important;padding:0!important;font-size:11px!important}
-  .form-actions,#successMsg,.gen-card,.form-header-strip a,.notice,.notice-blue,.pay-sub,.err-msg,#printOverlay,.no-print,.readonly-badge,.user-badge{display:none!important}
-  .pay-sub.open{display:block!important}
-  .pay-sub.open .notice{display:none!important}
-  /* 移除頂部空白、壓縮成一頁 */
-  html,body{margin:0!important;padding:0!important}
-  .card{margin:0!important}
-  /* 縮小各區塊間距 */
-  .form-body{padding:6px 16px 0!important}
-  .section{margin-bottom:6px!important}
-  .section-label{font-size:9.5px!important;margin-bottom:5px!important;padding-bottom:3px!important}
-  .form-header-top{padding:8px 16px 6px!important}
-  .form-header-title{font-size:16px!important}
-  .form-header-en{font-size:8px!important}
-  .form-header-strip{padding:3px 16px!important}
-  /* 簽章區縮小 */
-  .sig-grid{grid-template-columns:1fr 1fr!important;gap:6px!important;margin-top:4px!important}
-  .sig-cell{padding:8px 8px!important;min-height:60px!important}
-  .sig-cell.large{min-height:60px!important}
-  .sig-cell .sig-title{font-size:9px!important;margin-bottom:24px!important}
-  .sig-cell.large .sig-title{margin-bottom:24px!important}
-  .sig-cell .sig-date{font-size:9px!important;margin-top:4px!important}
-  /* 金額顯示縮小 */
-  .amount-display{padding:4px 8px!important;font-size:10px!important;margin-top:4px!important}
-  /* 表格縮小 */
-  .svc-table th{padding:4px 6px!important;font-size:9.5px!important}
-  .svc-table td{padding:4px 6px!important;font-size:10.5px!important}
-  /* 備註縮小 */
-  #notes{min-height:24px!important}
-  .field{min-height:28px!important;padding:3px 6px 2px!important}
-  .print-date{display:inline!important}
-  .card{box-shadow:none!important;border-radius:0!important;max-width:none!important;border:none!important}
-  .form-header{background:linear-gradient(135deg,#1a4a6b 0%,#1e7fc0 100%)!important;padding:0!important}
-  .form-header-top{padding:12px 20px 10px!important}
-  .form-header-title{font-size:18px!important}
-  .form-header-strip{padding:4px 20px!important}
-  .strip-gold{display:block!important}
-  .form-body{padding:10px 20px 0!important}
-  .section{margin-bottom:10px!important}
-  .section-label{font-size:10px!important;margin-bottom:8px!important;padding-bottom:4px!important}
-  .field{border:1px solid #bbb!important;border-radius:0!important;padding:4px 8px 3px!important;background:#fff!important;min-height:36px!important}
-  .field label{font-size:8.5px!important;color:#546e7a!important;margin-bottom:2px!important;display:block!important;line-height:1.2!important}
-  .field input,.field select,.field textarea{border:none!important;border-radius:0!important;background:transparent!important;padding:0!important;font-size:12px!important;box-shadow:none!important;color:#1a1a1a!important;width:100%!important;line-height:1.4!important;min-height:16px!important}
-  .field input::placeholder,.field textarea::placeholder{color:transparent!important}
-  .field label .err-msg,span[style*="color:#e24b4a"]{display:none!important}
-  .field input[readonly],.field select[disabled]{background:transparent!important;color:#1a1a1a!important}
-  .field textarea{min-height:36px!important;border:none!important;resize:none!important}
-  .row{gap:0!important;margin-bottom:0!important;border-bottom:1px solid #bbb!important}
-  .row .field{border-bottom:none!important;min-height:36px!important}
-  .row.c2 .field:first-child{border-right:none!important}
-  .row.c3 .field:not(:last-child){border-right:none!important}
-  .section > .field{border-bottom:1px solid #bbb!important}
-  /* 適用對象那行高度自動 */
-  .row.c2:first-of-type .field{min-height:auto!important}
-  .apptype-group{gap:2px!important;margin-top:0!important}
-  .apptype-group label{display:flex!important;border:none!important;background:none!important;padding:1px 0!important;font-size:11px!important;color:#546e7a!important;border-radius:0!important}
-  .apptype-group label.checked{color:#1a1a1a!important;font-weight:700!important}
-  .apptype-group input[type=checkbox]{display:none!important}
-  .apptype-group label::before{content:'□ ';font-size:11px;color:#999}
-  .apptype-group label.checked::before{content:'✓ ';font-size:11px;color:#1a4a6b}
-  .opt-group label{display:none!important}
-  .opt-group label:has(input:checked){display:flex!important;background:#e8f2fb!important;border:1px solid #1a4a6b!important;font-size:11px!important;padding:4px 10px!important}
-  .pay-sub.open{display:block!important}
-  .pay-sub .notice{display:none!important}
-  .pay-sub-title{font-size:10px!important;margin-bottom:6px!important}
-  .svc-table{font-size:11px!important}
-  .svc-table th{background:#e8f2fb!important;font-size:10px!important;padding:5px 8px!important}
-  .svc-table td{padding:5px 8px!important}
-  .amount-display{font-size:11px!important;padding:6px 10px!important}
-  .sig-grid{margin-top:6px!important}
-  .sig-cell{break-inside:avoid!important;border:1px solid #ccc!important;padding:12px 10px!important}
-  .sig-cell.large{min-height:80px!important}
-  .sig-cell .sig-title{font-size:10px!important;margin-bottom:36px!important}
-  .sig-cell.large .sig-title{margin-bottom:52px!important}
-  #notes{min-height:40px!important}
-  .row{margin-bottom:6px!important}
 }
 </style>
 </head>
