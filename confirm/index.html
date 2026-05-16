@@ -122,24 +122,45 @@ h1{font-size:0;height:0;overflow:hidden}
 .gen-del-btn{background:none;border:none;cursor:pointer;color:#b0bec5;font-size:16px;padding:2px 5px}
 .gen-del-btn:hover{color:#e24b4a}
 
+.no-print{display:block}
+
 /* Print Preview Mode */
-body.print-preview-mode{background:#fff!important;padding:60px 0 0!important}
-body.print-preview-mode .card{box-shadow:none!important;border-radius:0!important;max-width:none!important}
+body.print-preview-mode{background:#f0f0f0!important;padding:60px 0 20px!important}
+body.print-preview-mode .card{box-shadow:0 2px 16px rgba(0,0,0,.15)!important;border-radius:4px!important;max-width:794px!important;margin:0 auto!important}
 body.print-preview-mode .form-actions{display:none!important}
+body.print-preview-mode .no-print{display:none!important}
 body.print-preview-mode .gen-card{display:none!important}
-body.print-preview-mode .notice,body.print-preview-mode .notice-blue{display:none!important}
-body.print-preview-mode .pay-sub{display:block!important}
-body.print-preview-mode .field input,body.print-preview-mode .field select,body.print-preview-mode .field textarea{border:none!important;border-bottom:1px solid #ccc!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+body.print-preview-mode #printOverlay{position:fixed!important}
+/* 隱藏說明區塊 */
+body.print-preview-mode .notice,
+body.print-preview-mode .notice-blue,
+body.print-preview-mode .pay-sub{display:none!important}
+/* 顯示已選付款方式子區塊 */
+body.print-preview-mode .pay-sub.open{display:block!important}
+body.print-preview-mode .pay-sub.open .notice{display:none!important}
+/* 欄位樣式 */
+body.print-preview-mode .field input,
+body.print-preview-mode .field select,
+body.print-preview-mode .field textarea{border:none!important;border-bottom:1px solid #ccc!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+/* 適用對象：純文字無方框，已選加 ✓ 加粗 */
+body.print-preview-mode .apptype-group{gap:2px!important;margin-top:0!important}
+body.print-preview-mode .apptype-group label{display:flex!important;border:none!important;background:none!important;padding:1px 0!important;font-size:13px!important;color:#546e7a!important;border-radius:0!important}
+body.print-preview-mode .apptype-group label.checked{color:#1a1a1a!important;font-weight:700!important}
+body.print-preview-mode .apptype-group input[type=checkbox]{display:none!important}
+body.print-preview-mode .apptype-group label::before{content:'□ ';font-size:12px;color:#999}
+body.print-preview-mode .apptype-group label.checked::before{content:'✓ ';font-size:12px;color:#1a4a6b}
+/* 付款方式只顯示已選 */
 body.print-preview-mode .opt-group label{display:none!important}
-body.print-preview-mode .opt-group label:has(input:checked){display:flex!important}
-body.print-preview-mode .pay-sub .notice{display:none!important}
+body.print-preview-mode .opt-group label:has(input:checked){display:flex!important;background:#e8f2fb!important;border:1px solid #1a4a6b!important}
 
 /* Print */
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   @page{size:A4 portrait;margin:12mm 14mm}
   body{background:#fff!important;padding:0!important;font-size:11px!important}
-  .form-actions,#successMsg,.gen-card,.form-header-strip a,.notice,.notice-blue,.pay-sub,.err-msg{display:none!important}
+  .form-actions,#successMsg,.gen-card,.form-header-strip a,.notice,.notice-blue,.pay-sub,.err-msg,#printOverlay,.no-print{display:none!important}
+  .pay-sub.open{display:block!important}
+  .pay-sub.open .notice{display:none!important}
   .print-date{display:inline!important}
   .card{box-shadow:none!important;border-radius:0!important;max-width:none!important;border:none!important}
   .form-header{background:linear-gradient(135deg,#1a4a6b 0%,#1e7fc0 100%)!important;padding:0!important}
@@ -150,12 +171,25 @@ body.print-preview-mode .pay-sub .notice{display:none!important}
   .form-body{padding:10px 20px 0!important}
   .section{margin-bottom:10px!important}
   .section-label{font-size:10px!important;margin-bottom:8px!important;padding-bottom:4px!important}
-  .field label{font-size:9px!important;color:#546e7a!important;margin-bottom:1px!important}
-  .field input,.field select,.field textarea{border:none!important;border-bottom:1px solid #ccc!important;border-radius:0!important;background:transparent!important;padding:2px 4px!important;font-size:11px!important;box-shadow:none!important;color:#1a1a1a!important}
+  .field{border:1px solid #bbb!important;border-radius:0!important;padding:4px 8px 3px!important;background:#fff!important;min-height:36px!important}
+  .field label{font-size:8.5px!important;color:#546e7a!important;margin-bottom:2px!important;display:block!important;line-height:1.2!important}
+  .field input,.field select,.field textarea{border:none!important;border-radius:0!important;background:transparent!important;padding:0!important;font-size:12px!important;box-shadow:none!important;color:#1a1a1a!important;width:100%!important;line-height:1.4!important;min-height:16px!important}
   .field input[readonly],.field select[disabled]{background:transparent!important;color:#1a1a1a!important}
-  .field textarea{min-height:30px!important;border:1px solid #ccc!important}
-  .apptype-group label{border:none!important;background:transparent!important;padding:2px 4px!important;font-size:11px!important}
-  .apptype-group label.checked{background:#e8f2fb!important;border:1px solid #1a4a6b!important;border-radius:4px!important}
+  .field textarea{min-height:36px!important;border:none!important;resize:none!important}
+  .row{gap:0!important;margin-bottom:0!important}
+  .row.c2{border-bottom:1px solid #bbb!important}
+  .row.c2 .field{border-bottom:none!important}
+  .row.c2 .field:first-child{border-right:none!important}
+  .row.c3{border-bottom:1px solid #bbb!important}
+  .row.c3 .field{border-bottom:none!important}
+  .row.c3 .field:not(:last-child){border-right:none!important}
+  .section .field:not(.row .field){border-bottom:1px solid #bbb!important}
+  .apptype-group{gap:2px!important;margin-top:0!important}
+  .apptype-group label{display:flex!important;border:none!important;background:none!important;padding:1px 0!important;font-size:11px!important;color:#546e7a!important;border-radius:0!important}
+  .apptype-group label.checked{color:#1a1a1a!important;font-weight:700!important}
+  .apptype-group input[type=checkbox]{display:none!important}
+  .apptype-group label::before{content:'□ ';font-size:11px;color:#999}
+  .apptype-group label.checked::before{content:'✓ ';font-size:11px;color:#1a4a6b}
   .opt-group label{display:none!important}
   .opt-group label:has(input:checked){display:flex!important;background:#e8f2fb!important;border:1px solid #1a4a6b!important;font-size:11px!important;padding:4px 10px!important}
   .pay-sub.open{display:block!important}
@@ -218,7 +252,7 @@ body.print-preview-mode .pay-sub .notice{display:none!important}
           </div>
         </div>
         <div>
-          <div class="field" style="margin-bottom:10px">
+          <div class="field no-print" style="margin-bottom:10px">
             <label>案件序號</label>
             <input id="case_no" readonly>
           </div>
@@ -257,7 +291,7 @@ body.print-preview-mode .pay-sub .notice{display:none!important}
     <!-- 貳、服務項目及費用明細 -->
     <div class="section">
       <div class="section-label">貳、服務項目及費用明細 <span class="readonly-badge">核心填寫</span></div>
-      <div class="field" style="margin-bottom:12px">
+      <div class="field no-print" style="margin-bottom:12px">
         <label>委託服務平台</label>
         <input id="service_type" readonly>
       </div>
@@ -766,7 +800,8 @@ function printPreview() {
   document.body.classList.add('print-preview-mode');
   const overlay = document.createElement('div');
   overlay.id = 'printOverlay';
-  overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#1a4a6b;color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-family:inherit;box-shadow:0 2px 8px rgba(0,0,0,.3)';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#1a4a6b;color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-family:inherit;box-shadow:0 2px 8px rgba(0,0,0,.3);print-color-adjust:exact';
+  overlay.setAttribute('data-no-print','1');
   overlay.innerHTML = `
     <span>👁 列印預覽模式</span>
     <div style="display:flex;gap:10px">
