@@ -122,23 +122,56 @@ h1{font-size:0;height:0;overflow:hidden}
 .gen-del-btn{background:none;border:none;cursor:pointer;color:#b0bec5;font-size:16px;padding:2px 5px}
 .gen-del-btn:hover{color:#e24b4a}
 
+/* Print Preview Mode */
+body.print-preview-mode{background:#fff!important;padding:60px 0 0!important}
+body.print-preview-mode .card{box-shadow:none!important;border-radius:0!important;max-width:none!important}
+body.print-preview-mode .form-actions{display:none!important}
+body.print-preview-mode .gen-card{display:none!important}
+body.print-preview-mode .notice,body.print-preview-mode .notice-blue{display:none!important}
+body.print-preview-mode .pay-sub{display:block!important}
+body.print-preview-mode .field input,body.print-preview-mode .field select,body.print-preview-mode .field textarea{border:none!important;border-bottom:1px solid #ccc!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+body.print-preview-mode .opt-group label{display:none!important}
+body.print-preview-mode .opt-group label:has(input:checked){display:flex!important}
+body.print-preview-mode .pay-sub .notice{display:none!important}
+
 /* Print */
 @media print{
-  body{background:#fff;padding:0}
-  .card{box-shadow:none;border-radius:0;max-width:none}
-  .form-actions,#successMsg,.gen-card{display:none!important}
-  .form-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .form-header-strip{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .section-label{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .svc-table th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .pay-sub{display:block!important}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  @page{size:A4 portrait;margin:12mm 14mm}
+  body{background:#fff!important;padding:0!important;font-size:11px!important}
+  .form-actions,#successMsg,.gen-card,.form-header-strip a,.notice,.notice-blue,.pay-sub,.err-msg{display:none!important}
   .print-date{display:inline!important}
-  .sig-cell{break-inside:avoid}
-  .form-body{padding:14px 20px 0}
-  .section{margin-bottom:14px}
-  .field label{font-size:10px}
-  .field input,.field select,.field textarea{padding:4px 8px;font-size:12px}
-  @page{size:A4;margin:12mm 14mm}
+  .card{box-shadow:none!important;border-radius:0!important;max-width:none!important;border:none!important}
+  .form-header{background:linear-gradient(135deg,#1a4a6b 0%,#1e7fc0 100%)!important;padding:0!important}
+  .form-header-top{padding:12px 20px 10px!important}
+  .form-header-title{font-size:18px!important}
+  .form-header-strip{padding:4px 20px!important}
+  .strip-gold{display:block!important}
+  .form-body{padding:10px 20px 0!important}
+  .section{margin-bottom:10px!important}
+  .section-label{font-size:10px!important;margin-bottom:8px!important;padding-bottom:4px!important}
+  .field label{font-size:9px!important;color:#546e7a!important;margin-bottom:1px!important}
+  .field input,.field select,.field textarea{border:none!important;border-bottom:1px solid #ccc!important;border-radius:0!important;background:transparent!important;padding:2px 4px!important;font-size:11px!important;box-shadow:none!important;color:#1a1a1a!important}
+  .field input[readonly],.field select[disabled]{background:transparent!important;color:#1a1a1a!important}
+  .field textarea{min-height:30px!important;border:1px solid #ccc!important}
+  .apptype-group label{border:none!important;background:transparent!important;padding:2px 4px!important;font-size:11px!important}
+  .apptype-group label.checked{background:#e8f2fb!important;border:1px solid #1a4a6b!important;border-radius:4px!important}
+  .opt-group label{display:none!important}
+  .opt-group label:has(input:checked){display:flex!important;background:#e8f2fb!important;border:1px solid #1a4a6b!important;font-size:11px!important;padding:4px 10px!important}
+  .pay-sub.open{display:block!important}
+  .pay-sub .notice{display:none!important}
+  .pay-sub-title{font-size:10px!important;margin-bottom:6px!important}
+  .svc-table{font-size:11px!important}
+  .svc-table th{background:#e8f2fb!important;font-size:10px!important;padding:5px 8px!important}
+  .svc-table td{padding:5px 8px!important}
+  .amount-display{font-size:11px!important;padding:6px 10px!important}
+  .sig-grid{margin-top:6px!important}
+  .sig-cell{break-inside:avoid!important;border:1px solid #ccc!important;padding:12px 10px!important}
+  .sig-cell.large{min-height:80px!important}
+  .sig-cell .sig-title{font-size:10px!important;margin-bottom:36px!important}
+  .sig-cell.large .sig-title{margin-bottom:52px!important}
+  #notes{min-height:40px!important}
+  .row{margin-bottom:6px!important}
 }
 </style>
 </head>
@@ -360,6 +393,10 @@ h1{font-size:0;height:0;overflow:hidden}
 
   <!-- Actions -->
   <div class="form-actions">
+    <button class="btn btn-ghost" onclick="printPreview()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      預覽列印
+    </button>
     <button class="btn btn-ghost" onclick="window.print()">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
       列印 / 存成PDF
@@ -722,6 +759,28 @@ async function shortenUrl() {
 function copyShortUrl() {
   const url = document.getElementById('shortUrl').textContent;
   navigator.clipboard.writeText(url).then(()=>alert('短網址已複製！'));
+}
+
+function printPreview() {
+  // 開啟列印預覽模式：暫時加上 print-preview class，讓使用者看到列印樣式
+  document.body.classList.add('print-preview-mode');
+  const overlay = document.createElement('div');
+  overlay.id = 'printOverlay';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#1a4a6b;color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-family:inherit;box-shadow:0 2px 8px rgba(0,0,0,.3)';
+  overlay.innerHTML = `
+    <span>👁 列印預覽模式</span>
+    <div style="display:flex;gap:10px">
+      <button onclick="window.print()" style="background:#fff;color:#1a4a6b;border:none;border-radius:6px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:600">🖨 列印 / 存成PDF</button>
+      <button onclick="closePrintPreview()" style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:6px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:inherit">✕ 關閉預覽</button>
+    </div>`;
+  document.body.prepend(overlay);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function closePrintPreview() {
+  document.body.classList.remove('print-preview-mode');
+  const overlay = document.getElementById('printOverlay');
+  if (overlay) overlay.remove();
 }
 </script>
 </body>
