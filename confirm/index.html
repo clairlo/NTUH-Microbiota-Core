@@ -700,12 +700,18 @@ async function shortenUrl() {
   btn.textContent = '產生中…';
   btn.disabled = true;
   try {
-    const res = await fetch('https://is.gd/create.php?format=simple&url=' + encodeURIComponent(url));
-    if (!res.ok) throw new Error();
-    const short = await res.text();
-    document.getElementById('shortUrl').textContent = short;
-    document.getElementById('shortUrlBox').style.display = 'block';
-    btn.textContent = '✅ 已產生';
+    const form = new URLSearchParams();
+    form.append('action', 'shorten');
+    form.append('url', url);
+    const res = await fetch(SCRIPT_URL, { method: 'POST', body: form });
+    const json = await res.json();
+    if (json.status === 'ok') {
+      document.getElementById('shortUrl').textContent = json.short;
+      document.getElementById('shortUrlBox').style.display = 'block';
+      btn.textContent = '✅ 已產生';
+    } else {
+      throw new Error();
+    }
   } catch {
     alert('短網址產生失敗，請稍後再試，或手動使用 reurl.cc');
     btn.textContent = '✂️ 產生短網址';
