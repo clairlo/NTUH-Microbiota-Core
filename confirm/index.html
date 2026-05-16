@@ -163,7 +163,7 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
   .notice,.notice-blue,.pay-sub,.err-msg,
   .no-print,.readonly-badge,.user-badge,
   .form-header-strip a,
-  h1{display:none!important}
+  h1,span.readonly-badge,span.user-badge{display:none!important}
 
   /* 顯示已選付款方式子區塊（隱藏說明文字）*/
   .pay-sub.open{display:block!important}
@@ -286,7 +286,11 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
   .sig-cell .sig-date{font-size:8px!important;color:#888!important;margin-top:4px!important}
 
   /* ── 備註 ── */
-  #notes{min-height:16px!important;max-height:32px!important}
+  #notes{min-height:14px!important;max-height:20px!important;font-size:11px!important}
+  /* 隱藏適用對象格子（已顯示在標題旁）*/
+  .row.c2:first-of-type > .field:first-child{display:none!important}
+  /* 移除頂部空白 */
+  @page{margin-top:8mm}
 }
 </style>
 </head>
