@@ -221,8 +221,8 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
     <div class="portal-strip">
       <button class="portal-tab active" onclick="switchTab('home')">🏠 總覽</button>
       <button class="portal-tab" onclick="switchTab('applications')">📋 申請案件</button>
-      <button class="portal-tab" onclick="switchTab('confirmations')">✅ 確認單記錄</button>
       <button class="portal-tab" onclick="switchTab('generate')">🔗 產生確認單</button>
+      <button class="portal-tab" onclick="switchTab('confirmations')">✅ 確認單記錄</button>
     </div>
   </div>
 
@@ -238,15 +238,15 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
         <div class="stat-card"><div class="stat-num" id="statClosed">—</div><div class="stat-label">已結案</div></div>
       </div>
       <div class="quick-grid">
-        <a class="quick-card" onclick="switchTab('generate')">
-          <div class="icon">🔗</div>
-          <div class="label">產生確認單連結</div>
-          <div class="desc">輸入案件序號，產生申請人填寫連結</div>
-        </a>
         <a class="quick-card" onclick="switchTab('applications')">
           <div class="icon">📋</div>
           <div class="label">查看申請案件</div>
           <div class="desc">瀏覽所有服務委託申請表</div>
+        </a>
+        <a class="quick-card" onclick="switchTab('generate')">
+          <div class="icon">🔗</div>
+          <div class="label">產生確認單連結</div>
+          <div class="desc">輸入案件序號，產生申請人填寫連結</div>
         </a>
         <a class="quick-card" onclick="switchTab('confirmations')">
           <div class="icon">✅</div>
@@ -358,7 +358,7 @@ async function loadApplications() {
   try {
     const form = new URLSearchParams();
     form.append('action', 'getSheet');
-    form.append('sheet', 'Sheet1');
+    form.append('sheet', '申請單');
     const res = await fetch(SCRIPT_URL, { method: 'POST', body: form });
     const json = await res.json();
     if (json.status === 'ok') {
