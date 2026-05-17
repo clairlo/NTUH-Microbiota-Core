@@ -1,3 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>核心人員專區 — 微菌體核心技術服務平台</title>
+<style>
+:root {
+  --navy: #1a4a6b;
+  --blue: #1e7fc0;
+  --light-blue: #e8f2fb;
+  --gold: #f5c842;
+  --text: #1a2733;
+  --muted: #546e7a;
+  --border: #d0dbe3;
+  --bg: #f4f7fa;
+  --white: #ffffff;
+  --green: #2e7d52;
+  --green-light: #e8f5ee;
+  --red: #c0392b;
+  --red-light: #fdf0ee;
+  --orange: #d4760a;
+  --orange-light: #fef3e2;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 
+/* ── Login Screen ── */
+#loginScreen{
+  display:flex;align-items:center;justify-content:center;
+  min-height:100vh;padding:20px;
+  background:linear-gradient(135deg,#0f2d44 0%,#1a4a6b 50%,#1e7fc0 100%)
+}
+.login-box{
+  background:#fff;border-radius:16px;padding:40px;
+  width:100%;max-width:380px;
+  box-shadow:0 20px 60px rgba(0,0,0,.3)
+}
+.login-logo{text-align:center;margin-bottom:28px}
+.login-logo .org{font-size:12px;color:var(--muted);margin-bottom:4px}
+.login-logo .title{font-size:20px;font-weight:700;color:var(--navy);line-height:1.3}
+.login-logo .sub{font-size:11px;color:var(--muted);margin-top:4px}
+.login-badge{
+  display:inline-block;background:var(--navy);color:#fff;
+  font-size:10px;padding:3px 10px;border-radius:20px;
+  margin-bottom:24px;letter-spacing:1px
+}
+.login-field{margin-bottom:16px}
+.login-field label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:500}
+.login-field input{
+  width:100%;padding:11px 14px;border:1.5px solid var(--border);
+  border-radius:8px;font-size:14px;font-family:inherit;
+  transition:border .15s,box-shadow .15s;outline:none
+}
+.login-field input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(30,127,192,.12)}
+.login-btn{
+  width:100%;padding:12px;background:var(--navy);color:#fff;
+  border:none;border-radius:8px;font-size:14px;font-weight:600;
+  font-family:inherit;cursor:pointer;transition:background .15s;margin-top:4px
+}
+.login-btn:hover{background:var(--blue)}
+.login-err{
+  color:#c0392b;font-size:12px;text-align:center;
+  margin-top:10px;display:none
+}
 
- 
+/* ── Staff Portal ── */
+#staffPortal{display:none}
+.portal-header{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);
+  padding:0
+}
+.portal-header-top{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 28px
+}
+.portal-header-title{color:#fff}
+.portal-header-title .small{font-size:11px;opacity:.7;margin-bottom:2px}
+.portal-header-title h1{font-size:20px;font-weight:700}
+.portal-header-right{display:flex;align-items:center;gap:12px}
+.logout-btn{
+  background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);
+  border-radius:6px;padding:6px 14px;font-size:12px;cursor:pointer;
+  font-family:inherit;transition:background .15s
+}
+.logout-btn:hover{background:rgba(255,255,255,.25)}
+.portal-strip{
+  background:rgba(0,0,0,.2);padding:4px 28px;
+  display:flex;gap:0;border-top:1px solid rgba(255,255,255,.1)
+}
+.portal-tab{
+  color:rgba(255,255,255,.6);font-size:12px;padding:6px 16px;
+  cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;
+  font-family:inherit;background:none;border-top:none;border-left:none;border-right:none
+}
+.portal-tab:hover{color:#fff}
+.portal-tab.active{color:#fff;border-bottom-color:var(--gold)}
+
+.portal-body{max-width:1100px;margin:0 auto;padding:24px 20px}
+
+/* ── Tab Panels ── */
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* ── Cards ── */
+.panel-card{
+  background:#fff;border-radius:12px;padding:20px 24px;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px
+}
+.panel-title{
+  font-size:14px;font-weight:700;color:var(--navy);
+  margin-bottom:16px;padding-bottom:10px;
+  border-bottom:2px solid var(--light-blue)
+}
+
+/* ── Quick Actions ── */
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:24px}
+.quick-card{
+  background:#fff;border-radius:12px;padding:20px;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+  border:1.5px solid var(--border);cursor:pointer;
+  transition:all .15s;text-decoration:none;display:block
+}
+.quick-card:hover{border-color:var(--blue);box-shadow:0 4px 16px rgba(30,127,192,.15);transform:translateY(-2px)}
+.quick-card .icon{font-size:28px;margin-bottom:10px}
+.quick-card .label{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:4px}
+.quick-card .desc{font-size:11px;color:var(--muted)}
+
+/* ── Table ── */
+.data-table{width:100%;border-collapse:collapse;font-size:13px}
+.data-table th{
+  background:var(--light-blue);color:var(--navy);
+  padding:9px 12px;text-align:left;font-weight:600;font-size:12px
+}
+.data-table td{padding:9px 12px;border-bottom:1px solid #eef2f6;vertical-align:middle}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:#fafcff}
+
+/* ── Status Badge ── */
+.badge{
+  display:inline-block;padding:3px 10px;border-radius:20px;
+  font-size:11px;font-weight:600
+}
+.badge-new{background:#fff3cd;color:#856404}
+.badge-open{background:var(--green-light);color:var(--green)}
+.badge-closed{background:#f0f0f0;color:#666}
+.badge-confirmed{background:var(--light-blue);color:var(--navy)}
+
+/* ── Status Select ── */
+.status-select{
+  font-size:12px;padding:4px 8px;border:1px solid var(--border);
+  border-radius:6px;font-family:inherit;cursor:pointer;background:#fff
+}
+
+/* ── Loading ── */
+.loading{text-align:center;padding:40px;color:var(--muted);font-size:13px}
+.empty{text-align:center;padding:40px;color:var(--muted);font-size:13px}
+
+/* ── Stats ── */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+.stat-card{background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center}
+.stat-num{font-size:28px;font-weight:700;color:var(--navy);line-height:1}
+.stat-label{font-size:11px;color:var(--muted);margin-top:4px}
+
+/* ── Search ── */
+.search-bar{
+  display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap
+}
+.search-bar input{
+  flex:1;min-width:200px;padding:8px 12px;border:1.5px solid var(--border);
+  border-radius:8px;font-size:13px;font-family:inherit;outline:none
+}
+.search-bar input:focus{border-color:var(--blue)}
+.search-bar select{
+  padding:8px 12px;border:1.5px solid var(--border);
+  border-radius:8px;font-size:13px;font-family:inherit;background:#fff;outline:none
+}
+
+/* ── Responsive ── */
+@media(max-width:600px){
+  .portal-header-top{padding:12px 16px}
+  .portal-body{padding:16px}
+  .quick-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Login Screen -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="org">台大醫院 醫學研究部</div>
+      <div class="title">微菌體核心技術服務平台</div>
+      <div class="sub">NTUH Microbiome Core Facility</div>
+    </div>
+    <div style="text-align:center;margin-bottom:20px">
+      <span class="login-badge">🔒 核心人員專區</span>
+    </div>
+    <div class="login-field">
+      <label>密碼</label>
+      <input type="password" id="passwordInput" placeholder="請輸入密碼" onkeydown="if(event.key==='Enter')login()">
+    </div>
+    <button class="login-btn" onclick="login()">登入</button>
+    <div class="login-err" id="loginErr">密碼錯誤，請再試一次</div>
+  </div>
+</div>
+
+<!-- Staff Portal -->
+<div id="staffPortal">
+  <div class="portal-header">
+    <div class="portal-header-top">
+      <div class="portal-header-title">
+        <div class="small">台大醫院 醫學研究部 微菌體核心</div>
+        <h1>核心人員專區</h1>
+      </div>
+      <div class="portal-header-right">
+        <button class="logout-btn" onclick="logout()">登出</button>
+      </div>
+    </div>
+    <div class="portal-strip">
+      <button class="portal-tab active" onclick="switchTab('home')">🏠 總覽</button>
+      <button class="portal-tab" onclick="switchTab('applications')">📋 申請案件</button>
+      <button class="portal-tab" onclick="switchTab('confirmations')">✅ 確認單記錄</button>
+      <button class="portal-tab" onclick="switchTab('generate')">🔗 產生確認單</button>
+    </div>
+  </div>
+
+  <div class="portal-body">
+
+    <!-- 總覽 -->
+    <div class="tab-panel active" id="tab-home">
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card"><div class="stat-num" id="statTotal">—</div><div class="stat-label">總申請數</div></div>
+        <div class="stat-card"><div class="stat-num" id="statNew">—</div><div class="stat-label">待處理</div></div>
+        <div class="stat-card"><div class="stat-num" id="statOpen">—</div><div class="stat-label">進行中</div></div>
+        <div class="stat-card"><div class="stat-num" id="statConfirmed">—</div><div class="stat-label">已確認</div></div>
+        <div class="stat-card"><div class="stat-num" id="statClosed">—</div><div class="stat-label">已結案</div></div>
+      </div>
+      <div class="quick-grid">
+        <a class="quick-card" onclick="switchTab('generate')">
+          <div class="icon">🔗</div>
+          <div class="label">產生確認單連結</div>
+          <div class="desc">輸入案件序號，產生申請人填寫連結</div>
+        </a>
+        <a class="quick-card" onclick="switchTab('applications')">
+          <div class="icon">📋</div>
+          <div class="label">查看申請案件</div>
+          <div class="desc">瀏覽所有服務委託申請表</div>
+        </a>
+        <a class="quick-card" onclick="switchTab('confirmations')">
+          <div class="icon">✅</div>
+          <div class="label">確認單記錄</div>
+          <div class="desc">查看申請人已提交的確認單</div>
+        </a>
+      </div>
+      <div class="panel-card">
+        <div class="panel-title">最新申請（前5筆）</div>
+        <div id="recentList"><div class="loading">載入中…</div></div>
+      </div>
+    </div>
+
+    <!-- 申請案件 -->
+    <div class="tab-panel" id="tab-applications">
+      <div class="panel-card">
+        <div class="panel-title">所有申請案件</div>
+        <div class="search-bar">
+          <input type="text" id="appSearch" placeholder="搜尋案件序號、主持人、單位…" oninput="filterApps()">
+          <select id="appStatusFilter" onchange="filterApps()">
+            <option value="">所有狀態</option>
+            <option value="待處理">待處理</option>
+            <option value="進行中">進行中</option>
+            <option value="已確認">已確認</option>
+            <option value="已結案">已結案</option>
+          </select>
+        </div>
+        <div id="appTableWrap"><div class="loading">載入中…</div></div>
+      </div>
+    </div>
+
+    <!-- 確認單記錄 -->
+    <div class="tab-panel" id="tab-confirmations">
+      <div class="panel-card">
+        <div class="panel-title">確認單提交記錄</div>
+        <div class="search-bar">
+          <input type="text" id="confSearch" placeholder="搜尋案件序號、主持人…" oninput="filterConfs()">
+        </div>
+        <div id="confTableWrap"><div class="loading">載入中…</div></div>
+      </div>
+    </div>
+
+    <!-- 產生確認單 -->
+    <div class="tab-panel" id="tab-generate">
+      <div class="panel-card">
+        <div class="panel-title">產生確認單連結</div>
+        <iframe
+          src="/confirm/?staff=1"
+          style="width:100%;height:80vh;border:none;border-radius:8px"
+          title="產生確認單">
+        </iframe>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const PASSWORD = 'MBC@2026';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzKGrTAUnFtQ93dKd_ReoS9JqXb7PdmpPtrZN2icmKUjjjelbQv7E7Sd9pUmXWzzDi2OQ/exec';
+
+// ── Auth ──
+function login() {
+  const pw = document.getElementById('passwordInput').value;
+  if (pw === PASSWORD) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('staffPortal').style.display = 'block';
+    sessionStorage.setItem('staff_auth', '1');
+    loadAll();
+  } else {
+    document.getElementById('loginErr').style.display = 'block';
+    document.getElementById('passwordInput').value = '';
+    document.getElementById('passwordInput').focus();
+  }
+}
+
+function logout() {
+  sessionStorage.removeItem('staff_auth');
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('staffPortal').style.display = 'none';
+  document.getElementById('passwordInput').value = '';
+}
+
+// Auto-login if session exists
+if (sessionStorage.getItem('staff_auth') === '1') {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('staffPortal').style.display = 'block';
+  loadAll();
+}
+
+// ── Tabs ──
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.portal-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ── Data ──
+let allApps = [], allConfs = [];
+
+async function loadAll() {
+  await Promise.all([loadApplications(), loadConfirmations()]);
+  updateStats();
+  renderRecent();
+}
+
+async function loadApplications() {
+  try {
+    const form = new URLSearchParams();
+    form.append('action', 'getSheet');
+    form.append('sheet', 'Sheet1');
+    const res = await fetch(SCRIPT_URL, { method: 'POST', body: form });
+    const json = await res.json();
+    if (json.status === 'ok') {
+      allApps = json.data;
+      renderAppTable();
+    }
+  } catch(e) {
+    document.getElementById('appTableWrap').innerHTML = '<div class="empty">載入失敗，請稍後再試</div>';
+  }
+}
+
+async function loadConfirmations() {
+  try {
+    const form = new URLSearchParams();
+    form.append('action', 'getSheet');
+    form.append('sheet', '確認單');
+    const res = await fetch(SCRIPT_URL, { method: 'POST', body: form });
+    const json = await res.json();
+    if (json.status === 'ok') {
+      allConfs = json.data;
+      renderConfTable();
+    }
+  } catch(e) {
+    document.getElementById('confTableWrap').innerHTML = '<div class="empty">載入失敗，請稍後再試</div>';
+  }
+}
+
+// ── Stats ──
+function updateStats() {
+  document.getElementById('statTotal').textContent = allApps.length;
+  document.getElementById('statNew').textContent = allApps.filter(r => !r['狀態'] || r['狀態'] === '待處理').length;
+  document.getElementById('statOpen').textContent = allApps.filter(r => r['狀態'] === '進行中').length;
+  document.getElementById('statConfirmed').textContent = allApps.filter(r => r['狀態'] === '已確認').length;
+  document.getElementById('statClosed').textContent = allApps.filter(r => r['狀態'] === '已結案').length;
+}
+
+// ── Recent ──
+function renderRecent() {
+  const recent = [...allApps].reverse().slice(0, 5);
+  if (!recent.length) { document.getElementById('recentList').innerHTML = '<div class="empty">尚無申請資料</div>'; return; }
+  document.getElementById('recentList').innerHTML = `
+    <table class="data-table">
+      <thead><tr><th>提交時間</th><th>案件序號</th><th>計畫主持人</th><th>委託單位</th><th>狀態</th></tr></thead>
+      <tbody>${recent.map(r => `
+        <tr>
+          <td>${r['提交時間']||''}</td>
+          <td><strong>${r['案件序號']||'—'}</strong></td>
+          <td>${r['計畫主持人']||''}</td>
+          <td>${r['委託單位']||''}</td>
+          <td>${statusBadge(r['狀態'])}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>`;
+}
+
+// ── App Table ──
+function renderAppTable(data) {
+  const rows = data || allApps;
+  if (!rows.length) { document.getElementById('appTableWrap').innerHTML = '<div class="empty">尚無申請資料</div>'; return; }
+  document.getElementById('appTableWrap').innerHTML = `
+    <table class="data-table">
+      <thead><tr><th>提交時間</th><th>案件序號</th><th>計畫主持人</th><th>委託單位</th><th>聯絡電話</th><th>電子郵件</th><th>狀態</th></tr></thead>
+      <tbody>${rows.map((r, i) => `
+        <tr>
+          <td style="white-space:nowrap;font-size:11px">${r['提交時間']||''}</td>
+          <td><strong>${r['案件序號']||'—'}</strong></td>
+          <td>${r['計畫主持人']||''}</td>
+          <td>${r['委託單位']||''}</td>
+          <td>${r['電話']||''}</td>
+          <td>${r['電子郵件']||''}</td>
+          <td>
+            <select class="status-select" onchange="updateStatus(${i}, this.value)">
+              <option ${(!r['狀態']||r['狀態']==='待處理')?'selected':''}>待處理</option>
+              <option ${r['狀態']==='進行中'?'selected':''}>進行中</option>
+              <option ${r['狀態']==='已確認'?'selected':''}>已確認</option>
+              <option ${r['狀態']==='已結案'?'selected':''}>已結案</option>
+            </select>
+          </td>
+        </tr>`).join('')}
+      </tbody>
+    </table>`;
+}
+
+function filterApps() {
+  const q = document.getElementById('appSearch').value.toLowerCase();
+  const s = document.getElementById('appStatusFilter').value;
+  const filtered = allApps.filter(r => {
+    const matchQ = !q || JSON.stringify(r).toLowerCase().includes(q);
+    const matchS = !s || (r['狀態']||'待處理') === s;
+    return matchQ && matchS;
+  });
+  renderAppTable(filtered);
+}
+
+async function updateStatus(idx, status) {
+  allApps[idx]['狀態'] = status;
+  updateStats();
+  try {
+    const form = new URLSearchParams();
+    form.append('action', 'updateStatus');
+    form.append('caseNo', allApps[idx]['案件序號']);
+    form.append('status', status);
+    await fetch(SCRIPT_URL, { method: 'POST', body: form });
+  } catch(e) { console.error('狀態更新失敗', e); }
+}
+
+// ── Conf Table ──
+function renderConfTable(data) {
+  const rows = data || allConfs;
+  if (!rows.length) { document.getElementById('confTableWrap').innerHTML = '<div class="empty">尚無確認單記錄</div>'; return; }
+  document.getElementById('confTableWrap').innerHTML = `
+    <table class="data-table">
+      <thead><tr><th>提交時間</th><th>案件序號</th><th>計畫主持人</th><th>單位</th><th>合計金額</th><th>付款方式</th><th>發票抬頭</th></tr></thead>
+      <tbody>${rows.map(r => `
+        <tr>
+          <td style="white-space:nowrap;font-size:11px">${r['提交時間']||''}</td>
+          <td><strong>${r['案件序號']||'—'}</strong></td>
+          <td>${r['計畫主持人']||''}</td>
+          <td>${r['單位']||''}</td>
+          <td>${r['合計金額']||''}</td>
+          <td>${r['付款方式']||''}</td>
+          <td>${r['發票抬頭']||''}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>`;
+}
+
+function filterConfs() {
+  const q = document.getElementById('confSearch').value.toLowerCase();
+  const filtered = allConfs.filter(r => !q || JSON.stringify(r).toLowerCase().includes(q));
+  renderConfTable(filtered);
+}
+
+// ── Helpers ──
+function statusBadge(s) {
+  if (!s || s === '待處理') return '<span class="badge badge-new">待處理</span>';
+  if (s === '進行中') return '<span class="badge badge-open">進行中</span>';
+  if (s === '已確認') return '<span class="badge badge-confirmed">已確認</span>';
+  if (s === '已結案') return '<span class="badge badge-closed">已結案</span>';
+  return s;
+}
+</script>
+</body>
+</html>
