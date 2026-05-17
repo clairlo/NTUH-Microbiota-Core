@@ -263,7 +263,10 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
     <!-- 申請案件 -->
     <div class="tab-panel" id="tab-applications">
       <div class="panel-card">
-        <div class="panel-title">所有申請案件</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--light-blue)">
+          <div class="panel-title" style="margin-bottom:0;padding-bottom:0;border-bottom:none">所有申請案件</div>
+          <button id="saveBtn" onclick="saveAllStatus()" style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;display:none">💾 儲存變更</button>
+        </div>
         <div class="search-bar">
           <input type="text" id="appSearch" placeholder="搜尋案件序號、主持人、單位…" oninput="filterApps()">
           <select id="appStatusFilter" onchange="filterApps()">
@@ -430,7 +433,7 @@ function renderAppTable(data) {
           <td>${r['電話']||''}</td>
           <td>${r['電子郵件']||''}</td>
           <td>
-            <select class="status-select" onchange="updateStatus(${i}, this.value)">
+            <select class="status-select" onchange="markChanged(${i}, this.value)">
               <option ${(!r['狀態']||r['狀態']==='待處理')?'selected':''}>待處理</option>
               <option ${r['狀態']==='進行中'?'selected':''}>進行中</option>
               <option ${r['狀態']==='已確認'?'selected':''}>已確認</option>
@@ -453,16 +456,47 @@ function filterApps() {
   renderAppTable(filtered);
 }
 
-async function updateStatus(idx, status) {
+const pendingChanges = {}; // idx -> status
+
+function markChanged(idx, status) {
+  pendingChanges[idx] = status;
   allApps[idx]['狀態'] = status;
-  updateStats();
+  const saveBtn = document.getElementById('saveBtn');
+  if (saveBtn) saveBtn.style.display = 'inline-block';
+}
+
+async function saveAllStatus() {
+  const saveBtn = document.getElementById('saveBtn');
+  saveBtn.textContent = '儲存中…';
+  saveBtn.disabled = true;
   try {
-    const form = new URLSearchParams();
-    form.append('action', 'updateStatus');
-    form.append('caseNo', allApps[idx]['案件序號']);
-    form.append('status', status);
-    await fetch(SCRIPT_URL, { method: 'POST', body: form });
-  } catch(e) { console.error('狀態更新失敗', e); }
+    const promises = Object.entries(pendingChanges).map(([idx, status]) => {
+      const form = new URLSearchParams();
+      form.append('action', 'updateStatus');
+      form.append('rowIndex', parseInt(idx) + 2);
+      form.append('status', status);
+      return fetch(SCRIPT_URL, { method: 'POST', body: form });
+    });
+    await Promise.all(promises);
+    Object.keys(pendingChanges).forEach(k => delete pendingChanges[k]);
+    saveBtn.textContent = '✅ 已儲存';
+    saveBtn.style.background = 'var(--green)';
+    updateStats();
+    setTimeout(() => {
+      saveBtn.textContent = '💾 儲存變更';
+      saveBtn.style.background = 'var(--navy)';
+      saveBtn.style.display = 'none';
+      saveBtn.disabled = false;
+    }, 2000);
+  } catch(e) {
+    saveBtn.textContent = '❌ 儲存失敗';
+    saveBtn.style.background = 'var(--red)';
+    setTimeout(() => {
+      saveBtn.textContent = '💾 儲存變更';
+      saveBtn.style.background = 'var(--navy)';
+      saveBtn.disabled = false;
+    }, 2000);
+  }
 }
 
 // ── Conf Table ──
