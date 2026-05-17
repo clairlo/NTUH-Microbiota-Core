@@ -346,6 +346,9 @@ function switchTab(name) {
   document.querySelectorAll('.portal-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   event.target.classList.add('active');
+  if (name === 'home') {
+    loadAll();
+  }
 }
 
 // ── Data ──
