@@ -934,10 +934,10 @@ function autoFillName(sel) {
 
 function autoFillPrice(sel) {
   if (!CODE_PRICES[sel.value]) return;
-  const container = sel.closest('tr') || sel.closest('.gen-svc-row');
-  if (!container) return;
-  const priceInput = container.querySelector('.svc-price-input');
-  if (priceInput) { priceInput.value = CODE_PRICES[sel.value]; genUrl(); updateTotal(); }
+  const row = sel.closest('.gen-svc-row');
+  if (!row) return;
+  const priceInput = row.querySelector('.svc-price-input');
+  if (priceInput) { priceInput.value = CODE_PRICES[sel.value]; genUrl(); }
 }
 
 function addGenRow() {
