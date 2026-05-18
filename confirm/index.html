@@ -653,7 +653,7 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
   <div style="font-size:11px;color:#546e7a;margin-bottom:8px;font-weight:500">費用明細項目</div>
   <div class="gen-svc-rows" id="genSvcRows">
     <div class="gen-svc-row">
-      <select onchange="genUrl();autoFillName(this)">
+      <select onchange="genUrl();autoFillName(this);autoFillPrice(this)">
         <option value="">選擇代碼</option>
         <option value="R1101">R1101</option>
         <option value="R1102">R1102</option>
@@ -930,6 +930,13 @@ function autoFillName(sel) {
   const row = sel.closest('.gen-svc-row');
   const nameInput = row.querySelector('.svc-name-input');
   if (CODE_NAMES[sel.value]) nameInput.value = CODE_NAMES[sel.value];
+}
+
+function autoFillPrice(sel) {
+  if (CODE_PRICES[sel.value]) {
+    const priceInput = sel.closest('tr').querySelector('.svc-price-input');
+    if (priceInput) { priceInput.value = CODE_PRICES[sel.value]; genUrl(); updateTotal(); }
+  }
   if (CODE_PRICES[sel.value]) {
     const priceInput = sel.closest('tr').querySelector('.svc-price-input');
     if (priceInput) { priceInput.value = CODE_PRICES[sel.value]; genUrl(); updateTotal(); }
@@ -942,7 +949,7 @@ function addGenRow() {
   const div = document.createElement('div');
   div.className = 'gen-svc-row';
   div.innerHTML = `
-    <select onchange="genUrl();autoFillName(this)">
+    <select onchange="genUrl();autoFillName(this);autoFillPrice(this)">
       <option value="">選擇代碼</option>
       <option value="R1101">R1101</option>
       <option value="R1102">R1102</option>
