@@ -659,7 +659,7 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
         <option value="R1102">R1102</option>
       </select>
       <input placeholder="服務收費項目名稱" oninput="genUrl()" class="svc-name-input">
-      <input type="number" placeholder="單價" oninput="genUrl()" class="svc-price-input">
+      <input type="number" placeholder="單價" oninput="genUrl();updateTotal()" class="svc-price-input">
       <input type="number" placeholder="數量" oninput="genUrl()" class="svc-qty-input">
       <button class="gen-del-btn" onclick="delGenRow(this)">×</button>
     </div>
@@ -685,10 +685,17 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzKGrTAUnFtQ93dKd_ReoS9JqXb7PdmpPtrZN2icmKUjjjelbQv7E7Sd9pUmXWzzDi2OQ/exec';
 const CODE_NAMES = {'R1101':'腸道厭氧菌分離純化','R1102':'微菌批次樣品製備'};
+const CODE_PRICES = {'R1101':40000,'R1102':30000};
 
 // Show staff section if ?staff=1
 if (new URLSearchParams(location.search).get('staff') === '1') {
   document.getElementById('genCard').style.display = 'block';
+  // 自動捲動到核心人員區塊
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      document.getElementById('genCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 300);
+  });
 }
 
 // Query case data from Google Sheets
@@ -923,6 +930,10 @@ function autoFillName(sel) {
   const row = sel.closest('.gen-svc-row');
   const nameInput = row.querySelector('.svc-name-input');
   if (CODE_NAMES[sel.value]) nameInput.value = CODE_NAMES[sel.value];
+  if (CODE_PRICES[sel.value]) {
+    const priceInput = sel.closest('tr').querySelector('.svc-price-input');
+    if (priceInput) { priceInput.value = CODE_PRICES[sel.value]; genUrl(); updateTotal(); }
+  }
   genUrl();
 }
 
@@ -937,7 +948,7 @@ function addGenRow() {
       <option value="R1102">R1102</option>
     </select>
     <input placeholder="服務收費項目名稱" oninput="genUrl()" class="svc-name-input">
-    <input type="number" placeholder="單價" oninput="genUrl()" class="svc-price-input">
+    <input type="number" placeholder="單價" oninput="genUrl();updateTotal()" class="svc-price-input">
     <input type="number" placeholder="數量" oninput="genUrl()" class="svc-qty-input">
     <button class="gen-del-btn" onclick="delGenRow(this)">×</button>`;
   container.appendChild(div);
@@ -975,6 +986,23 @@ function genUrl() {
 
   const url = base + '?' + p.toString();
   document.getElementById('genUrl').textContent = url;
+}
+
+function updateTotal() {
+  let total = 0;
+  document.querySelectorAll('#svcBody tr').forEach(tr => {
+    const price = parseFloat(tr.querySelector('.svc-price-input')?.value) || 0;
+    const qty = parseFloat(tr.querySelector('.svc-qty-input')?.value) || 0;
+    total += price * qty;
+  });
+  document.getElementById('totalAmount').textContent = total ? total.toLocaleString() + ' 元' : '—';
+  // 更新小計欄
+  document.querySelectorAll('#svcBody tr').forEach(tr => {
+    const price = parseFloat(tr.querySelector('.svc-price-input')?.value) || 0;
+    const qty = parseFloat(tr.querySelector('.svc-qty-input')?.value) || 0;
+    const subCell = tr.querySelectorAll('td')[4];
+    if (subCell) subCell.textContent = (price && qty) ? (price * qty).toLocaleString() + ' 元' : '—';
+  });
 }
 
 function copyUrl() {
