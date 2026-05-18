@@ -221,8 +221,8 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
     <div class="portal-strip">
       <button class="portal-tab active" onclick="switchTab('home')">🏠 總覽</button>
       <button class="portal-tab" onclick="switchTab('applications')">📋 申請案件</button>
-      <button class="portal-tab" onclick="switchTab('confirmations')">✅ 確認單記錄</button>
       <button class="portal-tab" onclick="switchTab('generate')">🔗 產生確認單</button>
+      <button class="portal-tab" onclick="switchTab('confirmations')">✅ 確認單記錄</button>
     </div>
   </div>
 
@@ -238,15 +238,15 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
         <div class="stat-card"><div class="stat-num" id="statClosed">—</div><div class="stat-label">已結案</div></div>
       </div>
       <div class="quick-grid">
-        <a class="quick-card" onclick="switchTab('generate')">
-          <div class="icon">🔗</div>
-          <div class="label">產生確認單連結</div>
-          <div class="desc">輸入案件序號，產生申請人填寫連結</div>
-        </a>
         <a class="quick-card" onclick="switchTab('applications')">
           <div class="icon">📋</div>
           <div class="label">查看申請案件</div>
           <div class="desc">瀏覽所有服務委託申請表</div>
+        </a>
+        <a class="quick-card" onclick="switchTab('generate')">
+          <div class="icon">🔗</div>
+          <div class="label">產生確認單連結</div>
+          <div class="desc">輸入案件序號，產生申請人填寫連結</div>
         </a>
         <a class="quick-card" onclick="switchTab('confirmations')">
           <div class="icon">✅</div>
@@ -255,7 +255,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
         </a>
       </div>
       <div class="panel-card">
-        <div class="panel-title">最新申請（前5筆）</div>
+        <div class="panel-title">最新申請（前10筆）</div>
         <div id="recentList"><div class="loading">載入中…</div></div>
       </div>
     </div>
@@ -263,7 +263,10 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
     <!-- 申請案件 -->
     <div class="tab-panel" id="tab-applications">
       <div class="panel-card">
-        <div class="panel-title">所有申請案件</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--light-blue)">
+          <div class="panel-title" style="margin-bottom:0;padding-bottom:0;border-bottom:none">所有申請案件</div>
+          <button id="saveBtn" onclick="saveAllStatus()" style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;display:none">💾 儲存變更</button>
+        </div>
         <div class="search-bar">
           <input type="text" id="appSearch" placeholder="搜尋案件序號、主持人、單位…" oninput="filterApps()">
           <select id="appStatusFilter" onchange="filterApps()">
@@ -343,12 +346,16 @@ function switchTab(name) {
   document.querySelectorAll('.portal-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   event.target.classList.add('active');
+  if (name === 'home') {
+    loadAll();
+  }
 }
 
 // ── Data ──
 let allApps = [], allConfs = [];
 
 async function loadAll() {
+  document.getElementById('recentList').innerHTML = '<div class="loading">載入中…</div>';
   await Promise.all([loadApplications(), loadConfirmations()]);
   updateStats();
   renderRecent();
@@ -358,12 +365,14 @@ async function loadApplications() {
   try {
     const form = new URLSearchParams();
     form.append('action', 'getSheet');
-    form.append('sheet', 'Sheet1');
+    form.append('sheet', '申請單');
     const res = await fetch(SCRIPT_URL, { method: 'POST', body: form });
     const json = await res.json();
     if (json.status === 'ok') {
       allApps = json.data;
       renderAppTable();
+      updateStats();
+      renderRecent();
     }
   } catch(e) {
     document.getElementById('appTableWrap').innerHTML = '<div class="empty">載入失敗，請稍後再試</div>';
@@ -397,7 +406,7 @@ function updateStats() {
 
 // ── Recent ──
 function renderRecent() {
-  const recent = [...allApps].reverse().slice(0, 5);
+  const recent = [...allApps].reverse().slice(0, 10);
   if (!recent.length) { document.getElementById('recentList').innerHTML = '<div class="empty">尚無申請資料</div>'; return; }
   document.getElementById('recentList').innerHTML = `
     <table class="data-table">
@@ -430,7 +439,7 @@ function renderAppTable(data) {
           <td>${r['電話']||''}</td>
           <td>${r['電子郵件']||''}</td>
           <td>
-            <select class="status-select" onchange="updateStatus(${i}, this.value)">
+            <select class="status-select" onchange="markChanged(${i}, this.value)">
               <option ${(!r['狀態']||r['狀態']==='待處理')?'selected':''}>待處理</option>
               <option ${r['狀態']==='進行中'?'selected':''}>進行中</option>
               <option ${r['狀態']==='已確認'?'selected':''}>已確認</option>
@@ -453,16 +462,47 @@ function filterApps() {
   renderAppTable(filtered);
 }
 
-async function updateStatus(idx, status) {
+const pendingChanges = {}; // idx -> status
+
+function markChanged(idx, status) {
+  pendingChanges[idx] = status;
   allApps[idx]['狀態'] = status;
-  updateStats();
+  const saveBtn = document.getElementById('saveBtn');
+  if (saveBtn) saveBtn.style.display = 'inline-block';
+}
+
+async function saveAllStatus() {
+  const saveBtn = document.getElementById('saveBtn');
+  saveBtn.textContent = '儲存中…';
+  saveBtn.disabled = true;
   try {
-    const form = new URLSearchParams();
-    form.append('action', 'updateStatus');
-    form.append('caseNo', allApps[idx]['案件序號']);
-    form.append('status', status);
-    await fetch(SCRIPT_URL, { method: 'POST', body: form });
-  } catch(e) { console.error('狀態更新失敗', e); }
+    const promises = Object.entries(pendingChanges).map(([idx, status]) => {
+      const form = new URLSearchParams();
+      form.append('action', 'updateStatus');
+      form.append('rowIndex', parseInt(idx) + 2);
+      form.append('status', status);
+      return fetch(SCRIPT_URL, { method: 'POST', body: form });
+    });
+    await Promise.all(promises);
+    Object.keys(pendingChanges).forEach(k => delete pendingChanges[k]);
+    saveBtn.textContent = '✅ 已儲存';
+    saveBtn.style.background = 'var(--green)';
+    updateStats();
+    setTimeout(() => {
+      saveBtn.textContent = '💾 儲存變更';
+      saveBtn.style.background = 'var(--navy)';
+      saveBtn.style.display = 'none';
+      saveBtn.disabled = false;
+    }, 2000);
+  } catch(e) {
+    saveBtn.textContent = '❌ 儲存失敗';
+    saveBtn.style.background = 'var(--red)';
+    setTimeout(() => {
+      saveBtn.textContent = '💾 儲存變更';
+      saveBtn.style.background = 'var(--navy)';
+      saveBtn.disabled = false;
+    }, 2000);
+  }
 }
 
 // ── Conf Table ──
