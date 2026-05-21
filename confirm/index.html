@@ -722,6 +722,19 @@ async function queryCase() {
       document.getElementById('g_contact').value   = d['聯絡人']     || '';
       document.getElementById('g_tel').value       = d['電話']       || '';
       document.getElementById('g_email').value     = d['電子郵件']   || '';
+      // 帶入服務申請日期（從提交時間取出日期部分）
+      if (d['提交時間']) {
+        const raw = String(d['提交時間']);
+        let dateStr = '';
+        const isoMatch = raw.match(/^(\d{4}-\d{2}-\d{2})/);
+        const twMatch = raw.match(/(\d{4})\/(\d{1,2})\/(\d{1,2})/);
+        if (isoMatch) {
+          dateStr = isoMatch[1];
+        } else if (twMatch) {
+          dateStr = twMatch[1] + '-' + twMatch[2].padStart(2,'0') + '-' + twMatch[3].padStart(2,'0');
+        }
+        if (dateStr) document.getElementById('g_apply_date').value = dateStr;
+      }
       // Auto select service type
       const svc = d['委託服務'] || '';
       const sel = document.getElementById('g_service');
