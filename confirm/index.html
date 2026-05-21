@@ -641,7 +641,7 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
     </div>
     <div class="gen-field" style="grid-column:1/-1">
       <label>適用對象</label>
-      <select id="g_apptype" onchange="genUrl()">
+      <select id="g_apptype" onchange="genUrl();updatePricesByApptype()">
         <option value="">請選擇</option>
         <option value="1">台大醫院及台大醫學校區同仁</option>
         <option value="2">台灣大學非醫學校區同仁</option>
@@ -650,7 +650,8 @@ body.print-preview-mode .opt-group label:has(input:checked){display:flex!importa
     </div>
   </div>
 
-  <div style="font-size:11px;color:#546e7a;margin-bottom:8px;font-weight:500">費用明細項目</div>
+  <div style="font-size:11px;color:#546e7a;margin-bottom:4px;font-weight:500">費用明細項目</div>
+  <div style="font-size:10px;color:#90a4ae;margin-bottom:8px">定價以臺大醫院及醫學校區同仁為基準；臺大總區 = 定價 × 1.5；其他單位（非台大醫院／台大校區） = 定價 × 3</div>
   <div class="gen-svc-rows" id="genSvcRows">
     <div class="gen-svc-row">
       <select onchange="genUrl();autoFillName(this);autoFillPrice(this)">
@@ -932,12 +933,35 @@ function autoFillName(sel) {
   if (CODE_NAMES[sel.value]) nameInput.value = CODE_NAMES[sel.value];
 }
 
+function getApptypeMultiplier() {
+  const apptype = document.getElementById('g_apptype')?.value || '1';
+  if (apptype === '2') return 1.5;
+  if (apptype === '3') return 3;
+  return 1;
+}
+
 function autoFillPrice(sel) {
   if (!CODE_PRICES[sel.value]) return;
   const row = sel.closest('.gen-svc-row');
   if (!row) return;
   const priceInput = row.querySelector('.svc-price-input');
-  if (priceInput) { priceInput.value = CODE_PRICES[sel.value]; genUrl(); }
+  if (priceInput) {
+    const multiplier = getApptypeMultiplier();
+    priceInput.value = Math.round(CODE_PRICES[sel.value] * multiplier);
+    genUrl();
+  }
+}
+
+function updatePricesByApptype() {
+  const multiplier = getApptypeMultiplier();
+  document.querySelectorAll('.gen-svc-row').forEach(row => {
+    const codeSelect = row.querySelector('select');
+    const priceInput = row.querySelector('.svc-price-input');
+    if (codeSelect && priceInput && CODE_PRICES[codeSelect.value]) {
+      priceInput.value = Math.round(CODE_PRICES[codeSelect.value] * multiplier);
+    }
+  });
+  genUrl();
 }
 
 function addGenRow() {
